@@ -1,0 +1,11 @@
+git add .
+
+if on prosses -yuklemek icin
+gite yuklemek icin
+git commit -m "Your commit message here"
+git push origin main
+
+son guncellemeleri gitteen siteye geri yuklemek icin
+git pull origin main
+git add .
+git commit -m "Güncellemeleri ekle" (eger email user sorarsa yazip, bu atiri tekrar yaz)
