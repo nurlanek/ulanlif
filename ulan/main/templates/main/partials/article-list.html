@@ -1,0 +1,8 @@
+<div class="input-group mb-3">
+  <select name="article" class="form-select" id="inputGroupSelect03" >
+    <option selected>Choose...</option>
+      {% for article in articles %}
+    <option value="{{ article.id }}" >{{ article.name }}</option>
+     {% endfor %}
+  </select>
+</div>

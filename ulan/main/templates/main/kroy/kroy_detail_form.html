@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+{% endblock %}
+
+{% block title %} {% if form.instance.pk %}Изменить крой детальный {% else %}Создать крой детальный{% endif %} {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            {% include 'main/kroy/_nav_kroy.html' %}
+            <h5>{% if form.instance.pk %}Изменить крой детальный {% else %}Создать крой детальный{% endif %}</h5>
+            <form method="post">
+                {% csrf_token %}
+                <div class="row mt-2 ">
+                    <div class="col-md-2">{{ form.kroy.label_tag }}</div>
+                    <div class="col-6 col-md-3">{{ form.kroy }}</div>
+                </div>
+                <div class="row mt-2 ">
+                    <div class="col-md-2">{{ form.pachka.label_tag }}</div>
+                    <div class="col-6 col-md-3">{{ form.pachka }}</div>
+                </div>
+                <div class="row mt-2 ">
+                    <div class="col-md-2">{{ form.razmer.label_tag }}</div>
+                    <div class="col-6 col-md-3">{{ form.razmer }}</div>
+                </div>
+                <div class="row mt-2 ">
+                    <div class="col-md-2">{{ form.rost.label_tag }}</div>
+                    <div class="col-6 col-md-3">{{ form.rost }}</div>
+                </div>
+                <div class="row mt-2 ">
+                    <div class="col-md-2">{{ form.stuk.label_tag }}</div>
+                    <div class="col-6 col-md-3">{{ form.stuk }}{{ form.user }}</div>
+                </div>
+                <input type="submit" value="Сохранить" class="btn btn-secondary mt-2">
+            </form>
+        </div>
+        <div class="col-7">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Крой</th>
+                    <th>Пачка</th>
+                    <th>Размер</th>
+                    <th>Рост</th>
+                    <th>Штук</th>
+                    <th>Пользователь</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for kroy_detail in kroy_detail_list %}
+                <tr>
+                    <td>{{ kroy_detail.kroy }}</td>
+                    <td>{{ kroy_detail.pachka }}</td>
+                    <td>{{ kroy_detail.razmer }}</td>
+                    <td>{{ kroy_detail.rost }}</td>
+                    <td>{{ kroy_detail.stuk }}</td>
+                    <td><a href="{% url 'kroy-detail-update' pk=kroy_detail.pk %}">изменить</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js_files %}
+<script src="{% static 'main/js/script.js' %}"></script>
+{% endblock %}

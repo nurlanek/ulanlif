@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+{% endblock %}
+
+{% block title %} {% if form.instance.pk %}Изменить крой{% else %}Создать Кроя{% endif %} {% endblock %}
+
+{% block content %}
+<div class="container">
+{% include 'main/kroy/_nav_kroy.html' %}
+
+<h4> Крой № {{ kroy_instance.kroy_no }} -- {{ kroy_instance.name }}</h4>
+<strong> Дата создания:</strong> {{ kroy_instance.created }}, <strong>Расход ткани:</strong> {{ kroy_instance.ras_tkani }},
+    <strong>Расход дублерин:</strong> {{ kroy_instance.ras_dublerin }},
+    <strong>Единица:</strong> {{ kroy_instance.edinitsa }}</p>
+
+        <table class="table caption-top w-auto h-auto">
+  <caption> </caption>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Пачка</th>
+      <th scope="col">Размер</th>
+      <th scope="col">Рост</th>
+      <th scope="col">Штук</th>
+    </tr>
+  </thead>
+
+     <tbody>
+     <tr class="h-auto">
+     {% for detail in kroy_details %}
+  <th scope="row"></th>
+
+      <td>{{ detail.pachka }}</td>
+      <td>{{ detail.razmer }}</td>
+      <td>{{ detail.rost }}</td>
+      <td>{{ detail.stuk }}</td>
+         <td>
+             Передать:
+   <form method="post" action="">
+    {% csrf_token %}
+        <select name="user" id="id_user">
+            {% for user_choice in form.fields.user.choices %}
+                <option value="{{ user_choice.0 }}" {% if form.instance.user == user_choice.0 %}selected{% endif %}>
+                    {{ user_choice.1 }}
+                </option>
+            {% endfor %}
+        </select>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+         </td>
+
+    </tr>
+     {% empty %}
+            <li>Нет доступных позиций.</li>
+        {% endfor %}
+  </tbody>
+</table>
+<p><strong>Примечение:</strong> {{ kroy_instance.description }}</p>
+    <a href="{% url 'kroy-list' %}">Вернуться к списку кроя</a>
+</div>
+{% endblock %}
+
+{% block js_files %}
+<script src="{% static 'main/js/script.js' %}"></script>
+
+{% endblock %}
+

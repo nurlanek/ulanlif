@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+{% endblock %}
+
+{% block title %} {% if form.instance.pk %}Изменить крой{% else %}Создать Кроя{% endif %} {% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h4>{% if form.instance.pk %}Изменить крой{% else %}Создать новый крой{% endif %}</h4>
+            {% include 'main/kroy/_nav_kroy.html' %}
+            <form method="post" class="mt-4">
+                {% csrf_token %}
+                <div class="row mt-2 ">
+                    <div class="col-md-4">{{ form.kroy_no.label_tag }}</div>
+                    <div class="col-6 col-md-3">{{ form.kroy_no }}</div>
+                </div>
+                <div class="row mt-2 ">
+                    <div class="col-md-4">{{ form.name.label_tag }}</div>
+                    <div class="col-6 col-md-3">{{ form.name }}</div>
+                </div>
+                <div class="row mt-2 ">
+                    <div class="col-md-4">{{ form.ras_tkani.label_tag }}</div>
+                    <div class="col-6 col-md-3">{{ form.ras_tkani }}</div>
+                </div>
+                <div class="row mt-2 ">
+                    <div class="col-md-4">{{ form.ras_dublerin.label_tag }}</div>
+                    <div class="col-6 col-md-3">{{ form.ras_dublerin }}</div>
+                </div>
+                <div class="row mt-2 ">
+                    <div class="col-md-4">{{ form.edinitsa.label_tag }}</div>
+                    <div class="col-6 col-md-3">{{ form.edinitsa }}</div>
+                </div>
+                <div class="row mt-2 ">
+                    <div class="col-md-4">{{ form.description.label_tag }}</div>
+                    <div class="col- col-md-">{{ form.description }}</div>
+                </div>
+                <button type="submit" class="btn btn-secondary">Сохранить</button>
+            </form>
+        </div>
+        <div class="col-md-8">
+            <table class="table">
+                <tr>
+                    <th >#</th>
+                    <th>Крой №</th>
+                    <th></th>
+                    <th>На.ание</th>
+                    <th>Дата созд.</th>
+                    <th>ед.ца</th>
+                    <th>р.ткани</th>
+                    <th>р.дублрн</th>
+                </tr>
+                <tbody>
+                {% for kroy in kroy_list %}
+                {% if kroy_no is active %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td><a href="{% url 'kroy-detail-view' kroy.pk %}">{{ kroy.kroy_no }}</a>
+                    <td></td>
+                    <td>{{ kroy.name|slice:":20" }}</td>
+                    <td>{{ kroy.created|date:"d.m.Y" }}</td>
+                    <td>{{ kroy.edinitsa }}</td>
+                    <td>{{ kroy.ras_tkani }}</td>
+                    <td>{{ kroy.ras_dublerin }} </td>
+                    <td><a href="{% url 'kroy-update' kroy.pk %}">Изменить</a></td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js_files %}
+<script src="{% static 'main/js/script.js' %}"></script>
+{% endblock %}

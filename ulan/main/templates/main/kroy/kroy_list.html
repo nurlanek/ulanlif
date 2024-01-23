@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+{% endblock %}
+
+{% block title %} Крой Список {% endblock %}
+
+{% block content %}
+
+<div class="container mt-2">
+
+   <!-- <a href="{% url 'kroy-create' %}">Создать новый Крой</a>-->
+    <table class="table caption-top">
+        <caption>Крой Список</caption>
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Крой №</th>
+            <th></th>
+            <th scope="col">Наименование</th>
+            <th scope="col">Дата создание</th>
+            <th scope="col">Единица</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for kroy in object_list %}
+        {% if kroy.is_active %}
+        <form id="kroy-form" action="{% url 'create_masterdata' %}" method="POST">
+            {% csrf_token %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td><a href="{% url 'kroy-detail-view' kroy.pk %}">{{ kroy.kroy_no }}</a>
+                    <input class="" id="1" type="hidden" name="kroy_no" value="{{ kroy.kroy_no }}"></td>
+                    <td>
+                        <select class="form-select form-select-sm" aria-label="Default select example" name="user" style="width: 150px;" required>
+                        {% for user in user %}
+            <option value="{{ user.username }}">{{ user.username }}</option>
+        {% endfor %}
+                        </select>
+                        </td>
+                <td><a href="{% url 'kroy-update' kroy.pk %}">Изменить</a></td>
+                <td>{{ kroy.name|slice:":20" }}</td>
+                <td>{{ kroy.created|date:"d.m.Y H:i" }}</td>
+                <td><b>{{ kroy.edinitsa }}</b></td>
+                <td><input class="form-control form-control-sm"  name="edinitsa"  style="width: 50px;" required></td>
+                <td>
+                </td>
+                <td><button type="submit" class="btn btn-secondary btn-sm"  >Передать</button></td>
+            </tr>
+        </form>
+
+        {% endif %}
+        {% empty %}
+        <li>В системе нет активного кроя</li>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
+
+{% block js_files %}
+<script src="{% static 'main/js/script.js' %}"></script>
+{% endblock %}

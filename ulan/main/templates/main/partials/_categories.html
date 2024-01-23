@@ -1,0 +1,21 @@
+{{ category.name|title }}
+        <div class="dropdown">
+  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Dropdown link
+  </a>
+
+  <ul class="dropdown-menu">
+      {% for category in categories %}
+    <li>
+    {% if category.slug == selected_category %}
+    <a class="dropdown-item " href="{% url 'work_stations_by_category' category.slug %}">
+        {{ category.name|title }}</a>
+    {% else %}
+    <a class="dropdown-item " href="{% url 'work_stations_by_category' category.slug %}">
+        {{ category.name|title }}</a>
+    {% endif %}
+    </li>
+{% endfor %}
+  </ul>
+</div>
+

@@ -1,0 +1,27 @@
+{% load static %}
+
+
+<div class="row mt-2" >
+        {{ work_stations.work_station|title }}
+        <input type="hidden" name="work_stations" value="{{ work_stations.id }}">
+        <input type="hidden" class="form-control" name="category" value="{{ work_stations.category_id }}">
+        {{ work_stations.category }}
+    <div class="col">
+        <select name="article" class="form-control">
+                <option selected>Выбирайте...</option>
+                {% for article in articles %}
+                <option value="{{ article.id }}" >{{ article.name }}</option>
+                {% endfor %}
+        </select>
+    </div>
+    <div class="col">
+        <input type="text" class="form-control" placeholder="Количество" aria-label="" name="quantity">
+    </div>
+    <div class="col">
+        <input type="text" class="form-control" placeholder="Примечение" aria-label="" name="description">
+    </div>
+    <div class="col">
+        <input type="text" class="form-control" placeholder="Брак" aria-label="last name" name="brak">
+    </div>
+</div>
+

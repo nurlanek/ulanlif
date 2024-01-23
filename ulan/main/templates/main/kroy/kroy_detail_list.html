@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+{% endblock %}
+
+{% block title %} Kroy Detail List {% endblock %}
+
+{% block content %}
+<div class="container">
+    {% include 'main/kroy/_nav_kroy.html' %}
+    {{kroy_detail.id}}
+<!--<a href="{% url 'kroy-detail-create' %}">Создать Новую Крой Деталь</a>-->
+     <table class="table caption-top">
+  <caption>Крой детальный список</caption>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Крой №</th>
+      <th scope="col">Пачка</th>
+      <th scope="col">Размер</th>
+      <th scope="col">Рост</th>
+      <th scope="col">Штук</th>
+      <th scope="col"> </th>
+    </tr>
+  </thead>
+
+     <tbody>
+     {% for kroy_detail in object_list %}
+  <th scope="row"></th>
+      <td>{{ kroy_detail.kroy }}</td>
+      <td>{{ kroy_detail.pachka }}</td>
+      <td>{{ kroy_detail.razmer }}</td>
+      <td>{{ kroy_detail.rost }}</td>
+      <td>{{ kroy_detail.stuk }}</td>
+      <td> <a href="{% url 'kroy-detail-update' kroy_detail.pk %}">изменить</a></td>
+    </tr>
+     {% empty %}
+            <li>Нет доступных позиций.</li>
+        {% endfor %}
+  </tbody>
+</table>
+
+
+
+</div>
+{% endblock %}
+
+{% block js_files %}
+<script src="{% static 'main/js/script.js' %}"></script>
+
+{% endblock %}

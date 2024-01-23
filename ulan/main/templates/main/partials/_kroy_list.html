@@ -1,0 +1,34 @@
+
+<div class="container">
+
+         <table class="table caption-top">
+  <caption>Крой Список</caption>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Крой №</th>
+      <th scope="col">Наименование</th>
+      <th scope="col">Единица</th>
+      <th scope="col">Расход ткани</th>
+      <th scope="col">Расхо дублерин</th>
+      <th scope="col"> </th>
+    </tr>
+  </thead>
+
+     <tbody>
+     {% for kroy in object_list %}
+     <tr>
+  <th scope="row"></th>
+      <td><a href="{% url 'kroy-detail-view' kroy.pk %}">{{ kroy.kroy_no }}</a></td>
+      <td>{{ kroy.name }}</td>
+      <td>{{ kroy.edinitsa }}</td>
+      <td>{{ kroy.ras_tkani }}</td>
+      <td>{{ kroy.ras_dublerin }}</td>
+      <td><a href="{% url 'kroy-update' kroy.pk %}">Edit</a></td>
+    </tr>
+     {% empty %}
+            <li>No Kroy items available</li>
+        {% endfor %}
+  </tbody>
+</table>
+</div>

@@ -1,0 +1,70 @@
+<form method="get">
+    <div class="row mt-2">
+        <div class="col">
+            <label for="id_start_date">Дата начала:</label>
+            <input type="text" class="form-control form-control-sm"
+                   id="id_start_date"
+                   name="{{ search_form.start_date.name }}"
+                   value="">
+        </div>
+        <div class="col">
+            <label for="id_end_date">Дата окончания:</label>
+            <input type="text" class="form-control form-control-sm"
+                   id="id_end_date"
+                   name="{{ search_form.end_date.name }}"
+                   value="">
+        </div>
+        <div class="col">
+            <label for="id_uchastok_search">Участка:</label>
+            <input type="text" class="form-control form-control-sm"
+                   id="id_uchastok_search"
+                   name="{{ search_form.uchastok_search.name }}"
+                   value="">
+        </div>
+        <div class="col">
+            <label for="id_kroy_no_search">Крой №:</label>
+            <input type="text" class="form-control form-control-sm"
+                   id="id_kroy_no_search"
+                   name="{{ search_form.kroy_no_search.name }}"
+                   value="">
+        </div>
+        <div class="col">
+            <label for="button"></label>
+            <button type="submit" class="btn btn-sm btn-secondary mt-4" id="button">Показать</button>
+        </div>
+    </div>
+</form>
+
+<table class="table caption-top">
+        <caption>Рабочий процесс</caption>
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Крой номер</th>
+                <th scope="col">Участок</th>
+                <th scope="col">Единица</th>
+                <th scope="col">Дата</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Примечение</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for masterdata in masterdata_list %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ masterdata.kroy_no }}</td>
+                <td></td>
+                <td>{{ masterdata.edinitsa }}</td>
+                <td>{{ masterdata.created|date:"d.m.Y H:i" }}</td>
+                <td><b style="color: green;">{{ masterdata.status }}-({{ masterdata.user }})</b></td>
+                <td>{{ masterdata.description }}</td>
+
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No records found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+  <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+{% endblock %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+<div class="container">
+  <p>Привет, {{ user.username }}</p>
+
+    <form id="kroy-form" action="{% url 'masterdatauser_list' %}" method="POST">
+        {% csrf_token %}
+    <ul>
+      <li>
+          Крой номер:
+          <select class="form-select form-select-sm" aria-label="Default select example" name="kroy_no" style="width: 150px;">
+              {% for kroy_list in kroy_list %}
+                  <option value="{{ kroy_list.kroy_no }}">{{ kroy_list.kroy_no }}</option>
+              {% endfor %}
+          </select>
+      </li>
+      <li> Единица:
+          <input class="form-control form-control-sm"  name="edinitsa"  style="width: 50px;" required>
+      </li>
+        <li>
+            <input type="hidden" class="" id="230" name="user" value="{{ user.username }}">
+        </li>
+      <button type="submit" class="btn btn-primary">Завершить</button>
+    </ul>
+</form>
+
+  {% if request.method == 'POST' %}
+    <p>Данные отправлены! {{ user.username }}.</p>
+  {% endif %}
+
+  <p>Одиночка</p>
+  {% for masterdata in kroy_detail_list %}
+    <ul>
+      <li>{{ masterdata.kroy }}крой </li>
+      <li>{{ masterdata.stuk }}штук </li>
+      <li> </li>
+    </ul>
+  {% endfor %}
+</div>
+{% endblock %}
+
+{% block js_files %}
+  <script src="{% static 'main/js/script.js' %}"></script>
+{% endblock %}

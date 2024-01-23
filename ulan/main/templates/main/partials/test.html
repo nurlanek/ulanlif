@@ -1,0 +1,18 @@
+{% load static %}
+
+
+
+<div class="row">
+<div class="col">
+    <form action="{% url 'createdata' %}" method="POST">{% csrf_token %}
+        {{ work_stations.category|title }}
+         <input type="" name="x1" value="">
+          <input type="" name="x2" value="">
+        <input type="submit">
+    </form>
+  </div>
+
+</div>
+
+
+
