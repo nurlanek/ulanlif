@@ -179,12 +179,14 @@ def MasterdatauserListView(request):
 
     if request.method == 'POST':
         kroy_no = request.POST.get('kroy_no')
+        status = request.POST.get('status', 'звершень')
         edinitsa = request.POST.get('edinitsa')
 
         # No need to get the username separately; use request.user directly
         user = request.user
 
         masterdata = Masterdata(
+            status=status,
             kroy_no=kroy_no,
             edinitsa=edinitsa,
             user=user,

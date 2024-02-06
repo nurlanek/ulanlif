@@ -27,6 +27,14 @@
       </li>
         <li>
             <input type="hidden" class="" id="230" name="user" value="{{ user.username }}">
+
+             <label for="status">Status:</label>ccc
+   <select id="status" name="status">
+        <option value="звершень" selected>звершень</option>
+        {% for masterdata_list in masterdata_list %}
+            <option value="{{ masterdata_list.status }}">{{ masterdata_list.status }}</option>
+        {% endfor %}
+    </select>
         </li>
       <button type="submit" class="btn btn-primary">Завершить</button>
     </ul>

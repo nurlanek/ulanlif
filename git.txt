@@ -5,7 +5,10 @@ gite yuklemek icin
 git commit -m "Your commit message here"
 git push origin main
 
-son guncellemeleri gitteen siteye geri yuklemek icin
+gitten yuklemek icin
+git commit -m "Your commit message here"
 git pull origin main
-git add .
-git commit -m "Güncellemeleri ekle" (eger email user sorarsa yazip, bu atiri tekrar yaz)
+
+dosya gite eklenmemis ise
+git add . (Yada add klasor/dosya adi)
+git commit -m "Güncellemeleri ekle"
