@@ -18,46 +18,51 @@
 
         <table class="table caption-top w-auto h-auto">
   <caption> </caption>
-  <thead>
+
+<thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Пачка</th>
-      <th scope="col">Размер</th>
-      <th scope="col">Рост</th>
-      <th scope="col">Штук</th>
+        <th scope="col">#</th>
+        <th scope="col">Пачка</th>
+        <th scope="col">Размер</th>
+        <th scope="col">Рост</th>
+        <th scope="col">Штук</th>
+        <th scope="col">Действия</th> <!-- Yeni sütun eklendi -->
     </tr>
-  </thead>
+</thead>
 
-     <tbody>
-     <tr class="h-auto">
-     {% for detail in kroy_details %}
-  <th scope="row"></th>
-
-      <td>{{ detail.pachka }}</td>
-      <td>{{ detail.razmer }}</td>
-      <td>{{ detail.rost }}</td>
-      <td>{{ detail.stuk }}</td>
-         <td>
-             Передать:
-   <form method="post" action="">
-    {% csrf_token %}
-        <select name="user" id="id_user">
-            {% for user_choice in form.fields.user.choices %}
-                <option value="{{ user_choice.0 }}" {% if form.instance.user == user_choice.0 %}selected{% endif %}>
-                    {{ user_choice.1 }}
-                </option>
-            {% endfor %}
-        </select>
-    <button type="submit" class="btn btn-primary">Save</button>
-</form>
-         </td>
-
+<tbody>
+    {% for detail in kroy_details %}
+    <tr class="small-row" style="height: 5px"> <!-- sadece small-row sınıfı kullanılıyor -->
+        <th scope="row"></th>
+        <td>{{ detail.pachka }}</td>
+        <td>{{ detail.razmer }}</td>
+        <td>{{ detail.rost }}</td>
+        <td>{{ detail.stuk }}</td>
+        <td>
+            <form method="post" action="">
+                {% csrf_token %}
+                <div style="display: flex; align-items: center;">
+                    <span style="margin-right: 10px;">Передать:</span>
+                    <select name="user" id="id_user">
+                        {% for user_choice in form.fields.user.choices %}
+                        <option value="{{ user_choice.0 }}" {% if form.instance.user == user_choice.0 %}selected{% endif %}>
+                            {{ user_choice.1 }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                </div>
+            </form>
+        </td>
     </tr>
-     {% empty %}
-            <li>Нет доступных позиций.</li>
-        {% endfor %}
-  </tbody>
-</table>
+    {% empty %}
+    <tr>
+        <td colspan="6">Нет доступных позиций.</td> <!-- Tüm sütunları kaplayan bir hücre eklendi -->
+    </tr>
+    {% endfor %}
+</tbody>
+
+
 <p><strong>Примечение:</strong> {{ kroy_instance.description }}</p>
     <a href="{% url 'kroy-list' %}">Вернуться к списку кроя</a>
 </div>
