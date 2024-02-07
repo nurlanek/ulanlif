@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="">
 
 
+
     {% block css_files %} {% endblock %}
     <title>{% block title %} {% endblock %} | Production</title>
 </head>
@@ -19,6 +20,7 @@
 
 
 {% block content %}{% endblock %}
+<script src="{% static 'js/print.js' %}"></script>
 <script src="{% static 'js/base.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
