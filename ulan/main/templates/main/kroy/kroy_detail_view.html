@@ -11,12 +11,13 @@
 <div class="container">
 
 <button type="submit" class="btn btn-secondary btn-sm mt-3" onclick="printTable()">Распечатать</button>
-
+<a class="btn  btn-secondary btn-sm mt-3" href="{% url 'kroy-list' %}">Вернуться к списку кроя</a>
 <div id="table-container"  class="">
 <h4 class="mt-2"> Крой № {{ kroy_instance.kroy_no }} -- {{ kroy_instance.name }}</h4>
 <strong> Дата создания:</strong> {{ kroy_instance.created }}, <strong>Расход ткани:</strong> {{ kroy_instance.ras_tkani }},
     <strong>Расход дублерин:</strong> {{ kroy_instance.ras_dublerin }},
     <strong>Единица:</strong> {{ kroy_instance.edinitsa }}</p>
+<p><strong>Примечение:</strong> {{ kroy_instance.description }}</p>
 
         <table class="table caption-top w-auto h-auto">
   <caption> </caption>
@@ -34,7 +35,7 @@
 
 <tbody>
     {% for detail in kroy_details %}
-    <tr class="small-row" style="height: 1px;"> <!-- sadece small-row sınıfı kullanılıyor -->
+    <tr class="small-row"> <!-- sadece small-row sınıfı kullanılıyor -->
         <th scope="row"></th>
         <td>{{ detail.pachka }}</td>
         <td>{{ detail.razmer }}</td>
@@ -58,14 +59,13 @@
     </tr>
     {% empty %}
     <tr>
-        <td colspan="6">Нет доступных позиций.</td> <!-- Tüm sütunları kaplayan bir hücre eklendi -->
+        <td >Нет доступных позиций.</td> <!-- Tüm sütunları kaplayan bir hücre eklendi -->
     </tr>
     {% endfor %}
 </tbody>
 </table>
 
-<p><strong>Примечение:</strong> {{ kroy_instance.description }}</p>
-    <a href="{% url 'kroy-list' %}">Вернуться к списку кроя</a>
+
 
 </div>
 </div>
