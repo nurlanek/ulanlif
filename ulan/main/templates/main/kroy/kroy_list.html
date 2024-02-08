@@ -12,7 +12,7 @@
 <div class="container mt-2">
 
    <!-- <a href="{% url 'kroy-create' %}">Создать новый Крой</a>-->
-    <table class="table caption-top">
+    <table class="table caption-top w-auto">
         <caption>Крой Список</caption>
         <thead class="table-light">
         <tr>
@@ -52,7 +52,7 @@
                 <td>
                 </td>
                 <td><button type="submit" class="btn btn-secondary btn-sm"  >Передать</button></td>
-                <td><a href="{% url 'kroy-update' kroy.pk %}">Изменить</a></td>
+                <td><a class="btn btn-secondary btn-sm" href="{% url 'kroy-update' kroy.pk %}">Изменить</a></td>
             </tr>
         </form>
 
