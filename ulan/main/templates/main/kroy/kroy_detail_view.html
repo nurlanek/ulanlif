@@ -19,10 +19,10 @@
     <strong>Единица:</strong> {{ kroy_instance.edinitsa }}</p>
 <p><strong>Примечение:</strong> {{ kroy_instance.description }}</p>
 
-        <table class="table caption-top w-auto h-auto">
-  <caption> </caption>
+        <table class="table table-sm caption-top w-auto h-auto">
 
-<thead>
+
+<thead class="table-light">
     <tr>
         <th scope="col">#</th>
         <th scope="col">Пачка</th>
@@ -35,7 +35,7 @@
 
 <tbody>
     {% for detail in kroy_details %}
-    <tr class="small-row"> <!-- sadece small-row sınıfı kullanılıyor -->
+    <tr> <!-- sadece small-row sınıfı kullanılıyor -->
         <th scope="row"></th>
         <td>{{ detail.pachka }}</td>
         <td>{{ detail.razmer }}</td>
@@ -44,16 +44,16 @@
         <td>
             <form method="post" action="">
                 {% csrf_token %}
-                <div style="display: flex; align-items: center;">
-                    <select name="user" id="id_user" style="margin-right: 10px;">
-                        {% for user_choice in form.fields.user.choices %}
-                        <option value="{{ user_choice.0 }}" {% if form.instance.user == user_choice.0 %}selected{% endif %}>
-                            {{ user_choice.1 }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                    <button type="submit" class="btn btn-secondary btn-sm">Передать</button>
-                </div>
+                <div class="d-flex align-items-center">
+    <select name="user" id="id_user" class="form-select form-select-sm me-2">
+        {% for user_choice in form.fields.user.choices %}
+        <option value="{{ user_choice.0 }}" {% if form.instance.user == user_choice.0 %}selected{% endif %}>
+            {{ user_choice.1 }}
+        </option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-secondary btn-sm">Передать</button>
+</div>
             </form>
         </td>
     </tr>
