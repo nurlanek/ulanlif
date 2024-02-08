@@ -10,11 +10,10 @@
 {% block content %}
 <div class="container">
 
-<br>
-<button onclick="printTable()">Распечатать</button>
+<button type="submit" class="btn btn-secondary btn-sm mt-3" onclick="printTable()">Распечатать</button>
 
-<div id="table-container">
-<h4> Крой № {{ kroy_instance.kroy_no }} -- {{ kroy_instance.name }}</h4>
+<div id="table-container"  class="">
+<h4 class="mt-2"> Крой № {{ kroy_instance.kroy_no }} -- {{ kroy_instance.name }}</h4>
 <strong> Дата создания:</strong> {{ kroy_instance.created }}, <strong>Расход ткани:</strong> {{ kroy_instance.ras_tkani }},
     <strong>Расход дублерин:</strong> {{ kroy_instance.ras_dublerin }},
     <strong>Единица:</strong> {{ kroy_instance.edinitsa }}</p>
@@ -63,12 +62,12 @@
     </tr>
     {% endfor %}
 </tbody>
-
+</table>
 
 <p><strong>Примечение:</strong> {{ kroy_instance.description }}</p>
     <a href="{% url 'kroy-list' %}">Вернуться к списку кроя</a>
-</div>
 
+</div>
 </div>
 {% endblock %}
 
