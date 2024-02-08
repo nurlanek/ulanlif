@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.contrib import messages
 
@@ -52,10 +53,16 @@ def create_masterdata(request):
 
     return render(request, 'main/kroy/kroy_masterdata.html')
 
-class MasterdataListView(ListView):
+class MasterdataListView(LoginRequiredMixin, ListView):
+
     model = Masterdata
     template_name = 'main/mdata/masterdata_list.html'
     context_object_name = 'masterdata_list'
+    login_url = '/login/'
+
+    def handle_no_permission(self):
+        # Kullanıcı oturum açmamışsa, giriş yapma sayfasına yönlendir
+        return redirect('login')
 
     def get_queryset(self):
         form = MasterdataSearchForm(self.request.GET)
@@ -66,6 +73,7 @@ class MasterdataListView(ListView):
             end_date = form.cleaned_data.get('end_date')
             #uchastok_search = form.cleaned_data.get('uchastok_search')
             kroy_no_search = form.cleaned_data.get('kroy_no_search')
+            user = form.cleaned_data.get('user')
 
             filter_conditions = Q()
 
@@ -77,6 +85,8 @@ class MasterdataListView(ListView):
                 #queryset = queryset.filter(Q(uchastok__name__icontains=uchastok_search))
             if kroy_no_search:
                 filter_conditions &= Q(kroy_no__icontains=kroy_no_search)
+            if user:
+                filter_conditions &= Q(user__username__icontains=user)
 
                 # Apply the combined filters
             queryset = queryset.filter(filter_conditions)
@@ -91,7 +101,10 @@ class MasterdataListView(ListView):
 
         return context
 
+@login_required
 def MdataKroyDetailView(request, kroy_id):
+    if not request.user.is_authenticated:
+        return redirect("login")
         kroy_instance = get_object_or_404(Masterdata, pk=kroy_id)
         kroy_details = Kroy_detail.objects.filter(kroy=kroy_instance)  # Retrieve related Kroy_detail records
 
@@ -101,9 +114,14 @@ def MdataKroyDetailView(request, kroy_id):
         }
         return render(request, 'main/dmata/dmata_kroy_detail_view.html', context)
 
-class KroyListView(ListView):
+class KroyListView(LoginRequiredMixin, ListView):
     model = Kroy
     template_name = 'main/kroy/kroy_list.html'
+    login_url = '/login/'
+
+    def handle_no_permission(self):
+        # Kullanıcı oturum açmamışsa, giriş yapma sayfasına yönlendir
+        return redirect('login')
 
     def get_queryset(self):
         # Filter the Kroy objects where is_active is True
@@ -116,18 +134,27 @@ class KroyListView(ListView):
 
         return context
 
-class KroyCreateView(CreateView):
+class KroyCreateView(LoginRequiredMixin, CreateView):
     model = Kroy
     form_class = KroyForm
     template_name = 'main/kroy/kroy_form.html'
     success_url = reverse_lazy ('kroy-create')
+    login_url = '/login/'
+
+    def handle_no_permission(self):
+        # Kullanıcı oturum açmamışsa, giriş yapma sayfasına yönlendir
+        return redirect('login')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['kroy_list'] = Kroy.objects.all().order_by('-created')[
                                       :10]  # Add this line to pass the data to the template
         return context
+
+@login_required
 def KroyDetailView(request, kroy_id):
+    if not request.user.is_authenticated:
+        return redirect("login")
     kroydetil_instance = Kroy_detail.objects.filter(user=request.user).first()
 
     if request.method == 'POST':
@@ -147,21 +174,35 @@ def KroyDetailView(request, kroy_id):
     }
     return render(request, 'main/kroy/kroy_detail_view.html', context)
 
-class KroyUpdateView(UpdateView):
+class KroyUpdateView(LoginRequiredMixin, UpdateView):
     model = Kroy
     form_class = KroyForm
     template_name = 'main/kroy/kroy_form.html'
     success_url = '/kroy/'
+    login_url = '/login/'
 
-class KroyDetailListView(ListView):
+    def handle_no_permission(self):
+        # Kullanıcı oturum açmamışsa, giriş yapma sayfasına yönlendir
+        return redirect('login')
+
+class KroyDetailListView(LoginRequiredMixin, ListView):
     model = Kroy_detail
     template_name = 'main/kroy/kroy_detail_list.html'
+    login_url = '/login/'
+    def handle_no_permission(self):
+        # Kullanıcı oturum açmamışsa, giriş yapma sayfasına yönlendir
+        return redirect('login')
 
-class KroyDetailCreateView(CreateView):
+class KroyDetailCreateView(LoginRequiredMixin, CreateView):
     model = Kroy_detail
     form_class = KroyDetailForm
     template_name = 'main/kroy/kroy_detail_form.html'
     success_url = reverse_lazy('kroy-detail-create')
+    login_url = '/login/'
+
+    def handle_no_permission(self):
+        # Kullanıcı oturum açmamışsa, giriş yapma sayfasına yönlendir
+        return redirect('login')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

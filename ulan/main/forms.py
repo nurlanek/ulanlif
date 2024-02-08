@@ -28,6 +28,7 @@ class MasterdataSearchForm(forms.Form):
     end_date = forms.DateField(label='Дата окончания', required=False)
     uchastok_search = forms.CharField(label='Искать по участке', required=False)
     kroy_no_search = forms.CharField(label='Искать по крой но:', required=False)
+    user = forms.CharField(label='Искать по крой но:', required=False)
 
 class MasterdataForm(forms.ModelForm):
     class Meta:
