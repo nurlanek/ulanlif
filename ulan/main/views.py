@@ -239,6 +239,7 @@ def MasterdatauserListView(request):
         'kroy_detail_list': Kroy_detail.objects.filter(user=request.user),
         'user': request.user,
         'kroy_list': Kroy.objects.all(),
+        'status_list': [option[0] for option in Masterdata.OPTION_CHOICES],
     }
 
     return render(request, 'main/masterdatauser_list.html', context)

@@ -26,30 +26,28 @@
           <input class="form-control form-control-sm"  name="edinitsa"  style="width: 50px;" required>
       </li>
         <li>
-            <input type="hidden" class="" id="230" name="user" value="{{ user.username }}">
-
-             <label for="status">Status:</label>ccc
-   <select id="status" name="status">
-        <option value="звершень" selected>звершень</option>
-        {% for masterdata_list in masterdata_list %}
-            <option value="{{ masterdata_list.status }}">{{ masterdata_list.status }}</option>
-        {% endfor %}
-    </select>
+            Status:
+            <select class="form-select form-select w-auto" aria-label="Default select example" name="status" style="width: 50px;" required>
+    {% for status_choice in status_list %}
+        <option value="{{ status_choice }}">{{ status_choice }}</option>
+    {% endfor %}
+</select>
         </li>
-      <button type="submit" class="btn btn-primary">Завершить</button>
+        <input type="hidden" class="" id="230" name="user" value="{{ user.username }}">
+      <button type="submit" class="btn btn-secondary mt-2">Завершить</button>
     </ul>
 </form>
 
   {% if request.method == 'POST' %}
     <p>Данные отправлены! {{ user.username }}.</p>
   {% endif %}
-
+<hr>
   <p>Одиночка</p>
   {% for masterdata in kroy_detail_list %}
     <ul>
       <li>{{ masterdata.kroy }}крой </li>
       <li>{{ masterdata.stuk }}штук </li>
-      <li> </li>
+
     </ul>
   {% endfor %}
 </div>
