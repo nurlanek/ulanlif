@@ -9,7 +9,7 @@
 
 {% block content %}
 <div class="container">
-{% include 'main/kroy/_nav_kroy.html' %}
+
 <br>
 <button onclick="printTable()">Распечатать</button>
 
@@ -29,7 +29,7 @@
         <th scope="col">Размер</th>
         <th scope="col">Рост</th>
         <th scope="col">Штук</th>
-        <th scope="col">Действия</th> <!-- Yeni sütun eklendi -->
+        <th scope="col">Действия</th>
     </tr>
 </thead>
 
@@ -52,7 +52,7 @@
                         </option>
                         {% endfor %}
                     </select>
-                    <button type="submit" class="btn btn-primary btn-sm">Передать</button>
+                    <button type="submit" class="btn btn-secondary btn-sm">Передать</button>
                 </div>
             </form>
         </td>

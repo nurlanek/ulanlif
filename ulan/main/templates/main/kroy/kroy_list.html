@@ -18,10 +18,12 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Крой №</th>
-            <th></th>
+            <th scope="col">Пользователь</th>
             <th scope="col">Наименование</th>
             <th scope="col">Дата создание</th>
             <th scope="col">Единица</th>
+            <th></th>
+            <th></th>
             <th></th>
             <th></th>
         </tr>
@@ -42,7 +44,7 @@
         {% endfor %}
                         </select>
                         </td>
-                <td><a href="{% url 'kroy-update' kroy.pk %}">Изменить</a></td>
+
                 <td>{{ kroy.name|slice:":20" }}</td>
                 <td>{{ kroy.created|date:"d.m.Y H:i" }}</td>
                 <td><b>{{ kroy.edinitsa }}</b></td>
@@ -50,6 +52,7 @@
                 <td>
                 </td>
                 <td><button type="submit" class="btn btn-secondary btn-sm"  >Передать</button></td>
+                <td><a href="{% url 'kroy-update' kroy.pk %}">Изменить</a></td>
             </tr>
         </form>
 
