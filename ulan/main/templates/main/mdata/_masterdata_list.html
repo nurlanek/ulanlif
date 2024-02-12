@@ -48,13 +48,11 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Крой номер</th>
-
                 <th scope="col">Единица</th>
                 <th scope="col">Дата</th>
                 <th scope="col">Статус</th>
                 <th scope="col">Примечение</th>
-                <th scope="col"></th>
-
+                <th scope="col">Подтверждения</th>
             </tr>
         </thead>
         <tbody>
@@ -65,9 +63,23 @@
 
                 <td>{{ masterdata.edinitsa }}</td>
                 <td>{{ masterdata.created|date:"d.m.Y H:i" }}</td>
-                <td><b style="color: green;">{{ masterdata.status }}-({{ masterdata.user }})</b></td>
-                <td>{{ masterdata.description }}</td>
-                <td> </td>
+                <td>
+                    {% if masterdata.status == 'завершень' %}
+                    <b>звершень</b>
+                    {% else %}
+                    в процессе
+                    {% endif %}
+                    -({{ masterdata.user }})
+                    </td>
+                <td>
+                    {% if masterdata.confirmation %}
+                    <b style="color: green;">проверено</b>
+                    {% else %}
+                    <span class="kirmizi-kalin">не проверено</span>
+                    {% endif %}
+                </td>
+
+                <td>{{ masterdata.description }} </td>
 
             </tr>
             {% empty %}

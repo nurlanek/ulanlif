@@ -29,7 +29,9 @@
         <th scope="col">Размер</th>
         <th scope="col">Рост</th>
         <th scope="col">Штук</th>
-        <th scope="col">Действия</th>
+        <th scope="col">Цвет</th>
+        <th scope="col">Город</th>
+        <th scope="col"></th>
     </tr>
 </thead>
 
@@ -41,6 +43,8 @@
         <td>{{ detail.razmer }}</td>
         <td>{{ detail.rost }}</td>
         <td>{{ detail.stuk }}</td>
+        <td>{{ detail.color }}</td>
+        <td>{{ detail.city }}</td>
         <td>
             <form method="post" action="">
                 {% csrf_token %}

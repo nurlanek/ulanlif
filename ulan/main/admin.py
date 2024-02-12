@@ -1,6 +1,6 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
-from .models import Kroy_detail, Kroy, Masterdata
+from .models import Kroy_detail, Kroy, Masterdata, Colors, City
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 import json
@@ -8,15 +8,24 @@ from django.core.management import call_command
 from django.http import HttpResponse
 
 class MasterdataAdmin(ImportExportModelAdmin):
-    list_display = ("kroy_no", "edinitsa", "created", "user")
+    list_display = ("kroy_no", "edinitsa", "created", "user", "confirmation","status",)
+    list_editable = ("confirmation",)
 
 class KroyAdmin(ImportExportModelAdmin):
     list_display = ("kroy_no", "name", "ras_tkani", "ras_dublerin", "edinitsa", "description", "created", "is_active",)
     search_fields = ("kroy_no",)
     list_editable = ("is_active",)
 
+class ColorsAdmin(ImportExportModelAdmin):
+    list_display = ("name",)
+    #list_editable = ("name",)
+
+class CityAdmin(ImportExportModelAdmin):
+    list_display = ("name",)
+    #list_editable = ("name",)
+
 class Kroy_detailAdmin(ImportExportModelAdmin):
-    list_display = ("kroy", "pachka", "razmer", "rost", "stuk", "user")
+    list_display = ("kroy", "pachka", "razmer", "rost", "stuk", "user", "color", "city",)
     search_fields = ("kroy",)
 
 class UserAdmin(BaseUserAdmin, ImportExportModelAdmin):
@@ -51,3 +60,5 @@ admin.site.register(User, UserAdmin)
 admin.site.register(Masterdata, MasterdataAdmin)
 admin.site.register(Kroy, KroyAdmin)
 admin.site.register(Kroy_detail, Kroy_detailAdmin)
+admin.site.register(Colors, ColorsAdmin)
+admin.site.register(City, CityAdmin)

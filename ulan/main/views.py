@@ -25,10 +25,6 @@ def create_masterdata(request):
         edinitsa = request.POST.get('edinitsa')
         username = request.POST.get('user')  # Get the username
 
-        try:
-            edinitsa = int(edinitsa)
-        except ValueError:
-            edinitsa = 0  # Default value if parsing fails
 
         # Create a new Masterdata object and save it to the database
         #uchastok = get_object_or_404(Uchastok, pk=uchastok)
@@ -46,7 +42,7 @@ def create_masterdata(request):
         masterdata.save()
 
         kroy_record = get_object_or_404(Kroy, kroy_no=kroy_no)
-        kroy_record.edinitsa = int(kroy_record.edinitsa or 0) - edinitsa
+        #kroy_record.edinitsa = int(kroy_record.edinitsa or 0) - edinitsa
         kroy_record.save()
 
         return redirect('masterdata_list')

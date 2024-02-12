@@ -15,7 +15,7 @@ class KroyDetailForm(forms.ModelForm):
 
     class Meta:
         model = Kroy_detail
-        fields = ['kroy', 'pachka', 'razmer', 'rost', 'stuk', 'user']  # You can specify specific fields if needed
+        fields = ['kroy', 'pachka', 'razmer', 'rost', 'stuk', 'user', 'city', 'color']  # You can specify specific fields if needed
 
     user = forms.ModelChoiceField(
         queryset=get_user_model().objects.all(),

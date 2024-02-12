@@ -35,6 +35,14 @@
                     <div class="col-md-2">{{ form.stuk.label_tag }}</div>
                     <div class="col-6 col-md-3">{{ form.stuk }}{{ form.user }}</div>
                 </div>
+                <div class="row mt-2 ">
+                    <div class="col-md-2">{{ form.color.label_tag }}</div>
+                    <div class="col-6 col-md-3">{{ form.color }}</div>
+                </div>
+                <div class="row mt-2 ">
+                    <div class="col-md-2">{{ form.city.label_tag }}</div>
+                    <div class="col-6 col-md-3">{{ form.city }}</div>
+                </div>
                 <input type="submit" value="Сохранить" class="btn btn-secondary mt-2">
             </form>
         </div>
@@ -47,7 +55,9 @@
                     <th>Размер</th>
                     <th>Рост</th>
                     <th>Штук</th>
-                    <th>Пользователь</th>
+                    <th>Свет</th>
+                    <th>Город</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -58,6 +68,8 @@
                     <td>{{ kroy_detail.razmer }}</td>
                     <td>{{ kroy_detail.rost }}</td>
                     <td>{{ kroy_detail.stuk }}</td>
+                    <td>{{ kroy_detail.color_id }}</td>
+                    <td>{{ kroy_detail.city_id }}</td>
                     <td><a href="{% url 'kroy-detail-update' pk=kroy_detail.pk %}">изменить</a></td>
                 </tr>
                 {% endfor %}
