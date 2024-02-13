@@ -72,7 +72,7 @@ class Masterdata(models.Model):
     description = models.TextField(null=True, blank=True, verbose_name='Примечение')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
     is_active = models.BooleanField(default=True, verbose_name='Активен')
-    confirmation = models.BooleanField(default=True, verbose_name='Подтверждение')
+    confirmation = models.BooleanField(default=False, verbose_name='Подтверждение')
     def __str__(self):
         return f"{self.status} - {self.kroy_no}"
 

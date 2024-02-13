@@ -25,7 +25,7 @@ class CityAdmin(ImportExportModelAdmin):
     #list_editable = ("name",)
 
 class Kroy_detailAdmin(ImportExportModelAdmin):
-    list_display = ("kroy", "pachka", "razmer", "rost", "stuk", "user", "color", "city",)
+    list_display = ("kroy", "pachka", "razmer", "rost", "stuk", "user", )#"color", "city",
     search_fields = ("kroy",)
 
 class UserAdmin(BaseUserAdmin, ImportExportModelAdmin):
