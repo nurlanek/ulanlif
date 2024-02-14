@@ -18,7 +18,7 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Крой №</th>
-            <th scope="col">Пользователь</th>
+            <th scope="col"></th>
             <th scope="col">Наименование</th>
             <th scope="col">Дата создание</th>
             <th scope="col">Единица</th>
@@ -38,11 +38,8 @@
                 <td><a href="{% url 'kroy-detail-view' kroy.pk %}">{{ kroy.kroy_no }}</a>
                     <input class="" id="1" type="hidden" name="kroy_no" value="{{ kroy.kroy_no }}"></td>
                     <td>
-                        <select class="form-select form-select-sm" aria-label="Default select example" name="user" style="width: 150px;" required>
-                        {% for user in user %}
-            <option value="{{ user.username }}">{{ user.username }}</option>
-        {% endfor %}
-                        </select>
+
+                        <input class="" id="1" type="hidden" name="user" value="{{ request.user.username }}">
                         </td>
 
                 <td>{{ kroy.name|slice:":30" }}</td>

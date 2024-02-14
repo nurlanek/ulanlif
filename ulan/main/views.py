@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import get_user_model
 
 from django.contrib import messages
 
@@ -25,24 +26,17 @@ def create_masterdata(request):
         edinitsa = request.POST.get('edinitsa')
         username = request.POST.get('user')  # Get the username
 
-
-        # Create a new Masterdata object and save it to the database
-        #uchastok = get_object_or_404(Uchastok, pk=uchastok)
-
         # Get the User instance based on the username
-        user = get_object_or_404(User, username=username)
+        user = get_user_model().objects.get(username=username)  # Kullanıcı nesnesini almak için değişiklik yaptım
 
         masterdata = Masterdata(
             kroy_no=kroy_no,
-            #uchastok=uchastok,
             edinitsa=edinitsa,
-            user=user,  # Assign the User instance
-            # Add other fields here as needed
+            user=user,
         )
         masterdata.save()
 
         kroy_record = get_object_or_404(Kroy, kroy_no=kroy_no)
-        #kroy_record.edinitsa = int(kroy_record.edinitsa or 0) - edinitsa
         kroy_record.save()
 
         return redirect('masterdata_list')
@@ -121,14 +115,9 @@ class KroyListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         # Filter the Kroy objects where is_active is True
-        return Kroy.objects.filter(is_active=True).order_by('-id')
+        return Kroy.objects.filter(is_active=True).order_by('-id')[:100]
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        #context['uchastok'] = Uchastok.objects.all()
-        context['user'] = User.objects.all()
 
-        return context
 
 class KroyCreateView(LoginRequiredMixin, CreateView):
     model = Kroy
