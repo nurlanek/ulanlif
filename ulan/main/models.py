@@ -66,7 +66,7 @@ class Masterdata(models.Model):
         ('завершень', 'завершень'),
     ]
     status = models.CharField(max_length=50, choices=OPTION_CHOICES, default='в процессе')
-    kroy_no = models.IntegerField(verbose_name='Крой номер')
+    kroy_no = models.CharField(max_length=50, verbose_name='Крой номер')
     edinitsa = models.IntegerField(verbose_name='Единица')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Дата')
     description = models.TextField(null=True, blank=True, verbose_name='Примечение')
