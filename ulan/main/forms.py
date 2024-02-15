@@ -1,12 +1,19 @@
 from django import forms
 from .models import Kroy, Kroy_detail, Masterdata
-from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
+
 
 class KroyForm(forms.ModelForm):
     class Meta:
         model = Kroy
         fields = ['kroy_no', 'name', 'ras_tkani', 'ras_dublerin', 'edinitsa', 'description']
+
+    def clean_kroy_no(self):
+        kroy_no = self.cleaned_data.get('kroy_no')
+        if Kroy.objects.filter(kroy_no=kroy_no).exists():
+            raise ValidationError("Этот номер Кроя уже существует. Пожалуйста, введите другой номер.")
+        return kroy_no
 
 class KroyDetailForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
