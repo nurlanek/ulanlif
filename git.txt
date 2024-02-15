@@ -1,14 +1,1 @@
-git add .
 
-if on prosses -yuklemek icin
-gite yuklemek icin
-git commit -m "Your commit message here"
-git push origin main
-
-gitten yuklemek icin
-git commit -m "Your commit message here"
-git pull origin main
-
-dosya gite eklenmemis ise
-git add . (Yada add klasor/dosya adi)
-git commit -m "Güncellemeleri ekle"
