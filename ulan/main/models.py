@@ -76,4 +76,7 @@ class Masterdata(models.Model):
     def __str__(self):
         return f"{self.status} - {self.kroy_no}"
 
+class Product_pype(models.Model):
+    name = models.CharField(max_length=50, verbose_name='Крой номер')
+    kroy = models.ForeignKey(Kroy, on_delete=models.CASCADE, verbose_name='Крой')
 
