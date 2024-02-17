@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, CreateView, UpdateView
-from .models import Kroy, Kroy_detail #Uchastok
+from .models import Kroy, Kroy_detail, Operations
 from .forms import KroyForm, KroyDetailForm, Masterdata, MasterdataSearchForm, MasterdataForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
+from django.http import JsonResponse
 
 from django.contrib import messages
 
@@ -132,14 +133,14 @@ class KroyCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['kroy_list'] = Kroy.objects.all().order_by('-created')[
-                                      :10]  # Add this line to pass the data to the template
+        context['kroy_list'] = Kroy.objects.all().order_by('-created')[:10]  # Add this line to pass the data to the template
         return context
 
 @login_required
 def KroyDetailView(request, kroy_id):
     if not request.user.is_authenticated:
         return redirect("login")
+
     kroydetil_instance = Kroy_detail.objects.filter(user=request.user).first()
 
     if request.method == 'POST':
@@ -177,6 +178,12 @@ class KroyDetailListView(LoginRequiredMixin, ListView):
     def handle_no_permission(self):
         # Kullanıcı oturum açmamışsa, giriş yapma sayfasına yönlendir
         return redirect('login')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        latest_kroys = Kroy_detail.objects.order_by('-created')[:30]  # Son 10 kaydı al
+        print(latest_kroys)
+        context['latest_kroys'] = latest_kroys  # Son 10 kaydı context'e ekle
+        return context
 
 class KroyDetailCreateView(LoginRequiredMixin, CreateView):
     model = Kroy_detail
@@ -200,6 +207,7 @@ class KroyDetailUpdateView(UpdateView):
     template_name = 'main/kroy/kroy_detail_form.html'
     success_url = '/kroy-detail/'
 
+
 @login_required
 def MasterdatauserListView(request):
 
@@ -207,17 +215,23 @@ def MasterdatauserListView(request):
         kroy_no = request.POST.get('kroy_no')
         status = request.POST.get('status', 'звершень')
         edinitsa = request.POST.get('edinitsa')
+        operations = request.POST.get('operations')
 
         # No need to get the username separately; use request.user directly
         user = request.user
 
         masterdata = Masterdata(
+            operations=operations,
             status=status,
             kroy_no=kroy_no,
             edinitsa=edinitsa,
             user=user,
         )
         masterdata.save()
+
+        # Get the related Kroy record
+        related_kroy = Kroy.objects.get(kroy_no=kroy_no)
+        # Now you can use 'related_kroy' to access the details of the related Kroy record
 
     context = {
         'masterdata_list': Masterdata.objects.filter(user=request.user),
@@ -229,3 +243,23 @@ def MasterdatauserListView(request):
 
     return render(request, 'main/masterdatauser_list.html', context)
 
+def get_operations(request):
+    kroy_no = request.GET.get('kroy_no')
+    operations = Operations.objects.filter(kroy__kroy_no=kroy_no).values('id', 'name')
+    return JsonResponse(list(operations), safe=False)
+
+
+@login_required
+def KroyOperationsView(request, kroy_id):
+    if not request.user.is_authenticated:
+        return redirect("login")
+
+
+    kroy_instance = get_object_or_404(Kroy, pk=kroy_id)
+    kroy_operations = Operations.objects.filter(kroy=kroy_instance)
+
+    context = {
+        'kroy_instance': kroy_instance,
+        'kroy_operations': kroy_operations,
+    }
+    return render(request, 'main/kroy/kroy_operations_list.html', context)

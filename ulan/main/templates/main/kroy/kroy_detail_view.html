@@ -12,7 +12,8 @@
 
 <button type="submit" class="btn btn-secondary btn-sm mt-3" onclick="printTable()">Распечатать</button>
 <a class="btn  btn-secondary btn-sm mt-3" href="{% url 'kroy-list' %}">Вернуться к списку кроя</a>
-<div id="table-container"  class="">
+<a class="btn  btn-secondary btn-sm mt-3" href="{% url 'kroy-operations-view' kroy_instance.pk %}">Показат операции</a>
+    <div id="table-container"  class="">
 <h4 class="mt-2"> Крой № {{ kroy_instance.kroy_no }} -- {{ kroy_instance.name }}</h4>
 <strong> Дата создания:</strong> {{ kroy_instance.created }}, <strong>Расход ткани:</strong> {{ kroy_instance.ras_tkani }},
     <strong>Расход дублерин:</strong> {{ kroy_instance.ras_dublerin }},
@@ -32,6 +33,7 @@
         <th scope="col">Цвет</th>
         <th scope="col">Город</th>
         <th scope="col"></th>
+        <th scope="col"></th>
     </tr>
 </thead>
 
@@ -48,17 +50,18 @@
         <td>
             <form method="post" action="">
                 {% csrf_token %}
-                <div class="d-flex align-items-center">
-    <select name="user" id="id_user" class="form-select form-select-sm me-2">
-        {% for user_choice in form.fields.user.choices %}
-        <option value="{{ user_choice.0 }}" {% if form.instance.user == user_choice.0 %}selected{% endif %}>
-            {{ user_choice.1 }}
-        </option>
-        {% endfor %}
-    </select>
-    <button type="submit" class="btn btn-secondary btn-sm">Передать</button>
-</div>
+                <div class="d-flex ">
+                    <select name="user" id="id_user" class="form-select form-select-sm me-2">
+                        {% for user_choice in form.fields.user.choices %}
+                        <option value="{{ user_choice.0 }}" {% if form.instance.user == user_choice.0 %}selected{% endif %}>{{ user_choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-secondary btn-sm" type="submit" >Передать</button>
+                </div>
             </form>
+        </td>
+        <td>
+            <a class="btn btn-secondary btn-sm" href="{% url 'kroy-detail-update' pk=detail.pk %}">Изменить</a>
         </td>
     </tr>
     {% empty %}

@@ -73,10 +73,16 @@ class Masterdata(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
     is_active = models.BooleanField(default=True, verbose_name='Активен')
     confirmation = models.BooleanField(default=False, verbose_name='Подтверждение')
+    operations = models.CharField(max_length=150, verbose_name='Операция')
     def __str__(self):
         return f"{self.status} - {self.kroy_no}"
 
-class Product_pype(models.Model):
+class Product_type(models.Model):
     name = models.CharField(max_length=50, verbose_name='Крой номер')
+
+
+class Operations(models.Model):
+    name = models.CharField(max_length=50, verbose_name='Наименование')
+    price = models.IntegerField(verbose_name='Цена')
     kroy = models.ForeignKey(Kroy, on_delete=models.CASCADE, verbose_name='Крой')
 

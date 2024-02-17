@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+{% endblock %}
+
+{% block title %} Operations list {% endblock %}
+
+{% block content %}
+
+<div class="container mt-2">
+
+    <h4>Операции крой {{ kroy_instance }}</h4>
+    <table class=" table table-sm caption-top w-auto h-auto">
+        <thead class="table-light">
+            <tr>
+                <th>Операция</th>
+                <th>Цена</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for operation in kroy_operations %}
+            <tr>
+                <td>{{ operation.name }}</td>
+                <td>{{ operation.price }} сом</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block js_files %}
+<script src="{% static 'main/js/script.js' %}"></script>
+{% endblock %}

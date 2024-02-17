@@ -1,6 +1,6 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
-from .models import Kroy_detail, Kroy, Masterdata, Colors, City
+from .models import Kroy_detail, Kroy, Masterdata, Colors, City, Operations
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 import json
@@ -30,6 +30,10 @@ class Kroy_detailAdmin(ImportExportModelAdmin):
 
 class UserAdmin(BaseUserAdmin, ImportExportModelAdmin):
     actions = ['export_selected', 'import_data']
+
+class OperationsAdmin(ImportExportModelAdmin):
+    list_display = ("kroy", "name", "price", )  # "color", "city",
+    search_fields = ("name",)
 
     def export_selected(self, request, queryset):
         response = HttpResponse(content_type='application/json')
@@ -62,3 +66,4 @@ admin.site.register(Kroy, KroyAdmin)
 admin.site.register(Kroy_detail, Kroy_detailAdmin)
 admin.site.register(Colors, ColorsAdmin)
 admin.site.register(City, CityAdmin)
+admin.site.register(Operations, OperationsAdmin)

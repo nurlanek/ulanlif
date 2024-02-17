@@ -24,11 +24,6 @@ class KroyDetailForm(forms.ModelForm):
         model = Kroy_detail
         fields = ['kroy', 'pachka', 'razmer', 'rost', 'stuk', 'user', 'city', 'color']  # You can specify specific fields if needed
 
-    user = forms.ModelChoiceField(
-        queryset=get_user_model().objects.all(),
-        widget=forms.HiddenInput(),
-        initial=get_user_model().objects.get(username='admin')
-    )
 
 class MasterdataSearchForm(forms.Form):
     start_date = forms.DateField(label='Дата начала', required=False)

@@ -52,6 +52,7 @@
                 <th scope="col">Дата</th>
                 <th scope="col">Статус</th>
                 <th scope="col">Подтверждения</th>
+                <th scope="col">Операция</th>
                 <th scope="col">Примечение</th>
             </tr>
         </thead>
@@ -78,7 +79,7 @@
                     <span class="kirmizi-kalin">не проверено</span>
                     {% endif %}
                 </td>
-
+                <td>{{ masterdata.operations }} </td>
                 <td>{{ masterdata.description }} </td>
 
             </tr>
