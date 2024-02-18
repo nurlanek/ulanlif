@@ -53,6 +53,8 @@
                 <th scope="col">Статус</th>
                 <th scope="col">Подтверждения</th>
                 <th scope="col">Операция</th>
+                <th scope="col">Тип одежды</th>
+                <th scope="col">Сотрудник</th>
                 <th scope="col">Примечение</th>
             </tr>
         </thead>
@@ -61,7 +63,6 @@
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{ masterdata.kroy_no }}</td>
-
                 <td>{{ masterdata.edinitsa }}</td>
                 <td>{{ masterdata.created|date:"d.m.Y H:i" }}</td>
                 <td>
@@ -70,7 +71,6 @@
                     {% else %}
                     в процессе
                     {% endif %}
-                    -({{ masterdata.user }})
                     </td>
                 <td>
                     {% if masterdata.confirmation %}
@@ -80,6 +80,8 @@
                     {% endif %}
                 </td>
                 <td>{{ masterdata.operations }} </td>
+                <td>{{ masterdata.type_product }} </td>
+                <td>{{ masterdata.user }} </td>
                 <td>{{ masterdata.description }} </td>
 
             </tr>

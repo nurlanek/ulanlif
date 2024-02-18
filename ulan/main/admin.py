@@ -1,6 +1,6 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
-from .models import Kroy_detail, Kroy, Masterdata, Colors, City, Operations
+from .models import Kroy_detail, Kroy, Masterdata, Colors, City, Operations, Product_type
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 import json
@@ -18,11 +18,12 @@ class KroyAdmin(ImportExportModelAdmin):
 
 class ColorsAdmin(ImportExportModelAdmin):
     list_display = ("name",)
-    #list_editable = ("name",)
+class Product_typeAdmin(ImportExportModelAdmin):
+    list_display = ("name",)
 
 class CityAdmin(ImportExportModelAdmin):
     list_display = ("name",)
-    #list_editable = ("name",)
+
 
 class Kroy_detailAdmin(ImportExportModelAdmin):
     list_display = ("kroy", "pachka", "razmer", "rost", "stuk", "user", )#"color", "city",
@@ -67,3 +68,4 @@ admin.site.register(Kroy_detail, Kroy_detailAdmin)
 admin.site.register(Colors, ColorsAdmin)
 admin.site.register(City, CityAdmin)
 admin.site.register(Operations, OperationsAdmin)
+admin.site.register(Product_type, Product_typeAdmin)

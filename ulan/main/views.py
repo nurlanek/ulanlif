@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, CreateView, UpdateView
-from .models import Kroy, Kroy_detail, Operations
+from .models import Kroy, Kroy_detail, Operations, Product_type
 from .forms import KroyForm, KroyDetailForm, Masterdata, MasterdataSearchForm, MasterdataForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -216,11 +216,13 @@ def MasterdatauserListView(request):
         status = request.POST.get('status', 'звершень')
         edinitsa = request.POST.get('edinitsa')
         operations = request.POST.get('operations')
+        type_product = request.POST.get('type_product')
 
         # No need to get the username separately; use request.user directly
         user = request.user
 
         masterdata = Masterdata(
+            type_product=type_product,
             operations=operations,
             status=status,
             kroy_no=kroy_no,
@@ -230,7 +232,7 @@ def MasterdatauserListView(request):
         masterdata.save()
 
         # Get the related Kroy record
-        related_kroy = Kroy.objects.get(kroy_no=kroy_no)
+        #related_kroy = Kroy.objects.get(kroy_no=kroy_no)
         # Now you can use 'related_kroy' to access the details of the related Kroy record
 
     context = {
@@ -239,9 +241,10 @@ def MasterdatauserListView(request):
         'user': request.user,
         'kroy_list': Kroy.objects.all(),
         'status_list': [option[0] for option in Masterdata.OPTION_CHOICES],
+        'type_product_list': Product_type.objects.all(),
     }
 
-    return render(request, 'main/masterdatauser_list.html', context)
+    return render(request, 'main/mdata/masterdatauser_list.html', context)
 
 def get_operations(request):
     kroy_no = request.GET.get('kroy_no')

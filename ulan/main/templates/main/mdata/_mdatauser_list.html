@@ -1,0 +1,45 @@
+
+  {% if request.method == 'POST' %}
+    <div class="alert alert-success font-weight-bold" role="alert">
+  Данные успешно отправлены!
+</div>
+  {% endif %}
+<hr>
+
+<form id="kroy-form" action="{% url 'masterdatauser_list' %}" method="POST">
+    {% csrf_token %}
+
+
+          Крой номер:
+          <select class="form-select form-select" aria-label="Default select example" name="kroy_no" style="width: 100%;">
+              {% for kroy_list in kroy_list %}
+                  <option value="{{ kroy_list.kroy_no }}">{{ kroy_list.kroy_no }}</option>
+              {% endfor %}
+          </select>
+
+            Выберите операции:
+            <div id="operations-select-container">
+    <select id="operations-select" class="form-select form-select mt-2" aria-label="Default select example" name="operations" style="width: 100%;">
+        <!-- AJAX ile doldurulacak -->
+    </select>
+</div>
+         Единица:
+<input class="form-control" type="number" name="edinitsa" style="width: 100%;" required>
+    Статус:
+    <select class="form-select form-select" aria-label="Default select example" name="status" style="width: 100%;" required>
+    {% for status_choice in status_list %}
+        <option value="{{ status_choice }}">{{ status_choice }}</option>
+    {% endfor %}
+</select>
+        Тип одежды:
+            <select class="form-select form-select mt-2" aria-label="Default select example" name="type_product" style="width: 100%;">
+              {% for type_product in type_product_list %}
+        <option value="{{ type_product.name }}">{{ type_product.name }}</option>
+    {% endfor %}
+          </select>
+
+
+        <input type="hidden" class="" id="230" name="user" value="{{ user.username }}">
+      <button type="submit" class="btn btn-secondary mt-2">Отправить</button>
+
+</form>
