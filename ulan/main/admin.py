@@ -26,14 +26,14 @@ class CityAdmin(ImportExportModelAdmin):
 
 
 class Kroy_detailAdmin(ImportExportModelAdmin):
-    list_display = ("kroy", "pachka", "razmer", "rost", "stuk", "user", )#"color", "city",
+    list_display = ("kroy", "pachka", "razmer", "rost", "stuk", "user", )
     search_fields = ("kroy",)
 
 class UserAdmin(BaseUserAdmin, ImportExportModelAdmin):
     actions = ['export_selected', 'import_data']
 
 class OperationsAdmin(ImportExportModelAdmin):
-    list_display = ("kroy", "name", "price", )  # "color", "city",
+    list_display = ("kroy", "product_type", "name", "price",  )
     search_fields = ("name",)
 
     def export_selected(self, request, queryset):

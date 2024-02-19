@@ -4,13 +4,12 @@ from .models import Kroy, Kroy_detail, Operations, Product_type
 from .forms import KroyForm, KroyDetailForm, Masterdata, MasterdataSearchForm, MasterdataForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseNotAllowed
+from django.views.decorators.csrf import csrf_exempt
 
-from django.contrib import messages
 
 
 def index(request):
@@ -213,23 +212,37 @@ def MasterdatauserListView(request):
 
     if request.method == 'POST':
         kroy_no = request.POST.get('kroy_no')
-        status = request.POST.get('status', 'звершень')
-        edinitsa = request.POST.get('edinitsa')
-        operations = request.POST.get('operations')
         type_product = request.POST.get('type_product')
+        operations = request.POST.get('operations')
+        price = request.POST.get('price')
+        edinitsa = request.POST.get('edinitsa')
+        status = request.POST.get('status')
 
         # No need to get the username separately; use request.user directly
         user = request.user
 
         masterdata = Masterdata(
+            kroy_no=kroy_no,
+            price=price,
             type_product=type_product,
             operations=operations,
-            status=status,
-            kroy_no=kroy_no,
             edinitsa=edinitsa,
+            status=status,
             user=user,
         )
         masterdata.save()
+        data = {
+            'kroy_no': kroy_no,
+            'price': price,
+            'type_product': type_product,
+            'operations': operations,
+            'edinitsa': edinitsa,
+            'status': status,
+            'user': user.username,
+        }
+        return JsonResponse(data)
+
+
 
         # Get the related Kroy record
         #related_kroy = Kroy.objects.get(kroy_no=kroy_no)
@@ -244,12 +257,7 @@ def MasterdatauserListView(request):
         'type_product_list': Product_type.objects.all(),
     }
 
-    return render(request, 'main/mdata/masterdatauser_list.html', context)
-
-def get_operations(request):
-    kroy_no = request.GET.get('kroy_no')
-    operations = Operations.objects.filter(kroy__kroy_no=kroy_no).values('id', 'name')
-    return JsonResponse(list(operations), safe=False)
+    return render(request, 'main/mdata/masterdatauser.html', context)
 
 
 @login_required
@@ -266,3 +274,22 @@ def KroyOperationsView(request, kroy_id):
         'kroy_operations': kroy_operations,
     }
     return render(request, 'main/kroy/kroy_operations_list.html', context)
+
+@login_required
+def get_operations(request):
+    if request.method == 'GET':
+        kroy_no = request.GET.get('kroy_no')
+        product_type = request.GET.get('type_product')
+
+        operations = Operations.objects.all()
+
+        if kroy_no:
+            operations = operations.filter(kroy__kroy_no=kroy_no)
+        if product_type:
+            operations = operations.filter(product_type__name=product_type)
+
+        operations_data = [{'name': operation.name, 'price': operation.price} for operation in operations]
+        return JsonResponse(operations_data, safe=False)
+    else:
+        return JsonResponse({'error': 'GET request expected'}, status=400)
+

@@ -1,45 +1,54 @@
+{% if request.method == 'POST' %}
+    <div id="success-message" class="alert font-weight-bold" role="alert" style="display: block;">
+        Başarıyla gönderildi
 
-  {% if request.method == 'POST' %}
-    <div class="alert alert-success font-weight-bold" role="alert">
-  Данные успешно отправлены!
+    </div>
+{% else %}
+<div id="success-message1" class="alert font-weight-bold" role="alert" style="display: block;">
+
+        gonderilmedi
 </div>
-  {% endif %}
+{% endif %}
 <hr>
-
-<form id="kroy-form" action="{% url 'masterdatauser_list' %}" method="POST">
+<form id="kroy-form">
     {% csrf_token %}
 
-
-          Крой номер:
-          <select class="form-select form-select" aria-label="Default select example" name="kroy_no" style="width: 100%;">
-              {% for kroy_list in kroy_list %}
-                  <option value="{{ kroy_list.kroy_no }}">{{ kroy_list.kroy_no }}</option>
-              {% endfor %}
-          </select>
-
-            Выберите операции:
-            <div id="operations-select-container">
-    <select id="operations-select" class="form-select form-select mt-2" aria-label="Default select example" name="operations" style="width: 100%;">
-        <!-- AJAX ile doldurulacak -->
+    Kroy numarası:
+    <select class="form-select form-select" aria-label="Default select example" name="kroy_no" id="kroy-no" style="width: 100%;">
+        {% for kroy_list_item in kroy_list %}
+            <option value="{{ kroy_list_item.kroy_no }}">{{ kroy_list_item.kroy_no }}</option>
+        {% endfor %}
     </select>
-</div>
-         Единица:
-<input class="form-control" type="number" name="edinitsa" style="width: 100%;" required>
-    Статус:
-    <select class="form-select form-select" aria-label="Default select example" name="status" style="width: 100%;" required>
-    {% for status_choice in status_list %}
-        <option value="{{ status_choice }}">{{ status_choice }}</option>
+
+    Giysi Türü:
+    <select class="form-select form-select mt-2" aria-label="Default select example" name="type_product" id="type-product" style="width: 100%;" >
+    {% for product_type in type_product_list %}
+        <option value="{{ product_type.name }}">{{ product_type.name }}</option>
     {% endfor %}
 </select>
-        Тип одежды:
-            <select class="form-select form-select mt-2" aria-label="Default select example" name="type_product" style="width: 100%;">
-              {% for type_product in type_product_list %}
-        <option value="{{ type_product.name }}">{{ type_product.name }}</option>
-    {% endfor %}
-          </select>
 
+    Operasyonları Seçin:
+    <div id="operations-select-container">
+         <select class="form-select form-select mt-2" aria-label="Default select example" name="operations" id="operations" style="width: 100%;">
+        <option value="">Seçiniz</option>
+        <!-- Operations seçenekleri burada gelecek -->
+    </select>
+    </div>
+    <div id="price-display-container">
+    <label for="price">Price:</label>
+    <span id="price-display"></span>
+</div>
 
-        <input type="hidden" class="" id="230" name="user" value="{{ user.username }}">
-      <button type="submit" class="btn btn-secondary mt-2">Отправить</button>
+    Birim:
+    <input class="form-control" type="number" name="edinitsa" style="width: 100%;" required>
 
+    Durum:
+    <select class="form-select form-select" aria-label="Default select example" name="status" style="width: 100%;" required>
+        {% for status_choice in status_list %}
+            <option value="{{ status_choice }}">{{ status_choice }}</option>
+        {% endfor %}
+    </select>
+
+    <input type="hidden" id="user" name="user" value="{{ user.username }}">
+    <button  type="submit" id="submit-btn" class="btn btn-secondary mt-2">Gönder</button>
 </form>

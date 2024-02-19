@@ -75,14 +75,18 @@ class Masterdata(models.Model):
     confirmation = models.BooleanField(default=False, verbose_name='Подтверждение')
     operations = models.CharField(max_length=150, verbose_name='Операция')
     type_product = models.CharField(max_length=150, verbose_name='Тип одежды')
+    price = models.IntegerField(verbose_name='Единица')
     def __str__(self):
         return f"{self.status} - {self.kroy_no}"
 
 class Product_type(models.Model):
     class Meta:
+            verbose_name = ('Тип одежды')
             verbose_name_plural = ('Тип одежды')
 
     name = models.CharField(max_length=50, verbose_name='Название')
+    def __str__(self):
+        return self.name
 
 
 class Operations(models.Model):
@@ -92,4 +96,5 @@ class Operations(models.Model):
     name = models.CharField(max_length=50, verbose_name='Наименование')
     price = models.IntegerField(verbose_name='Цена')
     kroy = models.ForeignKey(Kroy, on_delete=models.CASCADE, verbose_name='Крой')
+    product_type = models.ForeignKey(Product_type, on_delete=models.CASCADE, verbose_name='Тип одежды')
 

@@ -1,28 +1,63 @@
-document.getElementById("kroy-form").addEventListener("change", function() {
-    var kroyNo = document.querySelector("[name='kroy_no']").value;
+$(document).ready(function(){
+    $('#kroy-no, #type-product').change(function(){
+        var kroy_no = $('#kroy-no').val();
+        var product_type = $('#type-product').val();
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/get_operations/?kroy_no=" + kroyNo, true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var operations = JSON.parse(xhr.responseText);
-            var operationsSelect = document.getElementById("operations-select");
+        $.ajax({
+            type: 'GET',
+            url: '/get-operations/',
+            data: {
+                'kroy_no': kroy_no,
+                'type_product': product_type
+            },
+            success: function(data){
+                var operations = data;
+                $('#operations').empty(); // Önceki seçenekleri temizle
+                for(var i=0; i<operations.length; i++){
+                    $('#operations').append('<option value="' + operations[i].name + '">' + operations[i].name + '</option>');
+                }
 
-            operationsSelect.innerHTML = "";
+                // AJAX başarılı olduğunda, 'operations' alanının değerini gizli bir alana ekle
+                var selectedOperation = $('#operations').val();
+                var selectedOperationPrice = operations.find(operation => operation.name === selectedOperation).price;
+                $('#kroy-form').append('<input type="hidden" name="operations" value="' + selectedOperation + '">');
+                $('#kroy-form').append('<input type="hidden" name="price" value="' + selectedOperationPrice + '">');
 
-            operations.forEach(function(operation) {
-                var option = document.createElement("option");
-                option.value = operation.name; // ID numarasını değer olarak ayarla
-                option.textContent = operation.name;
-                operationsSelect.appendChild(option);
-            });
-        }
-    };
-    xhr.send();
+                // 'price-display' alanını güncelle
+                $('#price-display').text(selectedOperationPrice);
+            },
+            error: function(xhr, errmsg, err){
+                console.log(xhr.status + ": " + xhr.responseText);
+            }
+        });
+    });
 });
 
-// Form gönderildiğinde, seçilen operasyonun ID numarasını "operations" alanına ekleyin
-document.getElementById("kroy-form").addEventListener("submit", function(event) {
-    var selectedOperationId = document.getElementById("operations-select").value;
-    document.getElementById("operations").value = selectedOperationId;
+$(document).ready(function(){
+    // Burada form alanlarını dinleyen ve gerekli işlemleri yapan JavaScript kodu olabilir
+
+    $('#kroy-form').submit(function(event){
+        // Formun varsayılan davranışını engelle
+        event.preventDefault();
+
+        // Form verilerini al
+        var formData = $(this).serialize();
+
+        // AJAX isteği gönder
+        $.ajax({
+            type: 'POST',
+            url: '/masterdatauser/', // Formun gönderileceği URL'yi buraya ekleyin
+            data: formData,
+            success: function(data){
+                // Başarılı bir şekilde JSON yanıt alındığında burası çalışır
+                console.log(data); // JSON yanıtını konsola yazdır
+                // Burada JSON yanıtını işleyebilir ve kullanıcı arayüzünde gösterebilirsiniz
+            },
+            error: function(xhr, errmsg, err){
+                // AJAX isteği sırasında hata oluştuğunda burası çalışır
+                console.log(xhr.status + ": " + xhr.responseText);
+                // Hata mesajını kullanıcıya gösterebilirsiniz
+            }
+        });
+    });
 });
