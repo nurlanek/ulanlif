@@ -1,33 +1,24 @@
-{% if request.method == 'POST' %}
-    <div id="success-message" class="alert font-weight-bold" role="alert" style="display: block;">
-        Başarıyla gönderildi
 
-    </div>
-{% else %}
-<div id="success-message1" class="alert font-weight-bold" role="alert" style="display: block;">
-
-        gonderilmedi
-</div>
 {% endif %}
 <hr>
 <form id="kroy-form">
     {% csrf_token %}
 
-    Kroy numarası:
+    Крой:
     <select class="form-select form-select" aria-label="Default select example" name="kroy_no" id="kroy-no" style="width: 100%;">
         {% for kroy_list_item in kroy_list %}
             <option value="{{ kroy_list_item.kroy_no }}">{{ kroy_list_item.kroy_no }}</option>
         {% endfor %}
     </select>
 
-    Giysi Türü:
+    Тип одежды:
     <select class="form-select form-select mt-2" aria-label="Default select example" name="type_product" id="type-product" style="width: 100%;" >
     {% for product_type in type_product_list %}
         <option value="{{ product_type.name }}">{{ product_type.name }}</option>
     {% endfor %}
 </select>
 
-    Operasyonları Seçin:
+    Выберите операции:
     <div id="operations-select-container">
          <select class="form-select form-select mt-2" aria-label="Default select example" name="operations" id="operations" style="width: 100%;">
         <option value="">Seçiniz</option>
@@ -39,10 +30,10 @@
     <span id="price-display"></span>
 </div>
 
-    Birim:
+    Единица:
     <input class="form-control" type="number" name="edinitsa" style="width: 100%;" required>
 
-    Durum:
+    Статус:
     <select class="form-select form-select" aria-label="Default select example" name="status" style="width: 100%;" required>
         {% for status_choice in status_list %}
             <option value="{{ status_choice }}">{{ status_choice }}</option>
@@ -50,5 +41,5 @@
     </select>
 
     <input type="hidden" id="user" name="user" value="{{ user.username }}">
-    <button  type="submit" id="submit-btn" class="btn btn-secondary mt-2">Gönder</button>
+    <button  type="submit" id="submit-btn" class="btn btn-secondary mt-2">Отправить</button>
 </form>
