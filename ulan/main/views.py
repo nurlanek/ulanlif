@@ -151,11 +151,13 @@ def KroyDetailView(request, kroy_id):
 
     kroy_instance = get_object_or_404(Kroy, pk=kroy_id)
     kroy_details = Kroy_detail.objects.filter(kroy=kroy_instance)
+    product_type = Product_type.objects.all()
 
     context = {
         'form': form,
         'kroy_instance': kroy_instance,
         'kroy_details': kroy_details,
+        'product_type_list' : product_type,
     }
     return render(request, 'main/kroy/kroy_detail_view.html', context)
 
@@ -260,20 +262,18 @@ def MasterdatauserListView(request):
     return render(request, 'main/mdata/masterdatauser.html', context)
 
 
+
+
 @login_required
-def KroyOperationsView(request, kroy_id):
-    if not request.user.is_authenticated:
-        return redirect("login")
+def operations_query(request):
+    if request.method == 'GET':
+        kroy_id = request.GET.get('kroy_id')
+        product_type_id = request.GET.get('product_type_id')
+        if kroy_id and product_type_id:
+            operations = Operations.objects.filter(kroy_id=kroy_id, product_type_id=product_type_id)
+            return render(request, 'main/kroy/operations_query.html', {'operations': operations})
+    return render(request, 'main/kroy/operations_query.html')
 
-
-    kroy_instance = get_object_or_404(Kroy, pk=kroy_id)
-    kroy_operations = Operations.objects.filter(kroy=kroy_instance)
-
-    context = {
-        'kroy_instance': kroy_instance,
-        'kroy_operations': kroy_operations,
-    }
-    return render(request, 'main/kroy/kroy_operations_list.html', context)
 
 @login_required
 def get_operations(request):

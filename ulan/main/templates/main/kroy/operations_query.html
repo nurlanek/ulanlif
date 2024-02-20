@@ -20,15 +20,20 @@
             </tr>
         </thead>
         <tbody>
-            {% for operation in kroy_operations %}
+        {% if operations %}
+            {% for operation in operations %}
             <tr>
                 <td>{{ operation.name }}</td>
                 <td>{{ operation.price }} сом</td>
             </tr>
             {% endfor %}
+        {% endif %}
         </tbody>
     </table>
 </div>
+
+
+
 {% endblock %}
 
 {% block js_files %}

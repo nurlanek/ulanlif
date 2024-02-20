@@ -9,10 +9,31 @@
 
 {% block content %}
 <div class="container">
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-secondary btn-sm">Распечатать</button>
+            <a class="btn btn-secondary btn-sm ml-2" href="{% url 'kroy-list' %}">Вернуться к списку кроя</a>
+        </div>
+        <div class="col-md-8">
+            <form method="GET" action="{% url 'operations_query' %}" class="d-flex align-items-center">
+    <input type="hidden" name="kroy_id" id="kroy_id" value="{{ kroy_instance.id }}">
+    Посмотреть операции:
+    <select class="form-select form-select-sm ml-2" aria-label="Default select example" name="product_type_id" id="type-product" style="width: 100px;">
 
-<button type="submit" class="btn btn-secondary btn-sm mt-3" onclick="printTable()">Распечатать</button>
-<a class="btn  btn-secondary btn-sm mt-3" href="{% url 'kroy-list' %}">Вернуться к списку кроя</a>
-<a class="btn  btn-secondary btn-sm mt-3" href="{% url 'kroy-operations-view' kroy_instance.pk %}">Показат операции</a>
+        {% for product_type in product_type_list %}
+            <option value="{{ product_type.id }}">{{ product_type.name }}</option>
+        {% endfor %}
+    </select>
+    <div style="margin-left: 3px;"></div> <!-- 3 birimlik boşluk -->
+    <button class="btn btn-secondary btn-sm" type="submit">Показать</button>
+</form>
+
+        </div>
+    </div>
+</div>
+
+
     <div id="table-container"  class="">
 <h4 class="mt-2"> Крой № {{ kroy_instance.kroy_no }} -- {{ kroy_instance.name }}</h4>
 <strong> Дата создания:</strong> {{ kroy_instance.created }}, <strong>Расход ткани:</strong> {{ kroy_instance.ras_tkani }},
