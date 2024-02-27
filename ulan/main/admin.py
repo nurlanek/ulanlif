@@ -14,7 +14,7 @@ class MasterdataAdmin(ImportExportModelAdmin):
     list_editable = ("confirmation",)
 
 class KroyAdmin(ImportExportModelAdmin):
-    list_display = ("kroy_no", "name", "ras_tkani", "ras_dublerin", "edinitsa", "description", "created", "is_active",)
+    list_display = ("id", "kroy_no", "name", "ras_tkani", "ras_dublerin", "edinitsa", "description", "created", "is_active",)
     search_fields = ("kroy_no",)
     list_editable = ("is_active",)
 
@@ -35,7 +35,7 @@ class UserAdmin(BaseUserAdmin, ImportExportModelAdmin):
     actions = ['export_selected', 'import_data']
 
 class OperationsAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    list_display = ("product_type", "name", "price", )
+    list_display = ("kroy","product_type", "name", "price", )
     search_fields = ("name",)
 
 
