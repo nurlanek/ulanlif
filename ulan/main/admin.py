@@ -22,7 +22,7 @@ class ColorsAdmin(ImportExportModelAdmin):
     list_display = ("name",)
 
 class Product_typeAdmin(ImportExportModelAdmin):
-    list_display = ("name",)
+    list_display = ("id","name",)
 
 class CityAdmin(ImportExportModelAdmin):
     list_display = ("name",)
