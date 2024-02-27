@@ -96,3 +96,6 @@ class Operations(models.Model):
     price = models.IntegerField(verbose_name='Цена')
     kroy = models.ForeignKey(Kroy, on_delete=models.CASCADE, verbose_name='Крой')
     product_type = models.ForeignKey(Product_type, on_delete=models.CASCADE, verbose_name='Тип одежды')
+
+    def total_price(self):
+        return sum(self.objects.all().values_list('price', flat=True))

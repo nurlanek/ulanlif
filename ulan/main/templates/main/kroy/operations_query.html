@@ -25,9 +25,14 @@
             <tr>
                 <td>{{ operation.name }}</td>
                 <td>{{ operation.price }} сом</td>
+
             </tr>
             {% endfor %}
         {% endif %}
+        <tr>
+            <td>Сумма</td>
+            <td><strong>{{ total_price }} сом</strong></td>
+        </tr>
         </tbody>
     </table>
 </div>

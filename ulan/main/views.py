@@ -273,7 +273,9 @@ def operations_query(request):
         if kroy_id and product_type_id:
             operations = Operations.objects.filter(kroy_id=kroy_id, product_type_id=product_type_id)
             kroy_instance = get_object_or_404(Kroy, pk=kroy_id)
-            return render(request, 'main/kroy/operations_query.html', {'kroy_instance': kroy_instance,'operations': operations})
+            total_price = sum(operation.price for operation in operations)
+
+            return render(request, 'main/kroy/operations_query.html', {'kroy_instance': kroy_instance,'operations': operations, 'total_price': total_price})
     return render(request, 'main/kroy/operations_query.html')
 
 @login_required
