@@ -45,8 +45,12 @@
         <div class="col-6 col-md-3">{{ form.edinitsa }}</div>
     </div>
     <div class="row mt-2 ">
-        <div class="col-md-4">{{ form.color.label_tag }}</div>
-        <div class="col-6 col-md-3">{{ form.color }}</div>
+        <div class="col-md-4">{{ form.code_operations.label_tag }}</div>
+        <div class="col-6 col-md-3">{{ form.code_operations }}</div>
+    </div>
+    <div class="row mt-2 ">
+        <div class="col-md-4">{{ form.description.label_tag }}</div>
+        <div class="col-6 col-md-3">{{ form.description }}</div>
     </div>
     <button type="submit" class="btn btn-secondary mt-2">Сохранить</button>
 </form>
@@ -75,6 +79,8 @@
                     <td>{{ kroy.edinitsa }}</td>
                     <td>{{ kroy.ras_tkani }}</td>
                     <td>{{ kroy.ras_dublerin }} </td>
+                    <td>{{ kroy.code_operations }} </td>
+
                     <td><a href="{% url 'kroy-update' kroy.pk %}">Изменить</a></td>
                 </tr>
                 {% endif %}

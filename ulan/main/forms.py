@@ -11,9 +11,12 @@ class KroyForm(forms.ModelForm):
 
     def clean_kroy_no(self):
         kroy_no = self.cleaned_data.get('kroy_no')
+        if self.instance and self.instance.pk is not None:
+            return kroy_no
         if Kroy.objects.filter(kroy_no=kroy_no).exists():
             raise ValidationError("Этот номер Кроя уже существует. Пожалуйста, введите другой номер.")
         return kroy_no
+
 
 class KroyDetailForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):

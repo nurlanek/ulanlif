@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 import json
 from django.core.management import call_command
 from django.http import HttpResponse
+import xlrd
+import json
 
 class MasterdataAdmin(ImportExportModelAdmin):
     list_display = ("kroy_no", "edinitsa", "created", "user", "confirmation","status",)
@@ -18,12 +20,12 @@ class KroyAdmin(ImportExportModelAdmin):
 
 class ColorsAdmin(ImportExportModelAdmin):
     list_display = ("name",)
+
 class Product_typeAdmin(ImportExportModelAdmin):
     list_display = ("name",)
 
 class CityAdmin(ImportExportModelAdmin):
     list_display = ("name",)
-
 
 class Kroy_detailAdmin(ImportExportModelAdmin):
     list_display = ("kroy", "pachka", "razmer", "rost", "stuk", "user", )
@@ -32,32 +34,12 @@ class Kroy_detailAdmin(ImportExportModelAdmin):
 class UserAdmin(BaseUserAdmin, ImportExportModelAdmin):
     actions = ['export_selected', 'import_data']
 
-class OperationsAdmin(ImportExportModelAdmin):
-    list_display = ("kroy", "product_type", "name", "price",  )
+class OperationsAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    list_display = ("product_type", "name", "price", )
     search_fields = ("name",)
 
-    def export_selected(self, request, queryset):
-        response = HttpResponse(content_type='application/json')
-        response['Content-Disposition'] = 'attachment; filename=users_export.json'
 
-        # Call the dumpdata command and write the output to the response
-        call_command('dumpdata', 'auth.User', format='json', stdout=response)
 
-        return response
-
-    export_selected.short_description = "Export selected users as JSON"
-
-    def import_data(self, request, queryset):
-        # Assuming you have a JSON file named users_export.json
-        file_path = 'path/to/users_export.json'
-
-        with open(file_path, 'r') as file:
-            data = json.load(file)
-
-        # Use the loaddata command to import data
-        call_command('loaddata', file_path)
-
-    import_data.short_description = "Import data from JSON file"
 
 # Отменить предыдущую регистрацию модели UserAdmin
 admin.site.unregister(User)

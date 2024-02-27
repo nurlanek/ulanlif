@@ -135,6 +135,18 @@ class KroyCreateView(LoginRequiredMixin, CreateView):
         context['kroy_list'] = Kroy.objects.all().order_by('-created')[:10]  # Add this line to pass the data to the template
         return context
 
+
+class KroyUpdateView(LoginRequiredMixin, UpdateView):
+    model = Kroy
+    form_class = KroyForm
+    template_name = 'main/kroy/kroy_form.html'
+    success_url = '/kroy/'
+    login_url = '/login/'
+
+    def handle_no_permission(self):
+        # Kullanıcı oturum açmamışsa, giriş yapma sayfasına yönlendir
+        return redirect('login')
+
 @login_required
 def KroyDetailView(request, kroy_id):
     if not request.user.is_authenticated:
@@ -152,25 +164,16 @@ def KroyDetailView(request, kroy_id):
     kroy_instance = get_object_or_404(Kroy, pk=kroy_id)
     kroy_details = Kroy_detail.objects.filter(kroy=kroy_instance)
     product_type = Product_type.objects.all()
+    kroy_list = Kroy.objects.all()
 
     context = {
+        'objects':kroy_list,
         'form': form,
         'kroy_instance': kroy_instance,
         'kroy_details': kroy_details,
         'product_type_list' : product_type,
     }
     return render(request, 'main/kroy/kroy_detail_view.html', context)
-
-class KroyUpdateView(LoginRequiredMixin, UpdateView):
-    model = Kroy
-    form_class = KroyForm
-    template_name = 'main/kroy/kroy_form.html'
-    success_url = '/kroy/'
-    login_url = '/login/'
-
-    def handle_no_permission(self):
-        # Kullanıcı oturum açmamışsa, giriş yapma sayfasına yönlendir
-        return redirect('login')
 
 class KroyDetailListView(LoginRequiredMixin, ListView):
     model = Kroy_detail
@@ -262,8 +265,6 @@ def MasterdatauserListView(request):
     return render(request, 'main/mdata/masterdatauser.html', context)
 
 
-
-
 @login_required
 def operations_query(request):
     if request.method == 'GET':
@@ -271,9 +272,9 @@ def operations_query(request):
         product_type_id = request.GET.get('product_type_id')
         if kroy_id and product_type_id:
             operations = Operations.objects.filter(kroy_id=kroy_id, product_type_id=product_type_id)
-            return render(request, 'main/kroy/operations_query.html', {'operations': operations})
+            kroy_instance = get_object_or_404(Kroy, pk=kroy_id)
+            return render(request, 'main/kroy/operations_query.html', {'kroy_instance': kroy_instance,'operations': operations})
     return render(request, 'main/kroy/operations_query.html')
-
 
 @login_required
 def get_operations(request):
@@ -292,4 +293,3 @@ def get_operations(request):
         return JsonResponse(operations_data, safe=False)
     else:
         return JsonResponse({'error': 'GET request expected'}, status=400)
-

@@ -12,13 +12,18 @@
 <div class="container mt-3">
     <div class="row">
         <div class="col-md-4">
-            <button type="submit" class="btn btn-secondary btn-sm">Распечатать</button>
+            <button type="submit" class="btn btn-secondary btn-sm" onclick="printTable()">Распечатать</button>
             <a class="btn btn-secondary btn-sm ml-2" href="{% url 'kroy-list' %}">Вернуться к списку кроя</a>
         </div>
         <div class="col-md-8">
-            <form method="GET" action="{% url 'operations_query' %}" class="d-flex align-items-center">
-    <input type="hidden" name="kroy_id" id="kroy_id" value="{{ kroy_instance.id }}">
-    Посмотреть операции:
+             <form method="GET" action="{% url 'operations_query' %}" class="d-flex align-items-center">
+
+             <select class="form-select form-select-sm ml-2" aria-label="Default select example" name="kroy_id" id="kroy-id" style="width: 100px;">
+    {% for kroy_instance in objects %}
+        <option value="{{ kroy_instance.id }}">{{ kroy_instance.kroy_no }}</option>
+    {% endfor %}
+</select>
+                 Посмотреть операции:
     <select class="form-select form-select-sm ml-2" aria-label="Default select example" name="product_type_id" id="type-product" style="width: 100px;">
 
         {% for product_type in product_type_list %}
@@ -100,7 +105,7 @@
 {% endblock %}
 
 {% block js_files %}
-<script src="{% static 'main/js/script.js' %}"></script>
+<script src="{% static 'main/js/printTable.js' %}"></script>
 
 {% endblock %}
 

@@ -21,8 +21,10 @@ urlpatterns = [
     path('masterdata', MasterdataListView.as_view(), name='masterdata_list'),
     path('masterdatauser/', views.MasterdatauserListView, name='masterdatauser'),
     path('<int:kroy_id>/', views.MdataKroyDetailView, name='mdata-kroy-detail-view'),
-    path('get-operations/', views.get_operations, name='get_operations'),
+    #path('get-operations/', views.get_operations, name='get_operations'),
     #path('operations<int:kroy_id>/', views.KroyOperationsView, name='kroy-operations-view'),
+    path('get-operations/', views.get_operations, name='get_operations'),
+    # path('operations<int:kroy_id>/', views.KroyOperationsView, name='kroy-operations-view'),
     path('operations/', views.operations_query, name='operations_query'),
 
     # Changed the URL path to a different name

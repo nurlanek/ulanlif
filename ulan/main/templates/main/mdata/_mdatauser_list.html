@@ -1,15 +1,17 @@
 
 
 <hr>
-<form id="kroy-form">
+<div id="success-message"></div>
+<form id="kroy-form" action="">
     {% csrf_token %}
 
-    Крой:
-    <select class="form-select form-select" aria-label="Default select example" name="kroy_no" id="kroy-no" style="width: 100%;">
-        {% for kroy_list_item in kroy_list %}
-            <option value="{{ kroy_list_item.kroy_no }}">{{ kroy_list_item.kroy_no }}</option>
-        {% endfor %}
-    </select>
+    <label for="kroy-no">Крой:</label>
+<select class="form-select form-select" aria-label="Default select example" name="kroy_no" id="kroy-no" style="width: 100%;">
+    {% for kroy_list_item in kroy_list %}
+        <option value="{{ kroy_list_item.kroy_no }}">{{ kroy_list_item.kroy_no }}</option>
+    {% endfor %}
+</select>
+
 
     Тип одежды:
     <select class="form-select form-select mt-2" aria-label="Default select example" name="type_product" id="type-product" style="width: 100%;" >

@@ -7,18 +7,17 @@ def get_default_user():
 
 class Kroy(models.Model):
     class Meta:
-            verbose_name_plural = ('Крой')
+        verbose_name_plural = ('Крой')
+
     name = models.CharField(max_length=250, verbose_name='Наименование')
-    kroy_no = models.CharField(max_length=20,verbose_name='Крой номер')
+    kroy_no = models.CharField(max_length=20, verbose_name='Крой номер')
     ras_tkani = models.FloatField(verbose_name='Расход ткани')
     ras_dublerin = models.FloatField(verbose_name='Расход дублерин')
     edinitsa = models.IntegerField(null=True, blank=True, verbose_name='Единица')
     description = models.TextField(null=True, blank=True, verbose_name='Примечение')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создание')
     is_active = models.BooleanField(default=True, verbose_name='Активен')
-
-
-
+    #code_operations = models.ForeignKey(Code_operations, on_delete=models.CASCADE, default=1, verbose_name='Крой')
     def __str__(self):
         return str(self.kroy_no)
 
@@ -97,4 +96,3 @@ class Operations(models.Model):
     price = models.IntegerField(verbose_name='Цена')
     kroy = models.ForeignKey(Kroy, on_delete=models.CASCADE, verbose_name='Крой')
     product_type = models.ForeignKey(Product_type, on_delete=models.CASCADE, verbose_name='Тип одежды')
-
