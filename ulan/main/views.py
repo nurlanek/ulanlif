@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
-from django.http import JsonResponse, HttpResponseNotAllowed
+from django.http import JsonResponse, HttpResponseNotAllowed, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -214,8 +214,8 @@ class KroyDetailUpdateView(UpdateView):
 
 @login_required
 def MasterdatauserListView(request):
-
     if request.method == 'POST':
+        # POST isteğiyle gelen form verilerini alın
         kroy_no = request.POST.get('kroy_no')
         type_product = request.POST.get('type_product')
         operations = request.POST.get('operations')
@@ -223,46 +223,40 @@ def MasterdatauserListView(request):
         edinitsa = request.POST.get('edinitsa')
         status = request.POST.get('status')
 
-        # No need to get the username separately; use request.user directly
+        # Kullanıcının adını alın
         user = request.user
 
+        # Form verileriyle yeni bir Masterdata nesnesi oluşturun ve kaydedin
         masterdata = Masterdata(
             kroy_no=kroy_no,
-            price=price,
             type_product=type_product,
             operations=operations,
+            price=price,
             edinitsa=edinitsa,
             status=status,
-            user=user,
+            user=user
         )
         masterdata.save()
-        data = {
-            'kroy_no': kroy_no,
-            'price': price,
-            'type_product': type_product,
-            'operations': operations,
-            'edinitsa': edinitsa,
-            'status': status,
-            'user': user.username,
+
+        # Başarılı bir şekilde kaydedildiğinde kullanıcıyı yönlendirin veya başka bir şey yapın
+        # Örneğin, aynı sayfaya geri yönlendirme yapabilirsiniz
+        return HttpResponseRedirect(request.path_info)
+
+    else:
+        # GET isteği olduğunda, normal işlemi gerçekleştirin
+        # Bu kod parçası, görünümünüzün normal GET işlemlerini işleyecektir
+        context = {
+            'masterdata_list': Masterdata.objects.filter(user=request.user),
+            'kroy_detail_list': Kroy_detail.objects.filter(user=request.user),
+            'user': request.user,
+            'kroy_list': Kroy.objects.all(),
+            'status_list': [option[0] for option in Masterdata.OPTION_CHOICES],
+            'type_product_list': Product_type.objects.all(),
         }
-        return JsonResponse(data)
+
+        return render(request, 'main/mdata/masterdatauser.html', context)
 
 
-
-        # Get the related Kroy record
-        #related_kroy = Kroy.objects.get(kroy_no=kroy_no)
-        # Now you can use 'related_kroy' to access the details of the related Kroy record
-
-    context = {
-        'masterdata_list': Masterdata.objects.filter(user=request.user),
-        'kroy_detail_list': Kroy_detail.objects.filter(user=request.user),
-        'user': request.user,
-        'kroy_list': Kroy.objects.all(),
-        'status_list': [option[0] for option in Masterdata.OPTION_CHOICES],
-        'type_product_list': Product_type.objects.all(),
-    }
-
-    return render(request, 'main/mdata/masterdatauser.html', context)
 
 
 @login_required
@@ -293,5 +287,27 @@ def get_operations(request):
 
         operations_data = [{'name': operation.name, 'price': operation.price} for operation in operations]
         return JsonResponse(operations_data, safe=False)
+    elif request.method == 'POST':
+        return JsonResponse({'error': 'POST request received, but not expected for this endpoint'}, status=400)
     else:
-        return JsonResponse({'error': 'GET request expected'}, status=400)
+        return JsonResponse({'error': 'Unexpected request method'}, status=400)
+
+from django.shortcuts import redirect
+
+def process_form(request):
+    if request.method == 'POST':
+        kroy_no = request.POST.get('kroy_no')
+        type_product = request.POST.get('type_product')
+        operations = request.POST.get('operations')
+        price = request.POST.get('price')
+        edinitsa = request.POST.get('edinitsa')
+        status = request.POST.get('status')
+
+        # Kullanıcının adını al
+        user = request.POST.get('user')
+
+        # Verileri MasterdatauserListView görünümüne yönlendirin
+        return redirect('masterdatauser', kroy_no=kroy_no, type_product=type_product, operations=operations, price=price, edinitsa=edinitsa, status=status, user=user)
+    else:
+        # Hatalı istek durumunda hata yanıtı döndürün
+        return JsonResponse({'error': 'POST request expected'}, status=400)

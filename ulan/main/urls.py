@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (KroyListView, KroyCreateView, KroyUpdateView, KroyDetailListView,
                     KroyDetailCreateView, KroyDetailUpdateView, operations_query, create_masterdata, MasterdataListView,
-                    MdataKroyDetailView, MasterdatauserListView)
+                    MdataKroyDetailView, MasterdatauserListView, process_form)
 
 from . import views
 #from .views import get_operations
@@ -26,6 +26,7 @@ urlpatterns = [
     path('get-operations/', views.get_operations, name='get_operations'),
     # path('operations<int:kroy_id>/', views.KroyOperationsView, name='kroy-operations-view'),
     path('operations/', views.operations_query, name='operations_query'),
+    path('process-form/', process_form, name='process_form'),
 
     # Changed the URL path to a different name
 

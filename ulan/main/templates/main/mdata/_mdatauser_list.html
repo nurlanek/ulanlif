@@ -2,7 +2,8 @@
 
 <hr>
 <div id="success-message"></div>
-<form id="kroy-form" action="">
+<form id="kroy-form" action=""  method="post">
+
     {% csrf_token %}
 
     <label for="kroy-no">Крой:</label>
@@ -28,8 +29,9 @@
     </select>
     </div>
     <div id="price-display-container">
-    <label for="price">Price:</label>
-    <span id="price-display"></span>
+    <label for="price">Цена:</label>
+    <span id="price-display"></span>сом
+    <input type="hidden" id="price-input" name="price" readonly>
 </div>
 
     Единица:
