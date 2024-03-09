@@ -17,10 +17,13 @@ def login_request(request):
             return redirect("home")
         else:
             return render(request, "account/login.html", {
-                "error": "username or password is yanlis"
+                "error": "имя или пароль неправильно"
             })
 
     return render(request, "account/login.html")
+
+
+
 
 def register_request(request):
     if request.method == "POST":
@@ -51,3 +54,24 @@ def register_request(request):
 def logout_request(request):
     logout(request)
     return redirect("home")
+
+def masterdata_login(request):
+    if request.user.is_authenticated:
+        return redirect("home")  # Kullanıcı zaten giriş yapmışsa, home sayfasına yönlendir
+
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        # Kullanıcı kimlik doğrulaması
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            # Başarılı kimlik doğrulaması durumunda giriş yap
+            login(request, user)
+            return redirect("masterdatauser")  # masterdatauser sayfasına yönlendir
+        else:
+            return render(request, "account/masterdata_login.html", {
+                "error": "Kullanıcı adı veya şifre yanlış"
+            })
+
+    return render(request, "account/masterdata_login.html")

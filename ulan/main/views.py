@@ -212,8 +212,12 @@ class KroyDetailUpdateView(UpdateView):
     success_url = '/kroy-detail/'
 
 
-@login_required
+
 def MasterdatauserListView(request):
+    if not request.user.is_authenticated:
+        # Kullanıcı giriş yapmadıysa, giriş sayfasına yönlendir
+        return redirect('masterdata_login')
+
     if request.method == 'POST':
         # POST isteğiyle gelen form verilerini alın
         kroy_no = request.POST.get('kroy_no')
