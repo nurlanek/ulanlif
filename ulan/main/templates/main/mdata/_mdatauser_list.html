@@ -8,9 +8,13 @@
 
     <label for="kroy-no">Крой:</label>
 <select class="form-select form-select" aria-label="Default select example" name="kroy_no" id="kroy-no" style="width: 100%;">
+
     {% for kroy_list_item in kroy_list %}
+{% if kroy_list_item.is_active %}
         <option value="{{ kroy_list_item.kroy_no }}">{{ kroy_list_item.kroy_no }}</option>
+{% endif %}
     {% endfor %}
+
 </select>
 
 
