@@ -53,7 +53,7 @@
                 <th scope="col">Статус</th>
                 <th scope="col">Подтверждения</th>
                 <th scope="col">Операция</th>
-
+                <th scope="col">Цена</th>
                 <th scope="col">Тип одежды</th>
                 <th scope="col">Сотрудник</th>
                 <th scope="col">Примечение</th>
@@ -80,7 +80,8 @@
                     <span class="kirmizi-kalin">не проверено</span>
                     {% endif %}
                 </td>
-                <td>{{ masterdata.operations }}-{{ masterdata.price }}сом </td>
+                <td>{{ masterdata.operations }} </td>
+                <td>-{{ masterdata.price }}сом </td>
                 <td>{{ masterdata.operation_code }} </td>
                 <td>{{ masterdata.user }} </td>
                 <td>{{ masterdata.description }} </td>

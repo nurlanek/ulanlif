@@ -3,7 +3,7 @@ from . import views
 from .views import (KroyListView, KroyCreateView, KroyUpdateView, KroyDetailListView,
                     KroyDetailCreateView, KroyDetailUpdateView, MasterdataListView, MasterdatauserListView,
                     operation_code_create, operation_code_update, operation_code_delete,
-                    example_view, get_operation_codes, get_operation_list)
+                    get_operation_codes, get_operation_list)
 
 
 urlpatterns = [
@@ -23,7 +23,7 @@ urlpatterns = [
     #Users page
     #path('masterdatauser/', views.MasterdatauserListView, name='masterdatauser'),
     #path('process-form/', process_form, name='process_form'),
-    path('example/', example_view, name='example_view'),
+    #path('example/', example_view, name='example_view'),
     path('masterdatauser/', MasterdatauserListView, name='masterdatauser'),
     path('get_operation_codes/', get_operation_codes, name='get_operation_codes'),
     path('get_operation_list/', get_operation_list, name='get_operation_list'),

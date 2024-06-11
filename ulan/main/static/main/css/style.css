@@ -2,4 +2,45 @@ h1 {
     font-size: 40px;
     border-bottom:;
 }
+/* Style for form */
+form.custom-form {
+  background-color: lightblue; /* Change this to the desired color */
+  padding: 20px;
+  border-radius: 5px;
+}
 
+/* Style for text fields */
+form.custom-form input[type="text"],
+form.custom-form textarea {
+  background-color: lightyellow; /* Change this to the desired color */
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 8px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+/* Style for submit button */
+form.custom-form button {
+  background-color: #007bff; /* Change this to the desired color */
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* Style for submit button on hover */
+form.custom-form button:hover {
+  background-color: #0056b3; /* Change this to the desired hover color */
+}
+form.custom-form input[type="text"],
+form.custom-form textarea {
+  background-color: lightyellow; /* Change this to the desired color */
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 5px 8px; /* Adjust padding to your liking */
+  margin-bottom: 10px;
+  width: 100%;
+  height: 30px; /* Adjust height to your liking */
+}

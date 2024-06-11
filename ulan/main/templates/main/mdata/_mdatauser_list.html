@@ -12,7 +12,7 @@
     <label for="operation_code">Тип одежды:</label>
     <select class="form-select mt-2" name="type_product" id="operation_code" style="width: 100%;" onchange="loadOperationList();"></select>
 
-    <label for="operation_list">Выбор операции:</label>
+  <label for="operation_list">Выбор операции:</label>
     <select class="form-select mt-2" name="operations" id="operation_list">
         <option value="">Выберите оперции</option>
     </select>
@@ -20,8 +20,7 @@
     <label for="price-display">цена:</label>
     <span id="price-display"></span>
     <input type="hidden" id="price-input" name="price" value="0" readonly>
-
-
+    <input type="hidden" id="operation-title" name="operations">
     <br>
     Единица:
     <input class="form-control" type="number" name="edinitsa" style="width: 100%;" required>
@@ -38,47 +37,53 @@
 
 <script>
     function loadOperationCodes() {
-        const kroy = document.getElementById('kroy').value;
-        fetch(`/get_operation_codes?kroy_no=${kroy}`)
-            .then(response => response.json())
-            .then(data => {
-                const operationCodeSelect = document.getElementById('operation_code');
-                operationCodeSelect.innerHTML = '<option value="">Выберите</option>';
-                data.forEach(item => {
-                    const option = document.createElement('option');
-                    option.value = item.code;
-                    option.text = item.title;
-                    operationCodeSelect.appendChild(option);
-                });
+    const kroy = document.getElementById('kroy').value;
+    fetch(`/get_operation_codes?kroy_no=${kroy}`)
+        .then(response => response.json())
+        .then(data => {
+            const operationCodeSelect = document.getElementById('operation_code');
+            operationCodeSelect.innerHTML = '<option value="">Выберите</option>';
+            data.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.code; // or item.id if code is not unique
+                option.text = item.title;
+                option.setAttribute('data-title', item.title);
+                operationCodeSelect.appendChild(option);
             });
-    }
+        });
+}
 
-    function loadOperationList() {
-        const operationCode = document.getElementById('operation_code').value;
-        fetch(`/get_operation_list?operation_code=${operationCode}`)
-
-            .then(response => response.json())
-            .then(data => {
-                const operationListSelect = document.getElementById('operation_list');
-                operationListSelect.innerHTML = '<option value="">Выберите оперции</option>';
-                data.forEach(item => {
-                    const option = document.createElement('option');
-                    option.value = item.title;
-                    option.text = item.title;
-                    operationListSelect.appendChild(option);
-                });
+function loadOperationList() {
+    const operationCode = document.getElementById('operation_code').value;
+    fetch(`/get_operation_list?operation_code=${operationCode}`)
+        .then(response => response.json())
+        .then(data => {
+            const operationListSelect = document.getElementById('operation_list');
+            operationListSelect.innerHTML = '<option value="">Выберите операцию</option>';
+            data.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.id; // Use id for value
+                option.text = item.title;
+                option.setAttribute('data-title', item.title); // Store title
+                operationListSelect.appendChild(option);
             });
-    }
+        });
+}
 
 document.getElementById('operation_list').addEventListener('change', function() {
     const operationId = parseInt(this.value);
+    const operationTitle = this.options[this.selectedIndex].getAttribute('data-title'); // Get title
+    document.getElementById('operation-title').value = operationTitle; // Set hidden input value
     fetch(`/get_operation_price?operation_id=${operationId}`)
         .then(response => response.json())
         .then(data => {
-            // JSON yanıtından price değerini alıyoruz
+            // Get price from JSON response
             const price = data.price;
 
-            // price değerini price-display ve price-input elementlerine yerleştiriyoruz
+            // Log price to console
+            console.log('Price:', price);
+
+            // Set price display and hidden input
             document.getElementById('price-display').innerText = price;
             document.getElementById('price-input').value = price;
         })
@@ -86,5 +91,6 @@ document.getElementById('operation_list').addEventListener('change', function() 
             console.error('Error:', error);
         });
 });
+
 
 </script>

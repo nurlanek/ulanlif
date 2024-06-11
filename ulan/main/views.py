@@ -1,19 +1,14 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, CreateView, UpdateView
-from .models import (Kroy, Kroy_detail, Operations, Product_type,
-                     Operation_code, Operation_list, Kroy_operation_code)
+from .models import (Kroy, Kroy_detail, Operation_code, Operation_list, Kroy_operation_code)
 from .forms import (KroyForm, KroyDetailForm, Masterdata, MasterdataSearchForm,
-                    OperationCodeForm, OperationListForm, KroyOperationCodeForm,
-                    MasterdataForm)
+                    OperationCodeForm, OperationListForm, KroyOperationCodeForm,)
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import get_user_model
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import redirect
-from django.urls import reverse
-
 
 
 
@@ -23,12 +18,7 @@ def index(request):
         return redirect("login")
     return render(request, "main/index.html")
 
-"""def create_masterdata(request):
-    if not request.user.is_authenticated:
-        return redirect("login")
-
-    return render(request, 'main/kroy/kroy_masterdata.html')
-"""
+# --- Master data alani basi ---
 class MasterdataListView(LoginRequiredMixin, ListView):
 
     model = Masterdata
@@ -74,14 +64,9 @@ class MasterdataListView(LoginRequiredMixin, ListView):
         context['additional_variable'] = 'Some additional value'
 
         return context
+# --- Masterdata alani sonu ---
 
-"""@login_required
-def MdataKroyDetailView(request, kroy_id):
-    if not request.user.is_authenticated:
-        return redirect("login")
-        
-        return render(request, 'main/dmata/dmata_kroy_detail_view.html', context)
-"""
+# --- Kroy basi ---
 class KroyListView(LoginRequiredMixin, ListView):
     model = Kroy
     template_name = 'main/kroy/kroy_list.html'
@@ -94,8 +79,6 @@ class KroyListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         # Filter the Kroy objects where is_active is True
         return Kroy.objects.filter(is_active=True).order_by('-id')[:100]
-
-
 
 class KroyCreateView(LoginRequiredMixin, CreateView):
     model = Kroy
@@ -124,7 +107,8 @@ class KroyUpdateView(LoginRequiredMixin, UpdateView):
     def handle_no_permission(self):
         # Kullanıcı oturum açmamışsa, giriş yapma sayfasına yönlendir
         return redirect('login')
-
+# --- Kroy sonu ---
+# ---Kroy detail basi ---
 @login_required
 def KroyDetailView(request, kroy_id):
     if not request.user.is_authenticated:
@@ -179,9 +163,8 @@ class KroyDetailUpdateView(UpdateView):
     template_name = 'main/kroy/kroy_detail_form.html'
     success_url = '/kroy-detail/'
 
-
-
-
+# ---Kroy detail sonu ---
+# --- Operasynu kodu olusturma alani basi---
 def operation_code_create(request):
     if request.method == 'POST':
         form = OperationCodeForm(request.POST)
@@ -209,13 +192,14 @@ def operation_code_delete(request, pk):
         operation_code.delete()
         return redirect('operation_code_list')  # Silme işlemi gerçekleştiğinde listeleme sayfasına yönlendir
     return render(request, 'main/operation/operation_code_delete.html', {'object': operation_code})
+
 def operation_code_list(request):
     operation_codes = Operation_code.objects.all()
     return render(request, 'main/operation/operation_code_list.html', {'operation_codes': operation_codes})
 
+# --- operasyon kodu olusturma alani sonu ---
 
-# Existing Operation_code views...
-
+# --- operasyon listesi olusturma alani basi ---
 def operation_list_detail(request, operation_code_id):
     operation_code = get_object_or_404(Operation_code, id=operation_code_id)
     operation_lists = Operation_list.objects.filter(operation_code=operation_code)
@@ -269,13 +253,9 @@ def OperationListView(request, operation_code_id):
     }
     return render(request, 'main/operation/operation_list_view.html', context)
 
-def example_view(request):
-    kroys = Kroy.objects.all()
-    status_list = [option[0] for option in Masterdata.OPTION_CHOICES]
-    return render(request, 'main/mdata/example.html', {'kroys': kroys, 'status_list': status_list})
+# --- operasyon listesi olusturma alani sonu ---
 
-
-
+# --- Operasyonu Kroy icin atama alani basi ---
 def kroy_operation_code_list(request):
     codes = Kroy_operation_code.objects.all()
     return render(request, 'main/opercode/kroy_operation_code_list.html', {'codes': codes})
@@ -307,8 +287,9 @@ def kroy_operation_code_delete(request, pk):
         code.delete()
         return redirect('kroy_operation_code_list')
     return render(request, 'main/opercode/kroy_operation_code_confirm_delete.html', {'code': code})
+# --- Operasyonu Kroy icin atama alani sonu ---
 
-
+# --- Kullanicilar safasi basi ---
 def get_operation_codes(request):
     kroy_no = request.GET.get('kroy_no')
     if kroy_no:
@@ -370,3 +351,4 @@ def MasterdatauserListView(request):
             'status_list': [option[0] for option in Masterdata.OPTION_CHOICES],
         }
         return render(request, 'main/mdata/masterdatauser.html', context)
+# --- Kullanicilar safasi sonu--
