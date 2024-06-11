@@ -1,7 +1,8 @@
 from django import forms
-from .models import Kroy, Kroy_detail, Masterdata
+from .models import Kroy, Kroy_detail, Masterdata, Operation_code, Operation_list, Kroy_operation_code  #, Code_operation, Kroy_operations
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+
 
 
 class KroyForm(forms.ModelForm):
@@ -39,3 +40,18 @@ class MasterdataForm(forms.ModelForm):
     class Meta:
         model = Masterdata
         fields = ['user']  # Add other fields as needed
+
+class OperationCodeForm(forms.ModelForm):
+    class Meta:
+        model = Operation_code
+        fields = ['title', 'description', 'product_type']
+
+class OperationListForm(forms.ModelForm):
+    class Meta:
+        model = Operation_list
+        fields = ['title', 'price']
+
+class KroyOperationCodeForm(forms.ModelForm):
+    class Meta:
+        model = Kroy_operation_code
+        fields = ['kroy', 'operation_code', 'is_active']

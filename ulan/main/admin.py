@@ -1,6 +1,8 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
-from .models import Kroy_detail, Kroy, Masterdata, Colors, City, Operations, Product_type
+from .models import (Kroy_detail, Kroy, Masterdata, Colors, City, Operations,
+                     Kroy_operation_code, Product_type, Operation_list, Operation_code,
+                     )
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 import json
@@ -9,6 +11,14 @@ from django.http import HttpResponse
 import xlrd
 import json
 
+class Kroy_operation_codeAdmin(ImportExportModelAdmin):
+    list_display = ("kroy", "operation_code",)
+
+class Operation_listAdmin(ImportExportModelAdmin):
+    list_display = ("title", "operation_code",)
+
+class Operation_codeAdmin(ImportExportModelAdmin):
+    list_display = ("title", "product_type",)
 class MasterdataAdmin(ImportExportModelAdmin):
     list_display = ("kroy_no", "edinitsa", "created", "user", "confirmation","status",)
     list_editable = ("confirmation",)
@@ -39,9 +49,6 @@ class OperationsAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     search_fields = ("name",)
 
 
-
-
-# Отменить предыдущую регистрацию модели UserAdmin
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 admin.site.register(Masterdata, MasterdataAdmin)
@@ -51,3 +58,6 @@ admin.site.register(Colors, ColorsAdmin)
 admin.site.register(City, CityAdmin)
 admin.site.register(Operations, OperationsAdmin)
 admin.site.register(Product_type, Product_typeAdmin)
+admin.site.register(Kroy_operation_code, Kroy_operation_codeAdmin)
+admin.site.register(Operation_list, Operation_listAdmin)
+admin.site.register(Operation_code, Operation_codeAdmin)

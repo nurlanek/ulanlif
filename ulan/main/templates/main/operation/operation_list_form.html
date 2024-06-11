@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+{% endblock %}
+
+{% block title %} {% if form.instance.pk %} Редактировать операцию {% else %} Создать операцию {% endif %} {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h4>{% if form.instance.pk %} Изменить {% else %} Создать {% endif %} операция для - {{ operation_code.title }}</h4>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Сохранить</button>
+    </form>
+</div>
+{% endblock %}
+{% block js_files %}
+<script src="{% static 'main/js/script.js' %}"></script>
+{% endblock %}

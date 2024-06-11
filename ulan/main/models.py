@@ -5,6 +5,39 @@ from django.contrib.auth import get_user_model
 def get_default_user():
     return get_user_model().objects.first()
 
+class Product_type(models.Model):
+    class Meta:
+            verbose_name = ('Тип одежды')
+            verbose_name_plural = ('Тип одежды')
+
+    name = models.CharField(max_length=50, verbose_name='Название')
+    def __str__(self):
+        return self.name
+
+class Operation_code(models.Model):
+    class Meta:
+        verbose_name_plural = ('Код оперции')
+
+    title = models.CharField(max_length=50, verbose_name='Название')
+    description = models.TextField(null=True, blank=True, verbose_name='Примечение')
+    product_type = models.ForeignKey(Product_type, on_delete=models.CASCADE, verbose_name='Тип одежды')
+    is_active = models.BooleanField(default=True, verbose_name='Активен')
+    def __str__(self):
+        return self.title
+
+class Operation_list(models.Model):
+    class Meta:
+        verbose_name_plural = ('Список оперции')
+
+    title = models.CharField(max_length=50, verbose_name='Название')
+    price = models.IntegerField(null=True, blank=True, verbose_name='Цена')
+    operation_code = models.ForeignKey(Operation_code, on_delete=models.CASCADE, verbose_name='Код оперции')
+    is_active = models.BooleanField(default=True, verbose_name='Активен')
+    def __str__(self):
+        return self.title
+
+
+
 class Kroy(models.Model):
     class Meta:
         verbose_name_plural = ('Крой')
@@ -17,9 +50,19 @@ class Kroy(models.Model):
     description = models.TextField(null=True, blank=True, verbose_name='Примечение')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создание')
     is_active = models.BooleanField(default=True, verbose_name='Активен')
-    #code_operations = models.ForeignKey(Code_operations, on_delete=models.CASCADE, default=1, verbose_name='Крой')
+
     def __str__(self):
         return str(self.kroy_no)
+
+class Kroy_operation_code(models.Model):
+    class Meta:
+        verbose_name_plural = ('Применить операцию на крой')
+
+    kroy = models.ForeignKey(Kroy, on_delete=models.CASCADE, verbose_name='Крой')
+    operation_code = models.ForeignKey(Operation_code, on_delete=models.CASCADE, verbose_name='Код оперции')
+    is_active = models.BooleanField(default=True, verbose_name='Активен')
+    def __str__(self):
+       return f"{self.kroy} - {self.operation_code}"
 
 class City(models.Model):
     class Meta:
@@ -75,17 +118,11 @@ class Masterdata(models.Model):
     operations = models.CharField(max_length=150, verbose_name='Операция')
     type_product = models.CharField(max_length=150, verbose_name='Тип одежды')
     price = models.IntegerField(verbose_name='Единица')
+    operation_code = models.ForeignKey(Operation_code, on_delete=models.CASCADE, verbose_name='Пользователь')
+
     def __str__(self):
         return f"{self.status} - {self.kroy_no}"
 
-class Product_type(models.Model):
-    class Meta:
-            verbose_name = ('Тип одежды')
-            verbose_name_plural = ('Тип одежды')
-
-    name = models.CharField(max_length=50, verbose_name='Название')
-    def __str__(self):
-        return self.name
 
 
 class Operations(models.Model):
@@ -99,3 +136,4 @@ class Operations(models.Model):
 
     def total_price(self):
         return sum(self.objects.all().values_list('price', flat=True))
+

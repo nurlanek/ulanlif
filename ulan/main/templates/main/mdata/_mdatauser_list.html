@@ -1,53 +1,90 @@
-
-
-<hr>
 <div id="success-message"></div>
-<form id="kroy-form" action=""  method="post">
-
+<form id="kroy-form" action="" method="post">
     {% csrf_token %}
-
-    <label for="kroy-no">Крой:</label>
-<select class="form-select form-select" aria-label="Default select example" name="kroy_no" id="kroy-no" style="width: 100%;">
-
-    {% for kroy_list_item in kroy_list %}
-{% if kroy_list_item.is_active %}
-        <option value="{{ kroy_list_item.kroy_no }}">{{ kroy_list_item.kroy_no }}</option>
-{% endif %}
-    {% endfor %}
-
-</select>
-
-
-    Тип одежды:
-    <select class="form-select form-select mt-2" aria-label="Default select example" name="type_product" id="type-product" style="width: 100%;" >
-    {% for product_type in type_product_list %}
-        <option value="{{ product_type.name }}">{{ product_type.name }}</option>
-    {% endfor %}
-</select>
-
-    Выберите операции:
-    <div id="operations-select-container">
-         <select class="form-select form-select mt-2" aria-label="Default select example" name="operations" id="operations" style="width: 100%;">
-        <option value="">Seçiniz</option>
-        <!-- Operations seçenekleri burada gelecek -->
+    <label for="kroy">Крой:</label>
+    <select class="form-select" name="kroy_no" id="kroy" style="width: 100%;" onchange="loadOperationCodes();">
+        <option value="">Выберите</option>
+        {% for kroy_list_item in kroy_list %}
+            <option value="{{ kroy_list_item.kroy_no }}">{{ kroy_list_item.kroy_no }}</option>
+        {% endfor %}
     </select>
-    </div>
-    <div id="price-display-container">
-    <label for="price">Цена:</label>
-    <span id="price-display"></span>сом
-    <input type="hidden" id="price-input" name="price" readonly>
-</div>
 
+    <label for="operation_code">Тип одежды:</label>
+    <select class="form-select mt-2" name="type_product" id="operation_code" style="width: 100%;" onchange="loadOperationList();"></select>
+
+    <label for="operation_list">Выбор операции:</label>
+    <select class="form-select mt-2" name="operations" id="operation_list">
+        <option value="">Выберите оперции</option>
+    </select>
+
+    <label for="price-display">цена:</label>
+    <span id="price-display"></span>
+    <input type="hidden" id="price-input" name="price" value="0" readonly>
+
+
+    <br>
     Единица:
     <input class="form-control" type="number" name="edinitsa" style="width: 100%;" required>
 
     Статус:
-    <select class="form-select form-select" aria-label="Default select example" name="status" style="width: 100%;" required>
+    <select class="form-select" name="status" style="width: 100%;" required>
         {% for status_choice in status_list %}
             <option value="{{ status_choice }}">{{ status_choice }}</option>
         {% endfor %}
     </select>
-
     <input type="hidden" id="user" name="user" value="{{ user.username }}">
-    <button  type="submit" id="submit-btn" class="btn btn-secondary mt-2">Отправить</button>
+    <button type="submit" id="submit-btn" class="btn btn-secondary mt-2">Отправить</button>
 </form>
+
+<script>
+    function loadOperationCodes() {
+        const kroy = document.getElementById('kroy').value;
+        fetch(`/get_operation_codes?kroy_no=${kroy}`)
+            .then(response => response.json())
+            .then(data => {
+                const operationCodeSelect = document.getElementById('operation_code');
+                operationCodeSelect.innerHTML = '<option value="">Выберите</option>';
+                data.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.code;
+                    option.text = item.title;
+                    operationCodeSelect.appendChild(option);
+                });
+            });
+    }
+
+    function loadOperationList() {
+        const operationCode = document.getElementById('operation_code').value;
+        fetch(`/get_operation_list?operation_code=${operationCode}`)
+
+            .then(response => response.json())
+            .then(data => {
+                const operationListSelect = document.getElementById('operation_list');
+                operationListSelect.innerHTML = '<option value="">Выберите оперции</option>';
+                data.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.title;
+                    option.text = item.title;
+                    operationListSelect.appendChild(option);
+                });
+            });
+    }
+
+document.getElementById('operation_list').addEventListener('change', function() {
+    const operationId = parseInt(this.value);
+    fetch(`/get_operation_price?operation_id=${operationId}`)
+        .then(response => response.json())
+        .then(data => {
+            // JSON yanıtından price değerini alıyoruz
+            const price = data.price;
+
+            // price değerini price-display ve price-input elementlerine yerleştiriyoruz
+            document.getElementById('price-display').innerText = price;
+            document.getElementById('price-input').value = price;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+});
+
+</script>

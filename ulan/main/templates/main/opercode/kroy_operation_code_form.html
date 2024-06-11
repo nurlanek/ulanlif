@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load bootstrap %}
+<div class="container mt-5">
+  <h2>{% if form.instance.pk %}Edit{% else %}Create{% endif %} Kroy Operation Code</h2>
+  <form method="post" class="mt-3">
+    {% csrf_token %}
+    <div class="form-group">
+      {{ form.kroy|as_bootstrap }}
+    </div>
+    <div class="form-group">
+      {{ form.operation_code|as_bootstrap }}
+    </div>
+    <div class="form-group">
+      {{ form.is_active|as_bootstrap }}
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="{% url 'kroy_operation_code_list' %}" class="btn btn-secondary">Back to list</a>
+  </form>
+</div>
+{% endblock %}

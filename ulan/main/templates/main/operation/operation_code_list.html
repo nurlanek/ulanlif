@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+{% endblock %}
+
+{% block title %} Список кодов операций {% endblock %}
+
+{% block content %}
+<div class="container">
+<h4>Список кодов операций</h4>
+<table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Код</th>
+                <th>Примечание</th>
+                <th>Тип дежды</th>
+                <th>Изменить</th>
+                <th>Удалить</th>
+                <th>Список оперции</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for operation_code in operation_codes %}
+                <tr>
+                    <td>{{ operation_code.title }}</td>
+                    <td>{{ operation_code.description }}</td>
+                    <td>{{ operation_code.product_type }}</td>
+                    <td><a href="{% url 'operation_code_update' operation_code.id %}">Изменить</a></td>
+                    <td><a href="{% url 'operation_code_delete' operation_code.id %}">Удалить</a></td>
+                    <td><a href="{% url 'operation_list_detail' operation_code.id %}">Посмотреть список оперции</a></td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">Нет доступных кодов операций.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'operation_code_create' %}">Создать новый код</a>
+</div>
+{% endblock %}
+{% block js_files %}
+<script src="{% static 'main/js/script.js' %}"></script>
+{% endblock %}
