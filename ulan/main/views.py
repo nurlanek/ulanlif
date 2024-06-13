@@ -194,7 +194,7 @@ def operation_code_delete(request, pk):
     return render(request, 'main/operation/operation_code_delete.html', {'object': operation_code})
 
 def operation_code_list(request):
-    operation_codes = Operation_code.objects.all()
+    operation_codes = Operation_code.objects.filter(is_active=True)
     return render(request, 'main/operation/operation_code_list.html', {'operation_codes': operation_codes})
 
 # --- operasyon kodu olusturma alani sonu ---
@@ -257,7 +257,8 @@ def OperationListView(request, operation_code_id):
 
 # --- Operasyonu Kroy icin atama alani basi ---
 def kroy_operation_code_list(request):
-    codes = Kroy_operation_code.objects.all()
+    codes = Kroy_operation_code.objects.filter(is_active=True)
+
     return render(request, 'main/opercode/kroy_operation_code_list.html', {'codes': codes})
 
 def kroy_operation_code_create(request):

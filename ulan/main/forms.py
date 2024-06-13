@@ -9,6 +9,9 @@ class KroyForm(forms.ModelForm):
     class Meta:
         model = Kroy
         fields = ['kroy_no', 'name', 'ras_tkani', 'ras_dublerin', 'edinitsa', 'description']
+        widgets = {
+            'description': forms.Textarea(attrs={'rows': 3, 'cols': 23}),
+        }
 
     def clean_kroy_no(self):
         kroy_no = self.cleaned_data.get('kroy_no')
@@ -44,7 +47,11 @@ class MasterdataForm(forms.ModelForm):
 class OperationCodeForm(forms.ModelForm):
     class Meta:
         model = Operation_code
-        fields = ['title', 'description', 'product_type']
+        fields = ['title', 'description', 'product_type', 'is_active']
+        widgets = {
+            'description': forms.Textarea(attrs={'rows': 3, 'cols': 23}),
+        }
+
 
 class OperationListForm(forms.ModelForm):
     class Meta:
@@ -55,3 +62,8 @@ class KroyOperationCodeForm(forms.ModelForm):
     class Meta:
         model = Kroy_operation_code
         fields = ['kroy', 'operation_code', 'is_active']
+        widgets = {
+            'kroy': forms.Select(attrs={'class': 'form-control'}),
+            'operation_code': forms.Select(attrs={'class': 'form-control'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }

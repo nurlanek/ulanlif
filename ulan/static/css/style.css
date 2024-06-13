@@ -1,0 +1,21 @@
+/* main/css/style.css */
+
+/* Linkler gri ve alt çizgisiz olacak */
+a {
+    font-weight: bold;
+    color: #808080; /* Gri renk */
+    text-decoration: none; /* Alt çizgi kaldırma */
+}
+
+/* Linklerin hover durumunda rengi kırmızı olacak */
+a:hover {
+    color: red;
+}
+.table-auto-width {
+  table-layout: auto;
+  width: auto;
+  max-width: 100%;
+}
+.table-auto-width th, .table-auto-width td {
+  white-space: nowrap;
+}

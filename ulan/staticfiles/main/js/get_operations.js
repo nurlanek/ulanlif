@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     var kroySelect = document.getElementById('kroy');
     var operationCodeSelect = document.getElementById('operation_code');
-    //var operationListSelect = document.getElementById('operation_list');
+    var operationListSelect = document.getElementById('operation_list');
 
     if (kroySelect) {
         kroySelect.addEventListener('change', function() {

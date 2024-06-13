@@ -10,7 +10,7 @@
 {% block content %}
 <div class="container">
 <h4>Список кодов операций</h4>
-<table class="table table-striped">
+<table class="table table-striped table-auto-width">
         <thead>
             <tr>
                 <th>Код</th>
@@ -27,9 +27,9 @@
                     <td>{{ operation_code.title }}</td>
                     <td>{{ operation_code.description }}</td>
                     <td>{{ operation_code.product_type }}</td>
-                    <td><a href="{% url 'operation_code_update' operation_code.id %}">Изменить</a></td>
-                    <td><a href="{% url 'operation_code_delete' operation_code.id %}">Удалить</a></td>
-                    <td><a href="{% url 'operation_list_detail' operation_code.id %}">Посмотреть список оперции</a></td>
+                    <td><a  class="btn btn-warning btn-sm" href="{% url 'operation_code_update' operation_code.id %}">Изменить</a></td>
+                    <td><a class="btn btn-danger btn-sm" href="{% url 'operation_code_delete' operation_code.id %}">Удалить</a></td>
+                    <td><a href="{% url 'operation_list_detail' operation_code.id %}" class="btn btn-primary btn-sm">Показать</a></td>
                 </tr>
             {% empty %}
                 <tr>
@@ -38,7 +38,7 @@
             {% endfor %}
         </tbody>
     </table>
-    <a href="{% url 'operation_code_create' %}">Создать новый код</a>
+    <a href="{% url 'operation_code_create' %}" class="btn btn-success btn-sm" >Создать новый код</a>
 </div>
 {% endblock %}
 {% block js_files %}

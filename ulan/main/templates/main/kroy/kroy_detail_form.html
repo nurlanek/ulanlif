@@ -47,7 +47,7 @@
                     <div class="col-md-2">{{ form.city.label_tag }}</div>
                     <div class="col-6 col-md-3">{{ form.city }}</div>
                 </div>
-                <input type="submit" value="Сохранить" class="btn btn-secondary mt-2">
+                <input type="submit" value="Сохранить" class="btn btn-success btn-sm mt-2">
             </form>
         </div>
         <div class="col-7">
@@ -74,7 +74,7 @@
                     <td>{{ kroy_detail.stuk }}</td>
                     <td>{{ kroy_detail.color_id }}</td>
                     <td>{{ kroy_detail.city_id }}</td>
-                    <td><a href="{% url 'kroy-detail-update' pk=kroy_detail.pk %}">изменить</a></td>
+                    <td><a href="{% url 'kroy-detail-update' pk=kroy_detail.pk %}" class="btn btn-warning btn-sm" >изменить</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>

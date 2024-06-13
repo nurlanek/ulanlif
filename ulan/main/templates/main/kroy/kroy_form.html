@@ -52,7 +52,7 @@
         <div class="col-md-4">{{ form.description.label_tag }}</div>
         <div class="col-6 col-md-3">{{ form.description }}</div>
     </div>
-    <button type="submit" class="btn btn-secondary mt-2">Сохранить</button>
+    <button type="submit" class="btn btn-success btn-sm mt-2">Сохранить</button>
 </form>
         </div>
         <div class="col-md-8">
@@ -72,7 +72,7 @@
                 {% if kroy_no is active %}
                 <tr>
                     <th scope="row">{{ forloop.counter }}</th>
-                    <td><a href="{% url 'kroy-detail-view' kroy.pk %}">{{ kroy.kroy_no }}</a>
+                    <td><a href="{% url 'kroy-detail-view' kroy.pk %}" >{{ kroy.kroy_no }}</a>
                     <td></td>
                     <td>{{ kroy.name|slice:":20" }}</td>
                     <td>{{ kroy.created|date:"d.m.Y" }}</td>
@@ -81,7 +81,7 @@
                     <td>{{ kroy.ras_dublerin }} </td>
                     <td>{{ kroy.code_operations }} </td>
 
-                    <td><a href="{% url 'kroy-update' kroy.pk %}">Изменить</a></td>
+                    <td><a href="{% url 'kroy-update' kroy.pk %}" class="btn btn-warning btn-sm" >Изменить</a></td>
                 </tr>
                 {% endif %}
                 {% endfor %}

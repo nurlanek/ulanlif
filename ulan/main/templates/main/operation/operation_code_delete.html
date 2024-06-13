@@ -15,7 +15,7 @@
     <p>Вы уверены, что хотите удалить "{{ object.title }}"?</p>
     <form method="post">
         {% csrf_token %}
-        <button type="submit">Да, удалить</button>
+        <button type="submit" class="btn btn-danger btn-sm">Да, удалить</button>
     </form>
 
 </div>

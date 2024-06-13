@@ -9,29 +9,26 @@
 
 {% block content %}
 <div class="container">
-<div class="container mt-3">
-    <div class="row">
-        <div class="col-md-4">
+    <div class="col-md-4 mt-2">
             <button type="submit" class="btn btn-secondary btn-sm" onclick="printTable()">Распечатать</button>
-            <a class="btn btn-secondary btn-sm ml-2" href="{% url 'kroy-list' %}">Вернуться к списку кроя</a>
+            <a class="btn btn-primary btn-sm ml-2" href="{% url 'kroy-list' %}">Вернуться к списку кроя</a>
         </div>
-        <div class="col-md-8">
-            <h5>Посмотреть операции</h5>
-  <ul>
-    {% for code in kroy_operation_codes %}
-      <li><a href="{% url 'operation_list' code.operation_code.id %}">
-          {{ code.operation_code }} - {{ code.operation_code.product_type.name  }}
-      </a>
-      </li>
+    <div id="table-container"  class="">
+        <div class="container mt-3">
 
+            Посмотреть операции:
+
+    {% for code in kroy_operation_codes %}
+      <a href="{% url 'operation_list' code.operation_code.id %}" >
+           {{ forloop.counter }}. {{ code.operation_code }} - {{ code.operation_code.product_type.name  }}
+      </a>
     {% endfor %}
-  </ul>
-        </div>
-    </div>
+
+
 </div>
 
 
-    <div id="table-container"  class="">
+
 <h4 class="mt-2"> Крой № {{ kroy_instance.kroy_no }} -- {{ kroy_instance.name }}</h4>
 <strong> Дата создания:</strong> {{ kroy_instance.created }}, <strong>Расход ткани:</strong> {{ kroy_instance.ras_tkani }},
     <strong>Расход дублерин:</strong> {{ kroy_instance.ras_dublerin }},

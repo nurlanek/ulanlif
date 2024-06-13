@@ -2,12 +2,12 @@
 
 {% block content %}
 <div class="container mt-5">
-  <h2>Delete Kroy Operation Code</h2>
-  <p>Are you sure you want to delete "{{ code.kroy.name }} - {{ code.operation_code.code }}"?</p>
+  <h2>Удалить назначение операции</h2>
+  <p>Вы уверены, что хотите удалить "{{ code.kroy.name }} - {{ code.operation_code.code }}"?</p>
   <form method="post">
     {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Confirm</button>
-    <a href="{% url 'kroy_operation_code_list' %}" class="btn btn-secondary">Cancel</a>
+    <button type="submit" class="btn btn-danger btn-sm">Подтвердить</button>
+    <a href="{% url 'kroy_operation_code_list' %}" class="btn btn-secondary btn-sm">Отменить</a>
   </form>
 </div>
 {% endblock %}
