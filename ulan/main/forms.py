@@ -24,13 +24,16 @@ class KroyForm(forms.ModelForm):
 
 class KroyDetailForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
+        self.kroy_instance = kwargs.pop('kroy_instance', None)
         super(KroyDetailForm, self).__init__(*args, **kwargs)
-        self.fields['user'].queryset = get_user_model().objects.all()
+        if self.kroy_instance:
+            self.fields['kroy'].widget.attrs['readonly'] = True
+            self.initial['kroy'] = self.kroy_instance.pk
+
 
     class Meta:
         model = Kroy_detail
-        fields = ['kroy', 'pachka', 'razmer', 'rost', 'stuk', 'user', 'city', 'color']  # You can specify specific fields if needed
-
+        fields = ['kroy', 'pachka', 'razmer', 'rost', 'stuk', 'city', 'color']
 
 class MasterdataSearchForm(forms.Form):
     start_date = forms.DateField(label='Дата начала', required=False)

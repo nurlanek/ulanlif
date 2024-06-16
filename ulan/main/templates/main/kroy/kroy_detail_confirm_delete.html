@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Подтвердить удаление{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h4>Вы уверены, что хотите удалить эту пачку?</h4>
+    <form method="post">{% csrf_token %}
+        <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+        <a href="{% url 'kroy-detail-list' %}" class="btn btn-secondary btn-sm">Отмена</a>
+    </form>
+</div>
+{% endblock %}

@@ -5,84 +5,57 @@
 <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 {% endblock %}
 
-{% block title %} {% if form.instance.pk %}Изменить крой детальный {% else %}Создать крой детальный{% endif %} {% endblock %}
+{% block title %} Создать новую крой деталь {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col">
-            {% include 'main/kroy/_nav_kroy.html' %}
-            <h5>{% if form.instance.pk %}Изменить крой детальный {% else %}Создать крой детальный{% endif %}</h5>
-            <form method="post">
-                {% csrf_token %}
-                <div class="row mt-2 ">
-                    <div class="col-md-2">{{ form.kroy.label_tag }}</div>
-                    <div class="col-6 col-md-3">{{ form.kroy }}</div>
-                </div>
-                <div class="row mt-2 ">
-                    <div class="col-md-2">{{ form.pachka.label_tag }}</div>
-                    <div class="col-6 col-md-3">{{ form.pachka }}</div>
-                </div>
-                <div class="row mt-2 ">
-                    <div class="col-md-2">{{ form.razmer.label_tag }}</div>
-                    <div class="col-6 col-md-3">{{ form.razmer }}</div>
-                </div>
-                <div class="row mt-2 ">
-                    <div class="col-md-2">{{ form.rost.label_tag }}</div>
-                    <div class="col-6 col-md-3">{{ form.rost }}</div>
-                </div>
-                <div class="row mt-2 ">
-                    <div class="col-md-2">{{ form.stuk.label_tag }}</div>
-                    <div class="col-6 col-md-3">{{ form.stuk }}</div>
-                </div>
-                <div class="row mt-2 ">
-                    <div class="col-md-2">{{ form.user.label_tag }}</div>
-                    <div class="col-6 col-md-3">{{ form.user }}</div>
-                </div>
-                <div class="row mt-2 ">
-                    <div class="col-md-2">{{ form.color.label_tag }}</div>
-                    <div class="col-6 col-md-3">{{ form.color }}</div>
-                </div>
-                <div class="row mt-2 ">
-                    <div class="col-md-2">{{ form.city.label_tag }}</div>
-                    <div class="col-6 col-md-3">{{ form.city }}</div>
-                </div>
-                <input type="submit" value="Сохранить" class="btn btn-success btn-sm mt-2">
-            </form>
-        </div>
-        <div class="col-7">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Крой</th>
-                    <th>Пачка</th>
-                    <th>Размер</th>
-                    <th>Рост</th>
-                    <th>Штук</th>
-                    <th>Свет</th>
-                    <th>Город</th>
+<div class="container mt-2">
 
-                </tr>
-                </thead>
-                <tbody>
-                {% for kroy_detail in kroy_detail_list %}
-                <tr>
-                    <td>{{ kroy_detail.kroy }}</td>
-                    <td>{{ kroy_detail.pachka }}</td>
-                    <td>{{ kroy_detail.razmer }}</td>
-                    <td>{{ kroy_detail.rost }}</td>
-                    <td>{{ kroy_detail.stuk }}</td>
-                    <td>{{ kroy_detail.color_id }}</td>
-                    <td>{{ kroy_detail.city_id }}</td>
-                    <td><a href="{% url 'kroy-detail-update' pk=kroy_detail.pk %}" class="btn btn-warning btn-sm" >изменить</a></td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
+    <h2>Создать новую крой деталь</h2>
+    <form method="post" enctype="multipart/form-data" action="">
+    {% csrf_token %}
+
+    <div class="form-group" style="display: none;">
+        <label for="{{ form.kroy.id_for_label }}">Крой</label>
+        <div class="ml-2" id="{{ form.kroy.id_for_label }}">{{ form.kroy }}</div>
     </div>
+
+    <div class="form-group">
+        <label for="{{ form.pachka.id_for_label }}">Пачка</label>
+        <div class="ml-2" id="{{ form.pachka.id_for_label }}">{{ form.pachka }}</div>
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.razmer.id_for_label }}">Размер</label>
+        <div class="ml-2" id="{{ form.razmer.id_for_label }}">{{ form.razmer }}</div>
+    </div>
+
+    <div class="form-group">
+        <div class="ml-2"><label for="{{ form.rost.id_for_label }}">Рост</label>
+        <div class="ml-2" id="{{ form.rost.id_for_label }}">{{ form.rost }}</div>
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.stuk.id_for_label }}">Штук</label>
+        <div class="ml-2" id="{{ form.stuk.id_for_label }}">{{ form.stuk }}</div>
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.city.id_for_label }}">Город</label>
+        <div class="ml-2" id="{{ form.city.id_for_label }}">{{ form.city }}</div>
+    </div>
+
+    <div class="form-group">
+        <label for="1">Цвет</label>
+        <div class="ml-2" id="1">{{ form.color }}</div>
+    </div>
+
+<button type="submit" class="btn btn-primary mt-2 btn-sm">Сохранить</button>
+
+</form>
+
 </div>
 {% endblock %}
+
 {% block js_files %}
 <script src="{% static 'main/js/script.js' %}"></script>
 {% endblock %}

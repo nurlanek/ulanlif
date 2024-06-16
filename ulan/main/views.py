@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import (Kroy, Kroy_detail, Operation_code, Operation_list, Kroy_operation_code)
 from .forms import (KroyForm, KroyDetailForm, Masterdata, MasterdataSearchForm,
                     OperationCodeForm, OperationListForm, KroyOperationCodeForm,)
@@ -9,6 +9,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import redirect
+from django.http import Http404
 
 
 
@@ -141,6 +142,7 @@ class KroyDetailListView(LoginRequiredMixin, ListView):
         context['latest_kroys'] = latest_kroys  # Son 10 kaydı context'e ekle
         return context
 
+
 class KroyDetailCreateView(LoginRequiredMixin, CreateView):
     model = Kroy_detail
     form_class = KroyDetailForm
@@ -157,11 +159,46 @@ class KroyDetailCreateView(LoginRequiredMixin, CreateView):
         context['kroy_detail_list'] = Kroy_detail.objects.all().order_by('-created')[:10]  # Add this line to pass the data to the template
         return context
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kroy_instance_id = self.kwargs.get('kroy_id')
+        try:
+            kroy_instance = Kroy.objects.get(pk=kroy_instance_id)
+            kwargs['kroy_instance'] = kroy_instance
+        except Kroy.DoesNotExist:
+            raise Http404("Kroy matching query does not exist.")
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        #burada geldigim kroy-detail-view daki secilmis kroya gitmesi lazim
+        return reverse_lazy('kroy-detail-view', kwargs={'kroy_id': self.object.kroy.pk})
+
 class KroyDetailUpdateView(UpdateView):
     model = Kroy_detail
     form_class = KroyDetailForm
     template_name = 'main/kroy/kroy_detail_form.html'
     success_url = '/kroy-detail/'
+    def get_success_url(self):
+        #burada geldigim kroy-detail-view daki secilmis kroya gitmesi lazim
+        return reverse_lazy('kroy-detail-view', kwargs={'kroy_id': self.object.kroy.pk})
+
+
+class KroyDetailDeleteView(LoginRequiredMixin, DeleteView):
+    model = Kroy_detail
+    template_name = 'main/kroy/kroy_detail_confirm_delete.html'
+    #success_url = reverse_lazy('kroy-detail-view')  # Silme işleminden sonra yönlendirilecek URL
+
+    def handle_no_permission(self):
+        return redirect('login')
+
+    def get_success_url(self):
+        #burada geldigim kroy-detail-view daki secilmis kroya gitmesi lazim
+        return reverse_lazy('kroy-detail-view', kwargs={'kroy_id': self.object.kroy.pk})
+
 
 # ---Kroy detail sonu ---
 # --- Operasynu kodu olusturma alani basi---

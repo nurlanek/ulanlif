@@ -2,8 +2,8 @@ from django.urls import path
 from . import views
 from .views import (KroyListView, KroyCreateView, KroyUpdateView, KroyDetailListView,
                     KroyDetailCreateView, KroyDetailUpdateView, MasterdataListView, MasterdatauserListView,
-                    operation_code_create, operation_code_update, operation_code_delete,
-                    get_operation_codes, get_operation_list)
+                    operation_code_create, operation_code_update, operation_code_delete, KroyDetailView,
+                    KroyDetailDeleteView, get_operation_codes, get_operation_list)
 
 
 urlpatterns = [
@@ -14,10 +14,19 @@ urlpatterns = [
     path('kroy/create/', KroyCreateView.as_view(), name='kroy-create'),
     path('<int:kroy_id>/', views.KroyDetailView, name='kroy-detail-view'),
     path('kroy/update/<int:pk>/', KroyUpdateView.as_view(), name='kroy-update'),
-    path('kroy-detail/', KroyDetailListView.as_view(), name='kroy-detail-list'),
-    path('kroy-detail/create/', KroyDetailCreateView.as_view(), name='kroy-detail-create'),
-    path('kroy-detail/update/<int:pk>/', KroyDetailUpdateView.as_view(), name='kroy-detail-update'),
 
+    path('kroy-detail/', KroyDetailListView.as_view(), name='kroy-detail-list'),
+    path('kroy-detail/create/<int:kroy_id>', KroyDetailCreateView.as_view(), name='kroy-detail-create'),
+    path('kroy-detail/update/<int:pk>/', KroyDetailUpdateView.as_view(), name='kroy-detail-update'),
+    path('kroy-detail/delete/<int:pk>/', KroyDetailDeleteView.as_view(), name='kroy-detail-delete'),
+    path('kroy-detail/<int:kroy_id>/', KroyDetailView, name='kroy-detail-view'),
+
+
+
+    #path('kroy_details/<int:pk>/', views.KroyDetailView, name='kroy-detail-view'),
+
+    #path('kroy_details/new/<int:kroy_id>/', KroyDetailCreateView.as_view(), name='kroy-detail-create'),
+    #path('kroy_details/<int:pk>/', views.KroyDetailView, name='kroy-detail-view'),
     path('masterdata', MasterdataListView.as_view(), name='masterdata_list'),
 
     #Users page
