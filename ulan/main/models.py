@@ -95,7 +95,7 @@ class Kroy_detail(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name='Created at')
     color = models.ForeignKey(Colors, on_delete=models.CASCADE, verbose_name='Цвет')
     city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name='Город')
-
+    description = models.TextField(null=True, blank=True, verbose_name='Примечение')
 
     def __str__(self):
         return self.pachka

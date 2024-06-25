@@ -33,7 +33,10 @@ class KroyDetailForm(forms.ModelForm):
 
     class Meta:
         model = Kroy_detail
-        fields = ['kroy', 'pachka', 'razmer', 'rost', 'stuk', 'city', 'color']
+        fields = ['kroy', 'pachka', 'razmer', 'rost', 'stuk', 'city', 'color','description']
+        widgets = {
+            'description': forms.Textarea(attrs={'rows': 3, 'cols': 23}),
+        }
 
 class MasterdataSearchForm(forms.Form):
     start_date = forms.DateField(label='Дата начала', required=False)

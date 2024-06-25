@@ -5,6 +5,7 @@ from .forms import (KroyForm, KroyDetailForm, Masterdata, MasterdataSearchForm,
                     OperationCodeForm, OperationListForm, KroyOperationCodeForm,)
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.db.models import Sum
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse, HttpResponseRedirect
@@ -119,12 +120,14 @@ def KroyDetailView(request, kroy_id):
     kroy_details = Kroy_detail.objects.filter(kroy=kroy_instance)
     kroy_list = Kroy.objects.all()
     kroy_operation_codes = Kroy_operation_code.objects.filter(kroy=kroy_instance).order_by('operation_code')
-
+    # Stuk sütununun toplamını hesapla
+    stuk_total = kroy_details.aggregate(stuk_sum=Sum('stuk'))['stuk_sum'] or 0
     context = {
         'objects':kroy_list,
         'kroy_instance': kroy_instance,
         'kroy_details': kroy_details,
         'kroy_operation_codes': kroy_operation_codes,  # Yeni eklenen liste
+        'stuk_total': stuk_total,  # Toplamı context'e ekle
     }
     return render(request, 'main/kroy/kroy_detail_view.html', context)
 

@@ -28,8 +28,6 @@
         </div>
     </div>
 </div>
-
-
     <div id="table-container" class="">
         <div class="container mt-3">
             Посмотреть операции:
@@ -43,7 +41,7 @@
         <h4 class="mt-2"> Крой № {{ kroy_instance.kroy_no }} -- {{ kroy_instance.name }}</h4>
         <p><strong> Дата создания:</strong> {{ kroy_instance.created }}, <strong>Расход ткани:</strong> {{ kroy_instance.ras_tkani }},
             <strong>Расход дублерин:</strong> {{ kroy_instance.ras_dublerin }},
-            <strong>Единица:</strong> {{ kroy_instance.edinitsa }}</p>
+            <strong>Единица:</strong> {{ stuk_total }}</p>
         <p><strong>Примечение:</strong> {{ kroy_instance.description }}</p>
 
 
@@ -59,6 +57,7 @@
                     <th scope="col">Город</th>
                     <th scope="col"></th>
                     <th scope="col"></th>
+                    <th scope="col">Примечение:</th>
                 </tr>
             </thead>
 
@@ -76,6 +75,7 @@
                     <td> <a href="{% url 'kroy-detail-update' detail.pk %}" >изменить</a></td>
 
                     <td><a href="{% url 'kroy-detail-delete' detail.pk %}" class="text-danger">удалит</a></td>
+                    <td>{{ detail.description }}</td>
                 </tr>
                 {% empty %}
                 <tr>

@@ -49,8 +49,13 @@
         <div class="ml-2" id="1">{{ form.color }}</div>
     </div>
 
-<button type="submit" class="btn btn-primary mt-2 btn-sm">Сохранить</button>
+        <div class="form-group">
+        <label for="{{ form.description.id_for_label }}">Примичение:</label>
+        <div class="ml-2" id="{{ form.description.id_for_label }}">{{ form.description }}</div>
+    </div>
 
+<button type="submit" class="btn btn-primary mt-2 btn-sm">Сохранить</button>
+    </div>
 </form>
 
 </div>
