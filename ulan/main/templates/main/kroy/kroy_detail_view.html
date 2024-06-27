@@ -48,16 +48,17 @@
         <table class="table table-sm caption-top w-auto h-auto">
             <thead class="table-light">
                 <tr>
-                    <th scope="col">#</th>
+
                     <th scope="col">Пачка</th>
                     <th scope="col">Размер</th>
                     <th scope="col">Рост</th>
                     <th scope="col">Штук</th>
                     <th scope="col">Цвет</th>
                     <th scope="col">Город</th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
                     <th scope="col">Примечение:</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+
                 </tr>
             </thead>
 
@@ -65,17 +66,18 @@
                 {% for detail in kroy_details %}
                 <tr>
                     <!-- sadece small-row sınıfı kullanılıyor -->
-                    <th scope="row">{{ forloop.counter }}</th>
+
                     <td>{{ detail.pachka }}</td>
                     <td>{{ detail.razmer }}</td>
                     <td>{{ detail.rost }}</td>
                     <td>{{ detail.stuk }}</td>
                     <td>{{ detail.color }}</td>
                     <td>{{ detail.city }}</td>
+                    <td>{{ detail.description }}</td>
                     <td> <a href="{% url 'kroy-detail-update' detail.pk %}" >изменить</a></td>
 
                     <td><a href="{% url 'kroy-detail-delete' detail.pk %}" class="text-danger">удалит</a></td>
-                    <td>{{ detail.description }}</td>
+
                 </tr>
                 {% empty %}
                 <tr>
