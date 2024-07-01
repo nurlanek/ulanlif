@@ -48,7 +48,6 @@ class OperationsAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ("kroy","product_type", "name", "price", )
     search_fields = ("name",)
 
-
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 admin.site.register(Masterdata, MasterdataAdmin)
