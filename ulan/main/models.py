@@ -123,8 +123,6 @@ class Masterdata(models.Model):
     def __str__(self):
         return f"{self.status} - {self.kroy_no}"
 
-
-
 class Operations(models.Model):
     class Meta:
             verbose_name_plural = ('Операции')
@@ -136,4 +134,3 @@ class Operations(models.Model):
 
     def total_price(self):
         return sum(self.objects.all().values_list('price', flat=True))
-

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {% endblock %}
+
+{% block content %}
+
+    <h4>Регстрация материалов</h4>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group row">
+                <label for="id_isim" class="col-sm-4 col-form-label">Наименование</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="id_isim" name="isim" value="{{ form.isim.value|default_if_none:'' }}">
+                </div>
+            </div>
+            <div class="form-group row mt-2">
+                <label for="id_miktar" class="col-sm-4 col-form-label">Количество</label>
+                <div class="col-sm-8">
+                    <input type="number" class="form-control" id="id_miktar" name="miktar" value="{{ form.miktar.value|default_if_none:'' }}">
+                </div>
+            </div>
+            <div class="form-group row mt-2">
+                <label for="id_malzeme_category" class="col-sm-4 col-form-label">Категория</label>
+                <div class="col-sm-8">
+                    <select class="form-control" id="id_malzeme_category" name="malzeme_category">
+                    {% for choice in form.malzeme_category.field.choices %}
+                        <option value="{{ choice.0 }}" {% if choice.0 == form.malzeme_category.value %}selected{% endif %}>{{ choice.1 }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row mt-2">
+                <label for="id_malzeme_birim" class="col-sm-4 col-form-label">Единица измерения</label>
+                <div class="col-sm-8">
+                    <select class="form-control" id="id_malzeme_birim" name="malzeme_birim">
+                    {% for choice in form.malzeme_birim.field.choices %}
+                        <option value="{{ choice.0 }}" {% if choice.0 == form.malzeme_birim.value %}selected{% endif %}>{{ choice.1 }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row mt-2">
+                <label for="id_aciklama" class="col-sm-4 col-form-label">Примичение</label>
+                <div class="col-sm-8">
+                    <textarea class="form-control" id="id_aciklama" name="aciklama">{{ form.aciklama.value|default_if_none:'' }}</textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Сохранить</button>
+        </form>
+        <a href="{% url 'malzeme_listesi' %}" class="btn btn-secondary mt-3">Список материалов</a>
+    </div>
+
+{% endblock %}

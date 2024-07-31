@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ malzeme.isim }}{% endblock %}
+
+{% block content %}
+
+<!-- print area-->
+<div id="table-container" class="">
+    <h4 class="mt-2">{{ malzeme.isim }}</h4>
+    <p>Категория: {{ malzeme.malzeme_category }}</p>
+    <p>Количество: {{ malzeme.miktar }} {{ malzeme.malzeme_birim }}</p>
+    <p>Примечение: {{ malzeme.aciklama }}</p>
+
+    <h5>Движение входа</h5>
+    <ul>
+        {% for hareket in giris_hareketleri %}
+            <li>{{ hareket.miktar }} {{ malzeme.malzeme_birim }} - {{ hareket.tedarikci }} - {{ hareket.giris_tarihi }}</li>
+        {% empty %}
+            <li>Движение входа пока нет.</li>
+        {% endfor %}
+    </ul>
+
+    <h5>Движение выхода</h5>
+    <ul>
+        {% for hareket in cikis_hareketleri %}
+            <li>{{ hareket.miktar }} {{ malzeme.malzeme_birim }} - {{ hareket.uretim_siparisi }} - {{ hareket.cikis_tarihi }}</li>
+        {% empty %}
+            <li>Движение выхода пока нет.</li>
+        {% endfor %}
+    </ul>
+
+    <h5>Движение трансфера</h5>
+    <ul>
+        {% for hareket in transfer_hareketleri %}
+            <li>{{ hareket.miktar }} {{ malzeme.malzeme_birim }} - {{ hareket.hedef_ambar }} - {{ hareket.transfer_tarihi }}</li>
+        {% empty %}
+            <li>Движение трансфера пока нет.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

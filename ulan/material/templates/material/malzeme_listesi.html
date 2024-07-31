@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {% endblock %}
+
+{% block content %}
+
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+<a href="{% url 'malzeme_giris' %}" class="btn btn-secondary mt-2">Поступление матерала</a>
+ <a href="{% url 'malzeme_cikis'  %}" class="btn btn-secondary mt-2" class="btn">Выход материала</a>
+     <a href="{% url 'malzeme_kaydet' %}" class="btn btn-secondary mt-2">Регистрация материала</a>
+<h4 class="mt-3">Список материалов</h4>
+<table class="table mt-2">
+    <thead>
+        <tr>
+            <th scope="col">Название материала</th>
+            <th scope="col">Остаток</th>
+            <th scope="col">Единица измерения</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for malzeme in malzemeler %}
+            <tr>
+                <td><a href="{% url 'malzeme_detayi' malzeme.pk %}">{{ malzeme.isim }}</a></td>
+                <td>{{ malzeme.miktar }}</td>
+                <td>{{ malzeme.malzeme_birim }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

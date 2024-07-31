@@ -3,8 +3,6 @@ from .models import Kroy, Kroy_detail, Masterdata, Operation_code, Operation_lis
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 
-
-
 class KroyForm(forms.ModelForm):
     class Meta:
         model = Kroy
@@ -21,7 +19,6 @@ class KroyForm(forms.ModelForm):
             raise ValidationError("Этот номер Кроя уже существует. Пожалуйста, введите другой номер.")
         return kroy_no
 
-
 class KroyDetailForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.kroy_instance = kwargs.pop('kroy_instance', None)
@@ -29,7 +26,6 @@ class KroyDetailForm(forms.ModelForm):
         if self.kroy_instance:
             self.fields['kroy'].widget.attrs['readonly'] = True
             self.initial['kroy'] = self.kroy_instance.pk
-
 
     class Meta:
         model = Kroy_detail
@@ -57,7 +53,6 @@ class OperationCodeForm(forms.ModelForm):
         widgets = {
             'description': forms.Textarea(attrs={'rows': 3, 'cols': 23}),
         }
-
 
 class OperationListForm(forms.ModelForm):
     class Meta:
