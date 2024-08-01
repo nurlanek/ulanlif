@@ -4,12 +4,29 @@
 {% block title %}Malzeme Çıkışı{% endblock %}
 
 {% block content %}
-
+{% include 'material/menu_material.html' %}
 <h4>Выход материала</h4>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Сохранить</button>
+        <div class="form-row">
+            <div class="form-group col-md-4 mt-2">
+                <label for="{{ form.malzeme.id_for_label }}">Материал</label>
+                <select id="{{ form.malzeme.id_for_label }}" name="{{ form.malzeme.name }}" class="form-control">
+                    {% for choice in form.malzeme.field.choices %}
+                        <option value="{{ choice.0 }}" {% if choice.0 == form.malzeme.value %}selected{% endif %}>{{ choice.1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-4 mt-2">
+                <label for="{{ form.miktar.id_for_label }}">Штук</label>
+                <input type="number" id="{{ form.miktar.id_for_label }}" name="{{ form.miktar.name }}" class="form-control" value="{{ form.miktar.value }}">
+            </div>
+            <div class="form-group col-md-4 mt-2">
+                <label for="{{ form.uretim_siparisi.id_for_label }}">Производсвенный заказ</label>
+                <input type="text" id="{{ form.uretim_siparisi.id_for_label }}" name="{{ form.uretim_siparisi.name }}" class="form-control" value="{{ form.uretim_siparisi.value }}">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Отправить</button>
     </form>
 
 {% endblock %}

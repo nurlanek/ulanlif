@@ -4,6 +4,7 @@
 {% block title %} {% endblock %}
 
 {% block content %}
+{% include 'material/menu_material.html' %}
     <h4>Вход материалов</h4>
     <form method="post">
         {% csrf_token %}

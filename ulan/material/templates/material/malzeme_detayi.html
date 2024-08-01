@@ -4,7 +4,8 @@
 {% block title %}{{ malzeme.isim }}{% endblock %}
 
 {% block content %}
-
+{% include 'material/menu_material.html' %}
+{% include 'partials/print.html' %}
 <!-- print area-->
 <div id="table-container" class="">
     <h4 class="mt-2">{{ malzeme.isim }}</h4>
