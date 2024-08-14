@@ -1,32 +1,39 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import (Kroy, Kroy_detail, Operation_code, Operation_list, Kroy_operation_code)
 from .forms import (KroyForm, KroyDetailForm, Masterdata, MasterdataSearchForm,
                     OperationCodeForm, OperationListForm, KroyOperationCodeForm,)
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.db.models import Sum
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse, HttpResponseRedirect
-from django.shortcuts import redirect
 from django.http import Http404
 
 
 
 
+#@permission_required('main.add_operationcode', raise_exception=True)
 def index(request):
     if not request.user.is_authenticated:
         return redirect("login")
     return render(request, "main/index.html")
 
+def index1(request):
+    if not request.user.is_authenticated:
+        return redirect("login")
+    return render(request, "main/index1.html")
 # --- Master data alani basi ---
-class MasterdataListView(LoginRequiredMixin, ListView):
+class MasterdataListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
 
     model = Masterdata
     template_name = 'main/mdata/masterdata_list.html'
     context_object_name = 'masterdata_list'
     login_url = '/login/'
+    permission_required = 'main.view_masterdata'
 
     def handle_no_permission(self):
         # Kullanıcı oturum açmamışsa, giriş yapma sayfasına yönlendir
@@ -59,7 +66,6 @@ class MasterdataListView(LoginRequiredMixin, ListView):
 
         queryset = queryset.order_by('-created')
         return queryset
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['search_form'] = MasterdataSearchForm(self.request.GET)
@@ -69,10 +75,11 @@ class MasterdataListView(LoginRequiredMixin, ListView):
 # --- Masterdata alani sonu ---
 
 # --- Kroy basi ---
-class KroyListView(LoginRequiredMixin, ListView):
+class KroyListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     model = Kroy
     template_name = 'main/kroy/kroy_list.html'
     login_url = '/login/'
+    permission_required = 'main.view_kroy'
 
     def handle_no_permission(self):
         # Kullanıcı oturum açmamışsa, giriş yapma sayfasına yönlendir
@@ -82,12 +89,13 @@ class KroyListView(LoginRequiredMixin, ListView):
         # Filter the Kroy objects where is_active is True
         return Kroy.objects.filter(is_active=True).order_by('-id')[:100]
 
-class KroyCreateView(LoginRequiredMixin, CreateView):
+class KroyCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
     model = Kroy
     form_class = KroyForm
     template_name = 'main/kroy/kroy_form.html'
     success_url = reverse_lazy ('kroy-create')
     login_url = '/login/'
+    permission_required = 'app_name.view_kroy'
 
     def handle_no_permission(self):
         # Kullanıcı oturum açmamışsa, giriş yapma sayfasına yönlendir
@@ -99,12 +107,13 @@ class KroyCreateView(LoginRequiredMixin, CreateView):
         return context
 
 
-class KroyUpdateView(LoginRequiredMixin, UpdateView):
+class KroyUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     model = Kroy
     form_class = KroyForm
     template_name = 'main/kroy/kroy_form.html'
     success_url = '/kroy/'
     login_url = '/login/'
+    permission_required = 'app_name.view_kroy'
 
     def handle_no_permission(self):
         # Kullanıcı oturum açmamışsa, giriş yapma sayfasına yönlendir
@@ -112,6 +121,7 @@ class KroyUpdateView(LoginRequiredMixin, UpdateView):
 # --- Kroy sonu ---
 # ---Kroy detail basi ---
 @login_required
+@permission_required('main.add_view', raise_exception=True)
 def KroyDetailView(request, kroy_id):
     if not request.user.is_authenticated:
         return redirect("login")
@@ -131,10 +141,12 @@ def KroyDetailView(request, kroy_id):
     }
     return render(request, 'main/kroy/kroy_detail_view.html', context)
 
-class KroyDetailListView(LoginRequiredMixin, ListView):
+class KroyDetailListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     model = Kroy_detail
     template_name = 'main/kroy/kroy_detail_list.html'
     login_url = '/login/'
+    permission_required = 'app_name.view_KroyDetail'
+
     def handle_no_permission(self):
         # Kullanıcı oturum açmamışsa, giriş yapma sayfasına yönlendir
         return redirect('login')
@@ -146,12 +158,13 @@ class KroyDetailListView(LoginRequiredMixin, ListView):
         return context
 
 
-class KroyDetailCreateView(LoginRequiredMixin, CreateView):
+class KroyDetailCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
     model = Kroy_detail
     form_class = KroyDetailForm
     template_name = 'main/kroy/kroy_detail_form.html'
     success_url = reverse_lazy('kroy-detail-create')
     login_url = '/login/'
+    permission_required = 'app_name.view_KroyDetail'
 
     def handle_no_permission(self):
         # Kullanıcı oturum açmamışsa, giriş yapma sayfasına yönlendir
@@ -180,19 +193,22 @@ class KroyDetailCreateView(LoginRequiredMixin, CreateView):
         #burada geldigim kroy-detail-view daki secilmis kroya gitmesi lazim
         return reverse_lazy('kroy-detail-view', kwargs={'kroy_id': self.object.kroy.pk})
 
-class KroyDetailUpdateView(UpdateView):
+class KroyDetailUpdateView(UpdateView, PermissionRequiredMixin):
     model = Kroy_detail
     form_class = KroyDetailForm
     template_name = 'main/kroy/kroy_detail_form.html'
     success_url = '/kroy-detail/'
+    permission_required = 'app_name.view_KroyDetail'
+
     def get_success_url(self):
         #burada geldigim kroy-detail-view daki secilmis kroya gitmesi lazim
         return reverse_lazy('kroy-detail-view', kwargs={'kroy_id': self.object.kroy.pk})
 
 
-class KroyDetailDeleteView(LoginRequiredMixin, DeleteView):
+class KroyDetailDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
     model = Kroy_detail
     template_name = 'main/kroy/kroy_detail_confirm_delete.html'
+    permission_required = 'app_name.view_KroyDetail'
     #success_url = reverse_lazy('kroy-detail-view')  # Silme işleminden sonra yönlendirilecek URL
 
     def handle_no_permission(self):
@@ -205,6 +221,8 @@ class KroyDetailDeleteView(LoginRequiredMixin, DeleteView):
 
 # ---Kroy detail sonu ---
 # --- Operasynu kodu olusturma alani basi---
+@login_required
+@permission_required('main.add_view', raise_exception=True)
 def operation_code_create(request):
     if request.method == 'POST':
         form = OperationCodeForm(request.POST)
@@ -215,6 +233,8 @@ def operation_code_create(request):
         form = OperationCodeForm()
     return render(request, 'main/operation/operation_code_create.html', {'form': form})
 
+@login_required
+@permission_required('main.add_view', raise_exception=True)
 def operation_code_update(request, pk):
     operation_code = get_object_or_404(Operation_code, pk=pk)
     if request.method == 'POST':
@@ -226,6 +246,8 @@ def operation_code_update(request, pk):
         form = OperationCodeForm(instance=operation_code)
     return render(request, 'main/operation/operation_code_update.html', {'form': form})
 
+@login_required
+@permission_required('main.add_view', raise_exception=True)
 def operation_code_delete(request, pk):
     operation_code = get_object_or_404(Operation_code, pk=pk)
     if request.method == 'POST':
@@ -233,6 +255,8 @@ def operation_code_delete(request, pk):
         return redirect('operation_code_list')  # Silme işlemi gerçekleştiğinde listeleme sayfasına yönlendir
     return render(request, 'main/operation/operation_code_delete.html', {'object': operation_code})
 
+@login_required
+@permission_required('main.add_view', raise_exception=True)
 def operation_code_list(request):
     operation_codes = Operation_code.objects.filter(is_active=True)
     return render(request, 'main/operation/operation_code_list.html', {'operation_codes': operation_codes})
@@ -240,6 +264,8 @@ def operation_code_list(request):
 # --- operasyon kodu olusturma alani sonu ---
 
 # --- operasyon listesi olusturma alani basi ---
+@login_required
+@permission_required('main.add_view', raise_exception=True)
 def operation_list_detail(request, operation_code_id):
     operation_code = get_object_or_404(Operation_code, id=operation_code_id)
     operation_lists = Operation_list.objects.filter(operation_code=operation_code)
@@ -250,6 +276,8 @@ def operation_list_detail(request, operation_code_id):
         'total_price': total_price,
     })
 
+@login_required
+@permission_required('main.add_view', raise_exception=True)
 def operation_list_create(request, operation_code_id):
     operation_code = get_object_or_404(Operation_code, id=operation_code_id)
     if request.method == "POST":
@@ -263,6 +291,8 @@ def operation_list_create(request, operation_code_id):
         form = OperationListForm()
     return render(request, 'main/operation/operation_list_form.html', {'form': form, 'operation_code': operation_code})
 
+@login_required
+@permission_required('main.add_view', raise_exception=True)
 def operation_list_update(request, pk):
     operation_list = get_object_or_404(Operation_list, pk=pk)
     if request.method == "POST":
@@ -274,13 +304,16 @@ def operation_list_update(request, pk):
         form = OperationListForm(instance=operation_list)
     return render(request, 'main/operation/operation_list_form.html', {'form': form})
 
+@login_required
+@permission_required('main.add_view', raise_exception=True)
 def operation_list_delete(request, pk):
     operation_list = get_object_or_404(Operation_list, pk=pk)
     operation_code_id = operation_list.operation_code.id
     operation_list.delete()
     return redirect('operation_list_detail', operation_code_id=operation_code_id)
 
-
+@login_required
+@permission_required('main.add_view', raise_exception=True)
 def OperationListView(request, operation_code_id):
     operation_code_instance = get_object_or_404(Operation_code, pk=operation_code_id)
     operation_lists = Operation_list.objects.filter(operation_code=operation_code_instance)
@@ -296,11 +329,15 @@ def OperationListView(request, operation_code_id):
 # --- operasyon listesi olusturma alani sonu ---
 
 # --- Operasyonu Kroy icin atama alani basi ---
+@login_required
+@permission_required('main.add_view', raise_exception=True)
 def kroy_operation_code_list(request):
     codes = Kroy_operation_code.objects.filter(is_active=True)
 
     return render(request, 'main/opercode/kroy_operation_code_list.html', {'codes': codes})
 
+@login_required
+@permission_required('main.add_view', raise_exception=True)
 def kroy_operation_code_create(request):
     if request.method == 'POST':
         form = KroyOperationCodeForm(request.POST)
@@ -311,6 +348,8 @@ def kroy_operation_code_create(request):
         form = KroyOperationCodeForm()
     return render(request, 'main/opercode/kroy_operation_code_form.html', {'form': form})
 
+@login_required
+@permission_required('main.add_view', raise_exception=True)
 def kroy_operation_code_edit(request, pk):
     code = get_object_or_404(Kroy_operation_code, pk=pk)
     if request.method == 'POST':
@@ -322,6 +361,8 @@ def kroy_operation_code_edit(request, pk):
         form = KroyOperationCodeForm(instance=code)
     return render(request, 'main/opercode/kroy_operation_code_form.html', {'form': form})
 
+@login_required
+@permission_required('main.add_view', raise_exception=True)
 def kroy_operation_code_delete(request, pk):
     code = get_object_or_404(Kroy_operation_code, pk=pk)
     if request.method == 'POST':
@@ -331,6 +372,8 @@ def kroy_operation_code_delete(request, pk):
 # --- Operasyonu Kroy icin atama alani sonu ---
 
 # --- Kullanicilar safasi basi ---
+@login_required
+@permission_required('main.add_view', raise_exception=True)
 def get_operation_codes(request):
     kroy_no = request.GET.get('kroy_no')
     if kroy_no:
@@ -339,6 +382,8 @@ def get_operation_codes(request):
         return JsonResponse(data, safe=False)
     return JsonResponse([], safe=False)
 
+@login_required
+@permission_required('main.add_view', raise_exception=True)
 def get_operation_list(request):
     operation_code = request.GET.get('operation_code')
     if operation_code:
@@ -347,6 +392,8 @@ def get_operation_list(request):
         return JsonResponse(data, safe=False)
     return JsonResponse([], safe=False)
 
+@login_required
+@permission_required('main.add_view', raise_exception=True)
 def get_operation_price(request):
     operation_id = request.GET.get('operation_id')
     if operation_id:
@@ -357,6 +404,8 @@ def get_operation_price(request):
             return JsonResponse({'price': 0})
     return JsonResponse({'price': 0})
 
+@login_required
+#@permission_required('main.add_view', raise_exception=True)
 def MasterdatauserListView(request):
     if not request.user.is_authenticated:
         return redirect('masterdata_login')
@@ -392,4 +441,4 @@ def MasterdatauserListView(request):
             'status_list': [option[0] for option in Masterdata.OPTION_CHOICES],
         }
         return render(request, 'main/mdata/masterdatauser.html', context)
-# --- Kullanicilar safasi sonu--
+# --- Kullanicilar sayfasi sonu--

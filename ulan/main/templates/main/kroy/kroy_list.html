@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "main/base.html" %}
 
 {% load static %}
 
@@ -8,11 +8,11 @@
 {% block title %} Крой Список {% endblock %}
 
 {% block content %}
+{% include 'partials/print.html' %}
+<div class="container mt-2" id="table-container">
 
-<div class="container mt-2">
 
-
-    <table class="table caption-top w-auto">
+    <table class="table table-striped" >
         <caption>Крой Список</caption>
         <thead class="table-light">
         <tr>

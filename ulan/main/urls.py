@@ -7,8 +7,9 @@ from .views import (KroyListView, KroyCreateView, KroyUpdateView, KroyDetailList
 
 
 urlpatterns = [
-    path("", views.index, name="home"),
+    #path("", views.index, name="home"),
     path("index", views.index),
+    path("index1", views.index1),
 
     path('kroy/', KroyListView.as_view(), name='kroy-list'),
     path('kroy/create/', KroyCreateView.as_view(), name='kroy-create'),

@@ -2,3 +2,15 @@ h1 {
     font-size: 40px;
     border-bottom:;
 }
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.btn {
+  position: absolute;
+  top: px;
+  left: 50%;
+  transform: translateX(-50%);
+}

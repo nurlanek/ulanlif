@@ -42,8 +42,8 @@
     </div>
 </form>
 
-<table class="table caption-top">
-        <caption>Рабочий процесс</caption>
+<table class="table caption-top" id="myTable">
+        <caption> {% include 'partials/to_exel.html' %}</caption>
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -81,7 +81,7 @@
                     {% endif %}
                 </td>
                 <td>{{ masterdata.operations }} </td>
-                <td>-{{ masterdata.price }}сом </td>
+                <td>{{ masterdata.price }}сом </td>
                 <td>{{ masterdata.operation_code }} </td>
                 <td>{{ masterdata.user }} </td>
                 <td>{{ masterdata.description }} </td>

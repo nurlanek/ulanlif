@@ -1,0 +1,42 @@
+{% extends 'orders/base.html' %}
+
+{% block content %}
+{% include 'partials/print.html' %}
+
+<div class="container mt-4" id="table-container">
+    <h2>Список заказов</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Номер заказа</th>
+                <th>Клиент</th>
+                <th>Дата создания</th>
+                <th>Дата обновления</th>
+                <th>Описание</th>
+                <th>Позиции заказа</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.orderno }}</td>
+                <td>{{ order.client.name }}</td>
+                <td>{{ order.created_at|date:"d.m.Y H:i" }}</td>
+                <td>{{ order.updated_at|date:"d.m.Y H:i" }}</td>
+                <td>{{ order.description }}</td>
+                <td>
+                    <a href="{% url 'orderitem_list_by_order' order.id %}" class="btn btn-info btn-sm">Просмотреть позиции</a>
+                </td>
+                <td>
+                    <a href="{% url 'order_edit' order.pk %}" class="btn btn-warning btn-sm">Изменить</a>
+                    <a href="{% url 'order_delete' order.pk %}" class="btn btn-danger btn-sm">Удалить</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,15 +1,17 @@
-{% extends "base.html" %}
+{% extends "main/base.html" %}
 {% load static %}
 {% block title %} Home {% endblock %}
 
 {% block css_files %}
-<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+
 {% endblock %}
 
 {% block content %}
 <!-- kroy_masterdata.htm -->
 
-<div class="container">
+<div id="myTable" class="">
+
+
     {% include 'main/mdata/_masterdata_list.html' %}
 
 </div>
@@ -18,5 +20,6 @@
 
 {% block js_files %}
 <script src="{% static 'main/js/script.js' %}"></script>
+<script src="{% static 'js/to_exel.js' %}"></script>
 
 {% endblock %}

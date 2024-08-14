@@ -1,0 +1,37 @@
+{% extends 'orders/base.html' %}
+
+{% block content %}
+{% include 'partials/print.html' %}
+<div class="container mt-4" id="table-container">
+    <h2>Список позиций для заказа #{{ order.id }}</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Продукт</th>
+                <th>Количество</th>
+                <th>Цена</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order_items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price }}</td>
+                <td>
+                    <a href="{% url 'orderitem_edit' item.pk %}" class="btn btn-warning btn-sm">Изменить</a>
+                    <a href="{% url 'orderitem_delete' item.pk %}" class="btn btn-danger btn-sm">Удалить</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">Нет позиций заказа.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'orderitem_add' order.id %}" class="btn btn-primary">Добавить позицию заказа</a>
+    <a href="{% url 'order_list' %}" class="btn btn-secondary">Назад к списку заказов</a>
+</div>
+{% endblock %}

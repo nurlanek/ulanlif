@@ -1,0 +1,58 @@
+
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">Demo V 1</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar">
+
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Крой</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'kroy-list' %}">Крой список</a></li>
+                        <li><a class="dropdown-item" href="{% url 'kroy-create' %}">Создать крой</a></li>
+                       <!--<li><a class="dropdown-item" href="">Создать крой деталь</a></li> -->
+
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Операция</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'operation_code_list' %}">Список код операции</a></li>
+                        <li><a class="dropdown-item" href="{% url 'kroy_operation_code_list' %}">Назначить операцию</a></li>
+                        <li>
+
+                    </ul>
+                </div>
+            </li>
+
+        </ul>
+        <ul class="navbar-nav ms-auto">
+            {% if user.is_authenticated %}
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Выход</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Привет,{{ user.username }} </a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Вход</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Регистрация</a>
+                </li>
+            {% endif %}
+        </ul>
+        </div>
+    </div>
+</nav>

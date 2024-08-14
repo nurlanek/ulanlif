@@ -1,0 +1,45 @@
+{% load static %}
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">T-Soft</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar">
+
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'malzeme_listesi' %}">Список материалов</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'malzeme_giris' %}">Поступление материала</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'malzeme_cikis' %}">Выход материала</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'malzeme_kaydet' %}">Регистрация материала</a>
+            </li>
+
+        </ul>
+        <ul class="navbar-nav ms-auto">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Выход</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Привет,{{ user.username }} </a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Вход</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Регистрация</a>
+                </li>
+            {% endif %}
+        </ul>
+        </div>
+    </div>
+</nav>
