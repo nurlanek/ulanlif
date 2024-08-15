@@ -14,22 +14,11 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="container mt-2">
-    <div class="row">
-        <div class="col-auto">
-
-            <button type="submit" class="btn btn-secondary btn-sm" onclick="printTable()">Распечатать</button>
-        </div>
-        <div class="col-auto">
-
-            <a href="{% url 'kroy-detail-create' kroy_instance.pk %}" class="btn btn-primary btn-sm">Создать крой детали</a>
-        </div>
-    </div>
-</div>
+{% include 'partials/print.html' %}
+<a href="{% url 'kroy-detail-create' kroy_instance.pk %}" class="btn btn-primary btn-sm mt-2">Создать крой детали</a>
     <div id="table-container" class="">
-        <div class="container mt-3">
-Посмотреть операции:
+        <div class="container mt-2">
+Операции:
             {% for code in kroy_operation_codes %}
             <a href="{% url 'operation_list' code.operation_code.id %}">
                 {{ forloop.counter }}. {{ code.operation_code }} - {{ code.operation_code.product_type.name }}
@@ -54,7 +43,7 @@
                     <th scope="col">Штук</th>
                     <th scope="col">Цвет</th>
                     <th scope="col">Город</th>
-                    <th scope="col">Примечение:</th>
+                    <th scope="col">Примечание:</th>
                     <th scope="col"></th>
                     <th scope="col"></th>
 
