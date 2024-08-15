@@ -29,7 +29,7 @@
 </div>
     <div id="table-container" class="">
         <div class="container mt-3">
-            Посмотреть операции:
+Посмотреть операции:
             {% for code in kroy_operation_codes %}
             <a href="{% url 'operation_list' code.operation_code.id %}">
                 {{ forloop.counter }}. {{ code.operation_code }} - {{ code.operation_code.product_type.name }}
@@ -44,7 +44,7 @@
         <p><strong>Примечение:</strong> {{ kroy_instance.description }}</p>
 
 
-        <table class="table table-sm caption-top w-auto h-auto">
+        <table class="table table-striped">
             <thead class="table-light">
                 <tr>
 
@@ -73,9 +73,9 @@
                     <td>{{ detail.color }}</td>
                     <td>{{ detail.city }}</td>
                     <td>{{ detail.description }}</td>
-                    <td> <a href="{% url 'kroy-detail-update' detail.pk %}" >изменить</a></td>
+                    <td> <a href="{% url 'kroy-detail-update' detail.pk %}" class="btn btn-warning btn-sm" >Изменить</a></td>
 
-                    <td><a href="{% url 'kroy-detail-delete' detail.pk %}" class="text-danger">удалит</a></td>
+                    <td><a href="{% url 'kroy-detail-delete' detail.pk %}"  class="btn btn-danger btn-sm">Удалит</a></td>
 
                 </tr>
                 {% empty %}

@@ -11,9 +11,9 @@
 {% include 'partials/print.html' %}
 <div class="container mt-2" id="table-container">
 
-
+<h4 class="mt-1">Крой Список</h4>
     <table class="table table-striped" >
-        <caption>Крой Список</caption>
+        <caption></caption>
         <thead class="table-light">
         <tr>
             <th scope="col">#</th>
@@ -22,8 +22,8 @@
             <th scope="col">Наименование</th>
             <th scope="col">Дата создание</th>
             <th scope="col">Единица</th>
-            <th></th>
-            <th></th>
+            <th>Изменить</th>
+            <th>Удалит</th>
             <th></th>
             <th></th>
         </tr>
@@ -32,25 +32,29 @@
         {% for kroy in object_list %}
         {% if kroy.is_active %}
 
-            {% csrf_token %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
-                <td><a href="{% url 'kroy-detail-view' kroy.pk %}" >{{ kroy.kroy_no }}</a>
-                    </td>
-                    <td> </td>
-
+                <td><a href="{% url 'kroy-detail-view' kroy.pk %}" >{{ kroy.kroy_no }}</a></td>
+                <td></td>
                 <td>{{ kroy.name|slice:":30" }}</td>
                 <td>{{ kroy.created|date:"d.m.Y H:i" }}</td>
                 <td>{{ kroy.edinitsa }}</td>
-                <td></td>
-                <td></td>
+                <td><a href="{% url 'kroy-update' kroy.pk %}" class="btn btn-warning btn-sm">Изменить</a></td>
+                <td>
+                    <form method="post" action="{% url 'kroy-delete' kroy.pk %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Вы уверены, что хотите удалить этот элемент?');">Удалить</button>
+                    </form>
+                </td>
                 <td></td>
                 <td></td>
             </tr>
 
         {% endif %}
         {% empty %}
-        <li>В системе нет активного кроя</li>
+        <tr>
+            <td colspan="10">В системе нет активного кроя</td>
+        </tr>
         {% endfor %}
         </tbody>
     </table>

@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import (KroyListView, KroyCreateView, KroyUpdateView, KroyDetailListView,
+from .views import (KroyListView, KroyCreateView, KroyUpdateView, KroyDetailListView, KroyDeleteView,
                     KroyDetailCreateView, KroyDetailUpdateView, MasterdataListView, MasterdatauserListView,
                     operation_code_create, operation_code_update, operation_code_delete, KroyDetailView,
                     KroyDetailDeleteView, get_operation_codes, get_operation_list)
@@ -13,9 +13,10 @@ urlpatterns = [
 
     path('kroy/', KroyListView.as_view(), name='kroy-list'),
     path('kroy/create/', KroyCreateView.as_view(), name='kroy-create'),
-    path('<int:kroy_id>/', views.KroyDetailView, name='kroy-detail-view'),
     path('kroy/update/<int:pk>/', KroyUpdateView.as_view(), name='kroy-update'),
+    path('kroy/delete/<int:pk>/', KroyDeleteView.as_view(), name='kroy-delete'),
 
+    path('<int:kroy_id>/', views.KroyDetailView, name='kroy-detail-view'),
     path('kroy-detail/', KroyDetailListView.as_view(), name='kroy-detail-list'),
     path('kroy-detail/create/<int:kroy_id>', KroyDetailCreateView.as_view(), name='kroy-detail-create'),
     path('kroy-detail/update/<int:pk>/', KroyDetailUpdateView.as_view(), name='kroy-detail-update'),

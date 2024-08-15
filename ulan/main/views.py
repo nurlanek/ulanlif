@@ -72,6 +72,7 @@ class MasterdataListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
         context['additional_variable'] = 'Some additional value'
 
         return context
+
 # --- Masterdata alani sonu ---
 
 # --- Kroy basi ---
@@ -106,12 +107,22 @@ class KroyCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
         context['kroy_list'] = Kroy.objects.all().order_by('-created')[:10]  # Add this line to pass the data to the template
         return context
 
+class KroyDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
+    model = Kroy
+    template_name = 'main/kroy/kroy_confirm_delete.html'
+    success_url = reverse_lazy('kroy-list')
+    login_url = '/login/'
+    permission_required = 'app_name.delete_kroy'
 
+    def handle_no_permission(self):
+        # Kullanıcı oturum açmamışsa, giriş yapma sayfasına yönlendir
+        return redirect('login')
 class KroyUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     model = Kroy
     form_class = KroyForm
     template_name = 'main/kroy/kroy_form.html'
-    success_url = '/kroy/'
+    #success_url = '/kroy/'
+    success_url = reverse_lazy('kroy-list')
     login_url = '/login/'
     permission_required = 'app_name.view_kroy'
 
