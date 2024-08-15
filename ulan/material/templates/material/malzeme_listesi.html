@@ -22,6 +22,7 @@
             <th scope="col">Остаток</th>
             <th scope="col">Тип измерения</th>
             <th scope="col">Примичение</th>
+            <th scope="col">Действие</th>
         </tr>
     </thead>
     <tbody>
@@ -31,6 +32,10 @@
                 <td>{{ malzeme.miktar }}</td>
                 <td>{{ malzeme.malzeme_birim }}</td>
                 <td>{{ malzeme.aciklama }}</td>
+                <td>
+                <a href="{% url 'malzeme_edit' malzeme.pk %}" class="btn btn-sm btn-primary">Изменить</a>
+                <a href="{% url 'malzeme_delete' malzeme.pk %}" class="btn btn-sm btn-danger">Удалить</a>
+            </td>
             </tr>
         {% endfor %}
     </tbody>

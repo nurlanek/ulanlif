@@ -7,6 +7,24 @@ def malzeme_listesi(request):
     malzemeler = Malzeme.objects.all()
     return render(request, 'material/malzeme_listesi.html', {'malzemeler': malzemeler})
 
+def malzeme_edit(request, pk):
+    malzeme = get_object_or_404(Malzeme, pk=pk)
+    if request.method == "POST":
+        form = MalzemeForm(request.POST, instance=malzeme)
+        if form.is_valid():
+            form.save()
+            return redirect('malzeme_listesi')
+    else:
+        form = MalzemeForm(instance=malzeme)
+    return render(request, 'material/malzeme_edit.html', {'form': form})
+
+def malzeme_delete(request, pk):
+    malzeme = get_object_or_404(Malzeme, pk=pk)
+    if request.method == "POST":
+        malzeme.delete()
+        return redirect('malzeme_listesi')
+    return render(request, 'material/malzeme_delete.html', {'malzeme': malzeme})
+
 def malzeme_detayi(request, pk):
     malzeme = get_object_or_404(Malzeme, pk=pk)
     giris_hareketleri = GirisHareketi.objects.filter(malzeme=malzeme)

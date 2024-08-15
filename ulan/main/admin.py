@@ -5,11 +5,7 @@ from .models import (Kroy_detail, Kroy, Masterdata, Colors, City, Operations,
                      )
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
-import json
-from django.core.management import call_command
-from django.http import HttpResponse
-import xlrd
-import json
+
 
 class Kroy_operation_codeAdmin(ImportExportModelAdmin):
     list_display = ("kroy", "operation_code",)
