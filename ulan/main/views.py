@@ -442,7 +442,7 @@ def masterdatauser(request):
             user=user
         )
         masterdata.save()
-        return HttpResponseRedirect('/masterdatauser/')
+        return HttpResponseRedirect('/mainmasterdatauser/')
 
     else:
         context = {
