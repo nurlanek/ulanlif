@@ -1,7 +1,8 @@
 from django.urls import path
+from django.views.generic import TemplateView
 from . import views
 from .views import (KroyListView, KroyCreateView, KroyUpdateView, KroyDetailListView, KroyDeleteView,
-                    KroyDetailCreateView, KroyDetailUpdateView, MasterdataListView, MasterdatauserListView,
+                    KroyDetailCreateView, KroyDetailUpdateView, MasterdataListView, masterdatauser,
                     operation_code_create, operation_code_update, operation_code_delete, KroyDetailView,
                     KroyDetailDeleteView, get_operation_codes, get_operation_list)
 
@@ -32,10 +33,7 @@ urlpatterns = [
     path('masterdata', MasterdataListView.as_view(), name='masterdata_list'),
 
     #Users page
-    #path('masterdatauser/', views.MasterdatauserListView, name='masterdatauser'),
-    #path('process-form/', process_form, name='process_form'),
-    #path('example/', example_view, name='example_view'),
-    path('masterdatauser/', MasterdatauserListView, name='masterdatauser'),
+    path('masterdatauser/', masterdatauser, name='masterdatauser'),
     path('get_operation_codes/', get_operation_codes, name='get_operation_codes'),
     path('get_operation_list/', get_operation_list, name='get_operation_list'),
     path('get_operation_price', views.get_operation_price, name='get_operation_price'),

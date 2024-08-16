@@ -415,9 +415,10 @@ def get_operation_price(request):
             return JsonResponse({'price': 0})
     return JsonResponse({'price': 0})
 
+
 @login_required
 #@permission_required('main.add_view', raise_exception=True)
-def MasterdatauserListView(request):
+def masterdatauser(request):
     if not request.user.is_authenticated:
         return redirect('masterdata_login')
 

@@ -38,7 +38,7 @@
 <script>
     function loadOperationCodes() {
     const kroy = document.getElementById('kroy').value;
-    fetch(`/get_operation_codes?kroy_no=${kroy}`)
+    fetch(`/mainget_operation_codes?kroy_no=${kroy}`)
         .then(response => response.json())
         .then(data => {
             const operationCodeSelect = document.getElementById('operation_code');
@@ -55,7 +55,7 @@
 
 function loadOperationList() {
     const operationCode = document.getElementById('operation_code').value;
-    fetch(`/get_operation_list?operation_code=${operationCode}`)
+    fetch(`/mainget_operation_list?operation_code=${operationCode}`)
         .then(response => response.json())
         .then(data => {
             const operationListSelect = document.getElementById('operation_list');
@@ -74,7 +74,7 @@ document.getElementById('operation_list').addEventListener('change', function() 
     const operationId = parseInt(this.value);
     const operationTitle = this.options[this.selectedIndex].getAttribute('data-title'); // Get title
     document.getElementById('operation-title').value = operationTitle; // Set hidden input value
-    fetch(`/get_operation_price?operation_id=${operationId}`)
+    fetch(`/mainget_operation_price?operation_id=${operationId}`)
         .then(response => response.json())
         .then(data => {
             // Get price from JSON response
