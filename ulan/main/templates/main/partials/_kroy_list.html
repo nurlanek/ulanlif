@@ -19,12 +19,12 @@
      {% for kroy in object_list %}
      <tr>
   <th scope="row"></th>
-      <td><a href="{% url 'kroy-detail-view' kroy.pk %}">{{ kroy.kroy_no }}</a></td>
+      <td><a href="{% url 'main:kroy-detail-view' kroy.pk %}">{{ kroy.kroy_no }}</a></td>
       <td>{{ kroy.name }}</td>
       <td>{{ kroy.edinitsa }}</td>
       <td>{{ kroy.ras_tkani }}</td>
       <td>{{ kroy.ras_dublerin }}</td>
-      <td><a href="{% url 'kroy-update' kroy.pk %}">Edit</a></td>
+      <td><a href="{% url 'main:kroy-update' kroy.pk %}">Edit</a></td>
     </tr>
      {% empty %}
             <li>No Kroy items available</li>

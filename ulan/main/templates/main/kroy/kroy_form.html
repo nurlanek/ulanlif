@@ -72,7 +72,7 @@
                 {% if kroy_no is active %}
                 <tr>
                     <th scope="row">{{ forloop.counter }}</th>
-                    <td><a href="{% url 'kroy-detail-view' kroy.pk %}" >{{ kroy.kroy_no }}</a>
+                    <td><a href="{% url 'main:kroy-detail-view' kroy.pk %}" >{{ kroy.kroy_no }}</a>
                     <td></td>
                     <td>{{ kroy.name|slice:":20" }}</td>
                     <td>{{ kroy.created|date:"d.m.Y" }}</td>
@@ -81,7 +81,7 @@
                     <td>{{ kroy.ras_dublerin }} </td>
                     <td>{{ kroy.code_operations }} </td>
 
-                    <td><a href="{% url 'kroy-update' kroy.pk %}" class="btn btn-warning btn-sm" >Изменить</a></td>
+                    <td><a href="{% url 'main:kroy-update' kroy.pk %}" class="btn btn-warning btn-sm" >Изменить</a></td>
                 </tr>
                 {% endif %}
                 {% endfor %}

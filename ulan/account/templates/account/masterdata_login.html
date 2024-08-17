@@ -151,7 +151,7 @@
 
 
 <main class="form-signin w-100 m-auto">
-  <form action="{% url 'masterdata_login' %}" method="POST" class="position-relative">
+  <form action="{% url 'account:masterdata_login' %}" method="POST" class="position-relative">
 
      {% csrf_token %}
             {% if error %}

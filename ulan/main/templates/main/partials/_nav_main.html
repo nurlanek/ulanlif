@@ -15,8 +15,8 @@
                 <div class="dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Крой</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{% url 'kroy-list' %}">Крой список</a></li>
-                        <li><a class="dropdown-item" href="{% url 'kroy-create' %}">Создать крой</a></li>
+                        <li><a class="dropdown-item" href="{% url 'main:kroy-list' %}">Крой список</a></li>
+                        <li><a class="dropdown-item" href="{% url 'main:kroy-create' %}">Создать крой</a></li>
                        <!--<li><a class="dropdown-item" href="">Создать крой деталь</a></li> -->
 
                     </ul>
@@ -26,8 +26,8 @@
                 <div class="dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Операция</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{% url 'operation_code_list' %}">Список код операции</a></li>
-                        <li><a class="dropdown-item" href="{% url 'kroy_operation_code_list' %}">Назначить операцию</a></li>
+                        <li><a class="dropdown-item" href="{% url 'main:operation_code_list' %}">Список код операции</a></li>
+                        <li><a class="dropdown-item" href="{% url 'main:kroy_operation_code_list' %}">Назначить операцию</a></li>
                         <li>
 
                     </ul>
@@ -39,14 +39,14 @@
             {% if user.is_authenticated %}
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Выход</a>
+                    <a class="nav-link" href="{% url 'account:logout' %}">Выход</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="">Привет,{{ user.username }} </a>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Вход</a>
+                    <a class="nav-link" href="{% url 'account:login' %}">Вход</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="">Регистрация</a>

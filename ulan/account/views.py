@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.urls import reverse
+
 
 # Create your views here.
 def login_request(request):
@@ -52,9 +54,13 @@ def logout_request(request):
     logout(request)
     return redirect("home")
 
+def user_logout_request(request):
+    logout(request)
+    return redirect(reverse("main:masterdatauser"))
+
 def masterdata_login(request):
     if request.user.is_authenticated:
-        return redirect("home")  # Kullanıcı zaten giriş yapmışsa, home sayfasına yönlendir
+        return redirect(reverse("main:masterdatauser"))  # Kullanıcı zaten giriş yapmışsa, home sayfasına yönlendir
 
     if request.method == "POST":
         username = request.POST.get("username")
@@ -65,7 +71,7 @@ def masterdata_login(request):
         if user is not None:
             # Başarılı kimlik doğrulaması durumunda giriş yap
             login(request, user)
-            return redirect("masterdatauser")  # masterdatauser sayfasına yönlendir
+            return redirect(reverse("main:masterdatauser"))  # masterdatauser sayfasına yönlendir
         else:
             return render(request, "account/masterdata_login.html", {
                 "error": "Kullanıcı adı veya şifre yanlış"

@@ -1,7 +1,7 @@
 <div id="success-message"></div>
 <form id="kroy-form" action="" method="post">
     {% csrf_token %}
-    <label for="kroy">Крой:</label>
+    <label for="kroy"  class="mt-2">Крой:</label>
     <select class="form-select" name="kroy_no" id="kroy" style="width: 100%;" onchange="loadOperationCodes();">
         <option value="">Выберите</option>
         {% for kroy_list_item in kroy_list %}
@@ -9,36 +9,35 @@
         {% endfor %}
     </select>
 
-    <label for="operation_code">Тип одежды:</label>
+    <label for="operation_code" class="mt-2">Тип одежды:</label>
     <select class="form-select mt-2" name="type_product" id="operation_code" style="width: 100%;" onchange="loadOperationList();"></select>
 
-  <label for="operation_list">Выбор операции:</label>
+  <label for="operation_list" class="mt-2">Выбор операции:</label>
     <select class="form-select mt-2" name="operations" id="operation_list">
         <option value="">Выберите оперции</option>
     </select>
 
-    <label for="price-display">цена:</label>
+    <label for="price-display" class="mt-2">цена:</label>
     <span id="price-display"></span>
     <input type="hidden" id="price-input" name="price" value="0" readonly>
     <input type="hidden" id="operation-title" name="operations">
     <br>
     Единица:
-    <input class="form-control" type="number" name="edinitsa" style="width: 100%;" required>
-
+    <input class="form-control mt-2" type="number" name="edinitsa" style="width: 100%;" required>
     Статус:
-    <select class="form-select" name="status" style="width: 100%;" required>
+    <select class="form-select mt-2" name="status" required >
         {% for status_choice in status_list %}
             <option value="{{ status_choice }}">{{ status_choice }}</option>
         {% endfor %}
     </select>
     <input type="hidden" id="user" name="user" value="{{ user.username }}">
-    <button type="submit" id="submit-btn" class="btn btn-secondary mt-2">Отправить</button>
+    <button type="submit" id="submit-btn" class="btn btn-secondary btn-sm mt-2 ">Отправить</button>
 </form>
 
 <script>
     function loadOperationCodes() {
     const kroy = document.getElementById('kroy').value;
-    fetch(`/mainget_operation_codes?kroy_no=${kroy}`)
+    fetch(`/main/get_operation_codes?kroy_no=${kroy}`)
         .then(response => response.json())
         .then(data => {
             const operationCodeSelect = document.getElementById('operation_code');
@@ -55,7 +54,7 @@
 
 function loadOperationList() {
     const operationCode = document.getElementById('operation_code').value;
-    fetch(`/mainget_operation_list?operation_code=${operationCode}`)
+    fetch(`/main/get_operation_list?operation_code=${operationCode}`)
         .then(response => response.json())
         .then(data => {
             const operationListSelect = document.getElementById('operation_list');
@@ -74,7 +73,7 @@ document.getElementById('operation_list').addEventListener('change', function() 
     const operationId = parseInt(this.value);
     const operationTitle = this.options[this.selectedIndex].getAttribute('data-title'); // Get title
     document.getElementById('operation-title').value = operationTitle; // Set hidden input value
-    fetch(`/mainget_operation_price?operation_id=${operationId}`)
+    fetch(`/main/get_operation_price?operation_id=${operationId}`)
         .then(response => response.json())
         .then(data => {
             // Get price from JSON response

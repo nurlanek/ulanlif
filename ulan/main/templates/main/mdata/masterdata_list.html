@@ -1,5 +1,8 @@
 {% extends "main/base.html" %}
 {% load static %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
+
 {% block title %} Home {% endblock %}
 
 {% block css_files %}
@@ -9,12 +12,9 @@
 {% block content %}
 <!-- kroy_masterdata.htm -->
 
-<div id="myTable" class="">
 
+{% include 'main/mdata/_masterdata_list.html' %}
 
-    {% include 'main/mdata/_masterdata_list.html' %}
-
-</div>
 
 {% endblock %}
 

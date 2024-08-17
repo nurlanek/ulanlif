@@ -5,12 +5,11 @@ from .views import (KroyListView, KroyCreateView, KroyUpdateView, KroyDetailList
                     KroyDetailCreateView, KroyDetailUpdateView, MasterdataListView, masterdatauser,
                     operation_code_create, operation_code_update, operation_code_delete, KroyDetailView,
                     KroyDetailDeleteView, get_operation_codes, get_operation_list)
-
+app_name = 'main'
 
 urlpatterns = [
     #path("", views.index, name="home"),
     path("index", views.index),
-    path("index1", views.index1),
 
     path('kroy/', KroyListView.as_view(), name='kroy-list'),
     path('kroy/create/', KroyCreateView.as_view(), name='kroy-create'),
@@ -33,7 +32,8 @@ urlpatterns = [
     path('masterdata', MasterdataListView.as_view(), name='masterdata_list'),
 
     #Users page
-    path('masterdatauser/', masterdatauser, name='masterdatauser'),
+    #path('main/masterdatauser/', views.masterdatauser_view, name='masterdatauser'),
+    path('masterdatauser/', views.masterdatauser, name='masterdatauser'),
     path('get_operation_codes/', get_operation_codes, name='get_operation_codes'),
     path('get_operation_list/', get_operation_list, name='get_operation_list'),
     path('get_operation_price', views.get_operation_price, name='get_operation_price'),

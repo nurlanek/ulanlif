@@ -31,8 +31,8 @@
                 <tr>
                     <td>{{ operation.title }}</td>
                     <td>{{ operation.price }}</td>
-                    <td><a href="{% url 'operation_list_update' operation.pk %}" class="btn btn-warning btn-sm">Изменить</a></td>
-                    <td><a href="{% url 'operation_list_delete' operation.pk %}" class="btn btn-danger btn-sm">Удалить</a></td>
+                    <td><a href="{% url 'main:operation_list_update' operation.pk %}" class="btn btn-warning btn-sm">Изменить</a></td>
+                    <td><a href="{% url 'main:operation_list_delete' operation.pk %}" class="btn btn-danger btn-sm">Удалить</a></td>
                 </tr>
             {% empty %}
                 <tr>
@@ -47,7 +47,7 @@
         </tbody>
     </table>
 
-    <a href="{% url 'operation_list_create' operation_code.id %}" class="btn btn-success btn-sm" >Добавить новую операцию</a>
+    <a href="{% url 'main:operation_list_create' operation_code.id %}" class="btn btn-success btn-sm" >Добавить новую операцию</a>
 </div>
 {% endblock %}
 {% block js_files %}
