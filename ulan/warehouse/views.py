@@ -12,7 +12,7 @@ def product_edit(request, pk):
         form = ProductForm(request.POST, instance=product)
         if form.is_valid():
             form.save()
-            return redirect('product_list')
+            return redirect('warehouse:product_list')
     else:
         form = ProductForm(instance=product)
     return render(request, 'warehouse/product_edit.html', {'form': form})
@@ -21,7 +21,7 @@ def product_delete(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == "POST":
         product.delete()
-        return redirect('product_list')
+        return redirect('warehouse:product_list')
     return render(request, 'warehouse/product_confirm_delete.html', {'product': product})
 
 def product_add(request):
@@ -29,7 +29,7 @@ def product_add(request):
         form = ProductForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('product_list')
+            return redirect('warehouse:product_list')
     else:
         form = ProductForm()
     return render(request, 'warehouse/product_add.html', {'form': form})

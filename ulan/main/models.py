@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
+from orders.models import Order
+#from client.models import Client
 
 def get_default_user():
     return get_user_model().objects.first()
@@ -50,6 +52,8 @@ class Kroy(models.Model):
     description = models.TextField(null=True, blank=True, verbose_name='Примечение')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создание')
     is_active = models.BooleanField(default=True, verbose_name='Активен')
+    #client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name="Клиент")
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name="Заказ")
 
     def __str__(self):
         return str(self.kroy_no)

@@ -104,7 +104,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="{% url 'order_list' %}">
+              <a class="nav-link d-flex align-items-center gap-2" href="{% url 'orders:order_list' %}">
                 <i class="bi bi-file-earmark"></i>
                 Заказы
               </a>
@@ -117,20 +117,20 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="{% url 'malzeme_listesi' %}">
+              <a class="nav-link d-flex align-items-center gap-2" href="{% url 'material:malzeme_listesi' %}">
                 <i class="bi bi-cart"></i>
                 Склад материалов
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="{% url 'product_list'%}">
+              <a class="nav-link d-flex align-items-center gap-2" href="{% url 'warehouse:product_list'%}">
                 <i class="bi bi-cart"></i>
                 Склад готовых продукт
               </a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="{% url 'client_list' %}">
+              <a class="nav-link d-flex align-items-center gap-2" href="{% url 'client:client_list' %}">
                 <i class="bi bi-people-fill"></i>
                 Клиенты
               </a>

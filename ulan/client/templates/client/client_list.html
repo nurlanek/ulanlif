@@ -24,8 +24,8 @@
                 <td>{{ client.phone }}</td>
                 <td>{{ client.address }}</td>
                 <td>
-                    <a href="{% url 'client_edit' client.pk %}" class="btn btn-warning btn-sm">Изменить</a>
-                    <a href="{% url 'client_delete' client.pk %}" class="btn btn-danger btn-sm">Удалить</a>
+                    <a href="{% url 'client:client_edit' client.pk %}" class="btn btn-warning btn-sm">Изменить</a>
+                    <a href="{% url 'client:client_delete' client.pk %}" class="btn btn-danger btn-sm">Удалить</a>
                 </td>
             </tr>
             {% endfor %}

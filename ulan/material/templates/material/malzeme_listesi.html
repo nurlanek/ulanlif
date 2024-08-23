@@ -28,13 +28,13 @@
     <tbody>
         {% for malzeme in malzemeler %}
             <tr>
-                <td><a href="{% url 'malzeme_detayi' malzeme.pk %}">{{ malzeme.isim }}</a></td>
+                <td><a href="{% url 'material:malzeme_detayi' malzeme.pk %}">{{ malzeme.isim }}</a></td>
                 <td>{{ malzeme.miktar }}</td>
                 <td>{{ malzeme.malzeme_birim }}</td>
                 <td>{{ malzeme.aciklama }}</td>
                 <td>
-                <a href="{% url 'malzeme_edit' malzeme.pk %}" class="btn btn-sm btn-primary">Изменить</a>
-                <a href="{% url 'malzeme_delete' malzeme.pk %}" class="btn btn-sm btn-danger">Удалить</a>
+                <a href="{% url 'material:malzeme_edit' malzeme.pk %}" class="btn btn-sm btn-primary">Изменить</a>
+                <a href="{% url 'material:malzeme_delete' malzeme.pk %}" class="btn btn-sm btn-danger">Удалить</a>
             </td>
             </tr>
         {% endfor %}

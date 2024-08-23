@@ -2,6 +2,8 @@ from django.db import models
 from client.models import Client
 from warehouse.models import Product
 
+
+
 class Order(models.Model):
     orderno = models.CharField(blank=True,max_length=50, verbose_name="Номер заказа")
     description = models.CharField(blank=True,max_length=150, verbose_name="Описание заказа")

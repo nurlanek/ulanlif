@@ -23,6 +23,10 @@ def index(request):
         return redirect("account:login")
     return render(request, "main/index.html")
 
+def users(request):
+
+    return render(request, "main/mdata/users.html")
+
 # --- Master data alani basi ---
 class MasterdataListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
 

@@ -4,12 +4,14 @@ from . import views
 from .views import (KroyListView, KroyCreateView, KroyUpdateView, KroyDetailListView, KroyDeleteView,
                     KroyDetailCreateView, KroyDetailUpdateView, MasterdataListView, masterdatauser,
                     operation_code_create, operation_code_update, operation_code_delete, KroyDetailView,
-                    KroyDetailDeleteView, get_operation_codes, get_operation_list)
+                    KroyDetailDeleteView, get_operation_codes, get_operation_list, users)
 app_name = 'main'
 
 urlpatterns = [
     #path("", views.index, name="home"),
     path("index", views.index),
+
+    path('users/', users, name='users'),
 
     path('kroy/', KroyListView.as_view(), name='kroy-list'),
     path('kroy/create/', KroyCreateView.as_view(), name='kroy-create'),
