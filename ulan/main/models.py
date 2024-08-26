@@ -104,15 +104,20 @@ class Kroy_detail(models.Model):
     def __str__(self):
         return self.pachka
 
+class Status(models.Model):
+    class Meta:
+            verbose_name_plural = ('Статус')
+
+    name = models.CharField(max_length=50, verbose_name="Статус")
+    def __str__(self):
+       return str(self.name)
+
 class Masterdata(models.Model):
     class Meta:
             verbose_name_plural = ('Общая таблица')
-    OPTION_CHOICES = [
-        ('в процессе', 'в процессе'),
-        ('завершень', 'завершень'),
-    ]
-    status = models.CharField(max_length=50, choices=OPTION_CHOICES, default='в процессе')
-    kroy_no = models.CharField(max_length=50, verbose_name='Крой номер')
+
+    status = models.ForeignKey(Status, on_delete=models.CASCADE, verbose_name='Статус' )
+    kroy_no = models.ForeignKey(Kroy, on_delete=models.CASCADE, verbose_name='Крой номер')
     edinitsa = models.IntegerField(verbose_name='Единица')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Дата')
     description = models.TextField(null=True, blank=True, verbose_name='Примечение')

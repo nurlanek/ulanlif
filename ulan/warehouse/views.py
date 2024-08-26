@@ -17,6 +17,8 @@ def product_edit(request, pk):
         form = ProductForm(instance=product)
     return render(request, 'warehouse/product_edit.html', {'form': form})
 
+
+
 def product_delete(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == "POST":

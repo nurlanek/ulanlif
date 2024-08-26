@@ -18,7 +18,7 @@
 </head>
 <body>
 <div class="container">
-  <p>Привет, {{ user.username }}</p>
+  <p>Привет, {{ user.username }}--{{ user.username }}</p>
     <a class="btn btn-success btn-sm" href="{% url 'account:user_logout' %}">Выход</a>
 
     {% include 'main/mdata/_mdatauser_list.html' %}

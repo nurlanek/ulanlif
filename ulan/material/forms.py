@@ -26,5 +26,5 @@ class MalzemeForm(forms.ModelForm):
             'miktar': forms.NumberInput(attrs={'class': 'form-control'}),
             'malzeme_category': forms.Select(attrs={'class': 'form-control'}),
             'malzeme_birim': forms.Select(attrs={'class': 'form-control'}),
-            'aciklama': forms.Textarea(attrs={'class': 'form-control'}),
+            'aciklama': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'cols': 23}),
         }

@@ -45,6 +45,7 @@ urlpatterns = [
     path('operation_code/<int:pk>/update/', views.operation_code_update, name='operation_code_update'),
     path('operation_code/<int:pk>/delete/', views.operation_code_delete, name='operation_code_delete'),
     path('operation_code/', views.operation_code_list, name='operation_code_list'),
+
     path('operation_code/<int:operation_code_id>/operations/', views.operation_list_detail, name='operation_list_detail'),
     path('operation_code/<int:operation_code_id>/operations/create/', views.operation_list_create, name='operation_list_create'),
     path('operation_code/operations/<int:pk>/edit/', views.operation_list_update, name='operation_list_update'),

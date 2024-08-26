@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from .models import (Kroy, Kroy_detail, Operation_code, Operation_list, Kroy_operation_code)
+from .models import (Kroy, Kroy_detail, Operation_code, Operation_list, Kroy_operation_code, Status)
 from .forms import (KroyForm, KroyDetailForm, Masterdata, MasterdataSearchForm,
                     OperationCodeForm, OperationListForm, KroyOperationCodeForm,)
 from django.contrib.auth.decorators import login_required, permission_required
@@ -371,7 +371,7 @@ def kroy_operation_code_edit(request, pk):
             return redirect('main:kroy_operation_code_list')
     else:
         form = KroyOperationCodeForm(instance=code)
-    return render(request, 'main/opercode/kroy_operation_code_form.html', {'form': form})
+    return render(request, 'main/opercode/kroy_operation_code_update.html', {'form': form})
 
 @login_required
 @permission_required('main.add_view', raise_exception=True)
@@ -422,22 +422,25 @@ def get_operation_price(request):
 def masterdatauser(request):
 
     if request.method == 'POST':
-        kroy_no = request.POST.get('kroy_no')
+        kroy_no_id = request.POST.get('kroy_no')
         operation_code = request.POST.get('type_product')
         operations = request.POST.get('operations')
         price = request.POST.get('price', '0')
         edinitsa = request.POST.get('edinitsa')
-        status = request.POST.get('status')
+        status_id = request.POST.get('status')
         user = request.user
 
         operation_code_instance = Operation_code.objects.get(id=operation_code)
+        status_instance = Status.objects.get(id=status_id)
+        kroy_no_instance = Kroy.objects.get(id=kroy_no_id)
+
         masterdata = Masterdata(
-            kroy_no=kroy_no,
+            kroy_no=kroy_no_instance,
             operation_code=operation_code_instance,
             operations=operations,
             price=price,
             edinitsa=edinitsa,
-            status=status,
+            status=status_instance,
             user=user
         )
         masterdata.save()
@@ -449,7 +452,7 @@ def masterdatauser(request):
             'kroy_detail_list': Kroy_detail.objects.filter(user=request.user),
             'user': request.user,
             'kroy_list': Kroy.objects.all(),
-            'status_list': [option[0] for option in Masterdata.OPTION_CHOICES],
+            'status_list': Status.objects.all(),
         }
         return render(request, 'main/mdata/masterdatauser.html', context)
 # --- Kullanicilar sayfasi sonu--
