@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 class KroyForm(forms.ModelForm):
     class Meta:
         model = Kroy
-        fields = ['kroy_no', 'name', 'ras_tkani', 'ras_dublerin', 'edinitsa', 'description']
+        fields = ['kroy_no', 'name', 'ras_tkani', 'ras_dublerin', 'order', 'edinitsa', 'description']
         widgets = {
             'description': forms.Textarea(attrs={'rows': 3, 'cols': 23}),
         }

@@ -1,12 +1,46 @@
 {% extends 'warehouse/base.html' %}
 {% block content %}
 <div class="container mt-4">
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
     <h2>Изменить продукт</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Сохранить</button>
-        <a href="{% url 'product_list' %}" class="btn btn-secondary">Отмена</a>
-    </form>
+   <div class="row ">
+    <div class="col-md-4">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="{{ form.name.id_for_label }}" class="form-label">Продукт</label>
+                {{ form.name }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.description.id_for_label }}" class="form-label">Примечание</label>
+                {{ form.description }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.quantity.id_for_label }}" class="form-label">Количество</label>
+                {{ form.quantity }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.price.id_for_label }}" class="form-label">Цена</label>
+                {{ form.price }}
+            </div>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a href="{% url 'warehouse:product_list' %}" class="btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+</div>
+
 </div>
 {% endblock %}

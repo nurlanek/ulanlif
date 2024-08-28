@@ -5,7 +5,7 @@
     <select class="form-select" name="kroy_no" id="kroy" style="width: 100%;" onchange="loadOperationCodes();">
         <option value="">Выберите</option>
         {% for kroy_list_item in kroy_list %}
-            <option value="{{ kroy_list_item.kroy_no }}">{{ kroy_list_item.kroy_no }}</option>
+            <option value="{{ kroy_list_item.id }}" data-kroy-no="{{ kroy_list_item.kroy_no }}">{{ kroy_list_item.kroy_no }}</option>
         {% endfor %}
     </select>
 
@@ -26,70 +26,89 @@
     <input class="form-control mt-2" type="number" name="edinitsa" style="width: 100%;" required>
     Статус:
     <select class="form-select mt-2" name="status" required >
-        {% for status_choice in status_list %}
-            <option value="{{ status_choice }}">{{ status_choice }}</option>
+        {% for status_list in status_list %}
+            <option value="{{ status_list.id }}">{{ status_list.name }}</option>
         {% endfor %}
     </select>
     <input type="hidden" id="user" name="user" value="{{ user.username }}">
+    <input type="hidden" id="user-group" name="user_group" value="{{ user.groups.all|join:', ' }}">
     <button type="submit" id="submit-btn" class="btn btn-secondary btn-sm mt-2 ">Отправить</button>
 </form>
 
 <script>
-    function loadOperationCodes() {
-    const kroy = document.getElementById('kroy').value;
-    fetch(`/main/get_operation_codes?kroy_no=${kroy}`)
-        .then(response => response.json())
-        .then(data => {
-            const operationCodeSelect = document.getElementById('operation_code');
-            operationCodeSelect.innerHTML = '<option value="">Выберите</option>';
-            data.forEach(item => {
-                const option = document.createElement('option');
-                option.value = item.code; // or item.id if code is not unique
-                option.text = item.title;
-                option.setAttribute('data-title', item.title);
-                operationCodeSelect.appendChild(option);
-            });
+    // CSRF token'ını meta etiketinden alıyoruz
+const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+// Fonksiyon: Kroy kodlarını yükleme
+function loadOperationCodes() {
+    const kroySelect = document.getElementById('kroy');
+    const kroyNo = kroySelect.options[kroySelect.selectedIndex].getAttribute('data-kroy-no');
+
+    fetch(`/main/get_operation_codes?kroy_no=${kroyNo}`, {
+        method: 'GET',
+        headers: {
+            'X-CSRFToken': csrftoken // CSRF token ekleniyor
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const operationCodeSelect = document.getElementById('operation_code');
+        operationCodeSelect.innerHTML = '<option value="">Выберите</option>';
+        data.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.code;
+            option.text = item.title;
+            operationCodeSelect.appendChild(option);
         });
+    });
 }
 
+// Fonksiyon: Operasyon listesi yükleme
 function loadOperationList() {
     const operationCode = document.getElementById('operation_code').value;
-    fetch(`/main/get_operation_list?operation_code=${operationCode}`)
-        .then(response => response.json())
-        .then(data => {
-            const operationListSelect = document.getElementById('operation_list');
-            operationListSelect.innerHTML = '<option value="">Выберите операцию</option>';
-            data.forEach(item => {
-                const option = document.createElement('option');
-                option.value = item.id; // Use id for value
-                option.text = item.title;
-                option.setAttribute('data-title', item.title); // Store title
-                operationListSelect.appendChild(option);
-            });
+
+    fetch(`/main/get_operation_list?operation_code=${operationCode}`, {
+        method: 'GET',
+        headers: {
+            'X-CSRFToken': csrftoken // CSRF token ekleniyor
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const operationListSelect = document.getElementById('operation_list');
+        operationListSelect.innerHTML = '<option value="">Выберите операцию</option>';
+        data.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.id;
+            option.text = item.title;
+            option.setAttribute('data-title', item.title);
+            operationListSelect.appendChild(option);
         });
+    });
 }
 
+// Fonksiyon: Operasyon fiyatını yükleme
 document.getElementById('operation_list').addEventListener('change', function() {
     const operationId = parseInt(this.value);
-    const operationTitle = this.options[this.selectedIndex].getAttribute('data-title'); // Get title
-    document.getElementById('operation-title').value = operationTitle; // Set hidden input value
-    fetch(`/main/get_operation_price?operation_id=${operationId}`)
-        .then(response => response.json())
-        .then(data => {
-            // Get price from JSON response
-            const price = data.price;
+    const operationTitle = this.options[this.selectedIndex].getAttribute('data-title');
+    document.getElementById('operation-title').value = operationTitle;
 
-            // Log price to console
-            console.log('Price:', price);
-
-            // Set price display and hidden input
-            document.getElementById('price-display').innerText = price;
-            document.getElementById('price-input').value = price;
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+    fetch(`/main/get_operation_price?operation_id=${operationId}`, {
+        method: 'GET',
+        headers: {
+            'X-CSRFToken': csrftoken // CSRF token ekleniyor
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const price = data.price;
+        document.getElementById('price-display').innerText = price;
+        document.getElementById('price-input').value = price;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 });
-
+console.log('JavaScript kodu yüklendi');
 
 </script>

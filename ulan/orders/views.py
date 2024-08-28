@@ -13,7 +13,7 @@ def order_add(request):
         form = OrderForm(request.POST)
         if form.is_valid():
             order = form.save()
-            return redirect('order_list')
+            return redirect('orders:order_list')
     else:
         form = OrderForm()
     return render(request, 'orders/order_add.html', {'form': form})
@@ -24,7 +24,7 @@ def order_edit(request, pk):
         form = OrderForm(request.POST, instance=order)
         if form.is_valid():
             form.save()
-            return redirect('order_list')
+            return redirect('orders:order_list')
     else:
         form = OrderForm(instance=order)
     return render(request, 'orders/order_edit.html', {'form': form})
@@ -33,7 +33,7 @@ def order_delete(request, pk):
     order = get_object_or_404(Order, pk=pk)
     if request.method == "POST":
         order.delete()
-        return redirect('order_list')
+        return redirect('orders:order_list')
     return render(request, 'orders/order_confirm_delete.html', {'order': order})
 
 from django.shortcuts import get_object_or_404

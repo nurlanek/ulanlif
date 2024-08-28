@@ -7,7 +7,7 @@
         {% csrf_token %}
         <p>Вы уверены, что хотите удалить позицию заказа "{{ order_item.product.name }}"?</p>
         <button type="submit" class="btn btn-danger">Удалить</button>
-        <a href="{% url 'orderitem_list_by_order' order_item.order.id %}" class="btn btn-secondary">Отмена</a>
+        <a href="{% url 'orders:orderitem_list_by_order' order_item.order.id %}" class="btn btn-secondary">Отмена</a>
     </form>
 </div>
 {% endblock %}

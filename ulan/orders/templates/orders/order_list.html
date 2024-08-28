@@ -28,11 +28,11 @@
                 <td>{{ order.updated_at|date:"d.m.Y H:i" }}</td>
                 <td>{{ order.description }}</td>
                 <td>
-                    <a href="{% url 'orderitem_list_by_order' order.id %}" class="btn btn-info btn-sm">Просмотреть позиции</a>
+                    <a href="{% url 'orders:orderitem_list_by_order' order.id %}" class="btn btn-info btn-sm">Просмотреть позиции</a>
                 </td>
                 <td>
-                    <a href="{% url 'order_edit' order.pk %}" class="btn btn-warning btn-sm">Изменить</a>
-                    <a href="{% url 'order_delete' order.pk %}" class="btn btn-danger btn-sm">Удалить</a>
+                    <a href="{% url 'orders:order_edit' order.pk %}" class="btn btn-warning btn-sm">Изменить</a>
+                    <a href="{% url 'orders:order_delete' order.pk %}" class="btn btn-danger btn-sm">Удалить</a>
                 </td>
             </tr>
             {% endfor %}

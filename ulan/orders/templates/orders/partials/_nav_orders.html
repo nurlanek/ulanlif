@@ -1,7 +1,7 @@
 {% load static %}
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'home' %}">T-Soft</a>
+        <a class="navbar-brand" href="{% url 'reports:home' %}">T-Soft</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
             <span class="navbar-toggler-icon"></span>
@@ -10,10 +10,10 @@
 
         <ul class="navbar-nav me-auto">
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'order_list' %}">Список заказов</a>
+                <a class="nav-link" href="{% url 'orders:order_list' %}">Список заказов</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'order_add' %}">Добавить новый</a>
+                <a class="nav-link" href="{% url 'orders:order_add' %}">Добавить новый</a>
             </li>
 
         </ul>

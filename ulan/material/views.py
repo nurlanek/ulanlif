@@ -13,7 +13,7 @@ def malzeme_edit(request, pk):
         form = MalzemeForm(request.POST, instance=malzeme)
         if form.is_valid():
             form.save()
-            return redirect('malzeme_listesi')
+            return redirect('material:malzeme_listesi')
     else:
         form = MalzemeForm(instance=malzeme)
     return render(request, 'material/malzeme_edit.html', {'form': form})
@@ -22,7 +22,7 @@ def malzeme_delete(request, pk):
     malzeme = get_object_or_404(Malzeme, pk=pk)
     if request.method == "POST":
         malzeme.delete()
-        return redirect('malzeme_listesi')
+        return redirect('material:malzeme_listesi')
     return render(request, 'material/malzeme_delete.html', {'malzeme': malzeme})
 
 def malzeme_detayi(request, pk):
@@ -56,7 +56,7 @@ def malzeme_giris(request):
             giris_hareketi.malzeme.miktar += giris_hareketi.miktar
             giris_hareketi.malzeme.save()
             messages.success(request, 'Поступление материала успешно зарегистрировано.')
-            return redirect('malzeme_listesi')
+            return redirect('material:malzeme_listesi')
     else:
         form = GirisHareketiForm()
     return render(request, 'material/malzeme_giris.html', {'form': form})
@@ -69,7 +69,7 @@ def malzeme_cikis(request):
             cikis_hareketi.malzeme.miktar -= cikis_hareketi.miktar
             cikis_hareketi.malzeme.save()
             messages.success(request, 'Выпуск материала успешно зафиксирован')
-            return redirect('malzeme_listesi')
+            return redirect('material:malzeme_listesi')
     else:
         form = CikisHareketiForm()
     return render(request, 'material/malzeme_cikis.html', {'form': form})
@@ -80,7 +80,7 @@ def malzeme_kaydet(request):
         form = MalzemeForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('malzeme_listesi')  # Kayıttan sonra malzeme listesi sayfasına yönlendirme
+            return redirect('material:malzeme_listesi')  # Kayıttan sonra malzeme listesi sayfasına yönlendirme
     else:
         form = MalzemeForm()
     return render(request, 'material/malzeme_kaydet.html', {'form': form})

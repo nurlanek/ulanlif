@@ -4,12 +4,14 @@ from . import views
 from .views import (KroyListView, KroyCreateView, KroyUpdateView, KroyDetailListView, KroyDeleteView,
                     KroyDetailCreateView, KroyDetailUpdateView, MasterdataListView, masterdatauser,
                     operation_code_create, operation_code_update, operation_code_delete, KroyDetailView,
-                    KroyDetailDeleteView, get_operation_codes, get_operation_list)
+                    KroyDetailDeleteView, get_operation_codes, get_operation_list, users)
 app_name = 'main'
 
 urlpatterns = [
     #path("", views.index, name="home"),
     path("index", views.index),
+
+    path('users/', users, name='users'),
 
     path('kroy/', KroyListView.as_view(), name='kroy-list'),
     path('kroy/create/', KroyCreateView.as_view(), name='kroy-create'),
@@ -43,6 +45,7 @@ urlpatterns = [
     path('operation_code/<int:pk>/update/', views.operation_code_update, name='operation_code_update'),
     path('operation_code/<int:pk>/delete/', views.operation_code_delete, name='operation_code_delete'),
     path('operation_code/', views.operation_code_list, name='operation_code_list'),
+
     path('operation_code/<int:operation_code_id>/operations/', views.operation_list_detail, name='operation_list_detail'),
     path('operation_code/<int:operation_code_id>/operations/create/', views.operation_list_create, name='operation_list_create'),
     path('operation_code/operations/<int:pk>/edit/', views.operation_list_update, name='operation_list_update'),

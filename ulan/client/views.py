@@ -11,7 +11,7 @@ def client_add(request):
         form = ClientForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('client_list')
+            return redirect('client:client_list')
     else:
         form = ClientForm()
     return render(request, 'client/client_add.html', {'form': form})
@@ -22,7 +22,7 @@ def client_edit(request, pk):
         form = ClientForm(request.POST, instance=client)
         if form.is_valid():
             form.save()
-            return redirect('client_list')
+            return redirect('client:client_list')
     else:
         form = ClientForm(instance=client)
     return render(request, 'client/client_edit.html', {'form': form})
@@ -31,5 +31,5 @@ def client_delete(request, pk):
     client = get_object_or_404(Client, pk=pk)
     if request.method == "POST":
         client.delete()
-        return redirect('client_list')
+        return redirect('client:client_list')
     return render(request, 'client/client_confirm_delete.html', {'client': client})

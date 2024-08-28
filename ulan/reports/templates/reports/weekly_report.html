@@ -1,0 +1,75 @@
+{% extends 'reports/base.html' %}
+
+{% block content %}
+
+    <h4>Отчет по сотрудникам</h4>
+    <form method="post" class="mb-4">
+    {% csrf_token %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="{{ form.user.id_for_label }}">{{ form.user.label }}</label>
+                    {{ form.user }} <!-- Bootstrap stilinde açılır menü -->
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="{{ form.status.id_for_label }}">{{ form.status.label }}</label>
+                    {{ form.status }} <!-- Bootstrap stilinde açılır menü -->
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="{{ form.start_date.id_for_label }}">{{ form.start_date.label }}</label>
+                    {{ form.start_date }} <!-- Bootstrap stilinde tarih seçici -->
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="{{ form.end_date.id_for_label }}">{{ form.end_date.label }}</label>
+                    {{ form.end_date }} <!-- Bootstrap stilinde tarih seçici -->
+                </div>
+            </div>
+            <div class="col-md-12 text-center mt-3">
+                <button type="submit" class="btn btn-primary btn-sm">Показать отчет</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+{% include 'partials/print.html' %}
+
+    {% if report_data %}
+    <div class="mt-2" id="table-container">
+        <table class="table table-bordered" >
+            <thead>
+                <tr>
+                    <th>Крой №</th>
+                    <th>Код операции</th>
+                    <th>Единица</th>
+                    <th>Цена</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in report_data %}
+                    <tr>
+                        <td>{{ item.kroy_no }}</td>
+                        <td>{{ item.operation_code }}</td>
+                        <td>{{ item.edinitsa }}</td>
+                        <td>{{ item.price }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>По выбранным вами критериям данные не найдены.</p>
+    {% endif %}
+    </div>
+
+
+
+
+{% endblock %}

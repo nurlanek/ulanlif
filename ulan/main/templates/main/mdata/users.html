@@ -1,0 +1,114 @@
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    #kroy-form {
+        background-color: #ffffff;
+        padding: 20px;
+        margin: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+        display: block;
+        font-size: 1.2em;
+        color: #333;
+        margin-top: 10px;
+    }
+
+    select, input[type="number"] {
+        width: 100%;
+        padding: 0;
+        margin-top: 5px;
+        font-size: 1em;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        outline: none;
+        height: 50px; /* Kare şekli için yüksekliği belirledik */
+    }
+
+    #submit-btn {
+        background-color: #28a745;
+        color: white;
+        padding: 0;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.2em;
+        cursor: pointer;
+        margin-top: 15px;
+        width: 100%;
+        height: 50px; /* Kare şekli için yüksekliği belirledik */
+        transition: background-color 0.3s ease;
+    }
+
+    #submit-btn:hover {
+        background-color: #218838;
+    }
+
+    #price-display {
+        font-weight: bold;
+        font-size: 1.2em;
+        color: #007bff;
+        display: inline-block;
+        margin-top: 5px;
+    }
+
+    input[type="number"] {
+        padding: 12px; /* Edinitsa için padding ayarlandı */
+    }
+
+    /* Mobil uyumlu stiller */
+    @media (max-width: 600px) {
+        label {
+            font-size: 1.4em;
+        }
+
+        select, input[type="number"] {
+            font-size: 1.2em;
+            height: 60px; /* Mobilde kare şekli için yüksekliği artırdık */
+        }
+
+        #submit-btn {
+            font-size: 1.5em;
+            height: 60px; /* Mobilde kare şekli için yüksekliği artırdık */
+        }
+    }
+</style>
+
+<div id="success-message"></div>
+<form id="kroy-form" action="" method="post">
+    <label for="kroy">Крой:</label>
+    <select name="kroy_no" id="kroy" onchange="loadOperationCodes();">
+        <option value="">Выберите</option>
+        <!-- Kroy list items here -->
+    </select>
+
+    <label for="operation_code">Тип одежды:</label>
+    <select name="type_product" id="operation_code" onchange="loadOperationList();"></select>
+
+    <label for="operation_list">Выбор операции:</label>
+    <select name="operations" id="operation_list">
+        <option value="">Выберите операцию</option>
+    </select>
+
+    <label for="price-display">цена:</label>
+    <span id="price-display"></span>
+    <input type="hidden" id="price-input" name="price" value="0" readonly>
+    <input type="hidden" id="operation-title" name="operations">
+
+    <label for="edinitsa">Единица:</label>
+    <input type="number" name="edinitsa" required>
+
+    <label for="status">Статус:</label>
+    <select name="status" required>
+        <!-- Status options here -->
+    </select>
+
+    <input type="hidden" id="user" name="user" value="{{ user.username }}">
+    <button type="submit" id="submit-btn">Отправить</button>
+</form>

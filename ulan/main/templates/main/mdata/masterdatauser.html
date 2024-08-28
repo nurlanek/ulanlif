@@ -10,15 +10,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="">
-
-
-
-
-    <title></title>
+<meta name="csrf-token" content="{{ csrf_token }}">
+<title></title>
 </head>
 <body>
 <div class="container">
-  <p>Привет, {{ user.username }}</p>
+   <p>Привет, {{ user.username }} -- {{ user.groups.all|join:', ' }}</p>
     <a class="btn btn-success btn-sm" href="{% url 'account:user_logout' %}">Выход</a>
 
     {% include 'main/mdata/_mdatauser_list.html' %}

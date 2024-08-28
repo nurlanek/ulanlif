@@ -14,5 +14,6 @@ urlpatterns = [
     path('warehouse/', include('warehouse.urls')),
     path('orders/', include('orders.urls')),
     path('client/', include('client.urls')),
+    #path('reports/', include('reports.urls', namespace='reports')),
  #   path('login/', LoginView.as_view(), name='login'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
