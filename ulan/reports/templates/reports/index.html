@@ -157,7 +157,7 @@
           </h6>
           <ul class="nav flex-column mb-auto">
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
+              <a class="nav-link d-flex align-items-center gap-2" href="{% url 'reports:weekly_report' %}">
                 <i class="bi bi-file-earmark-text"></i>
                 Текущая неделя
               </a>
@@ -212,7 +212,7 @@
           </div>
           <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
             <svg class="bi"><use xlink:href="#calendar3"/></svg>
-            Текущая неделя
+            <a href="{% url 'reports:weekly_report' %}"> Текущая неделя</a>
           </button>
         </div>
       </div>

@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth import get_user_model
 from orders.models import Order
 #from client.models import Client
@@ -122,12 +122,13 @@ class Masterdata(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name='Дата')
     description = models.TextField(null=True, blank=True, verbose_name='Примечение')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    user_group = models.ForeignKey(Group, on_delete=models.CASCADE, verbose_name='Группа пользователя')  # Yeni alan
     is_active = models.BooleanField(default=True, verbose_name='Активен')
     confirmation = models.BooleanField(default=False, verbose_name='Подтверждение')
     operations = models.CharField(max_length=150, verbose_name='Операция')
     type_product = models.CharField(max_length=150, verbose_name='Тип одежды')
-    price = models.IntegerField(verbose_name='Единица')
-    operation_code = models.ForeignKey(Operation_code, on_delete=models.CASCADE, verbose_name='Пользователь')
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена')
+    operation_code = models.ForeignKey(Operation_code, on_delete=models.CASCADE, verbose_name='Код операции')
 
     def __str__(self):
         return f"{self.status} - {self.kroy_no}"

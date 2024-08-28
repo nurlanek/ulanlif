@@ -385,7 +385,7 @@ def kroy_operation_code_delete(request, pk):
 
 # --- Kullanicilar safasi basi ---
 @login_required
-@permission_required('main.add_view', raise_exception=True)
+#@permission_required('main.add_operation_code', raise_exception=True)
 def get_operation_codes(request):
     kroy_no = request.GET.get('kroy_no')
     if kroy_no:
@@ -395,7 +395,7 @@ def get_operation_codes(request):
     return JsonResponse([], safe=False)
 
 @login_required
-@permission_required('main.add_view', raise_exception=True)
+#@permission_required('main.add_view', raise_exception=True)
 def get_operation_list(request):
     operation_code = request.GET.get('operation_code')
     if operation_code:
@@ -405,7 +405,7 @@ def get_operation_list(request):
     return JsonResponse([], safe=False)
 
 @login_required
-@permission_required('main.add_view', raise_exception=True)
+#@permission_required('main.add_view', raise_exception=True)
 def get_operation_price(request):
     operation_id = request.GET.get('operation_id')
     if operation_id:
@@ -420,7 +420,6 @@ def get_operation_price(request):
 @login_required(login_url='account:masterdata_login')
 #@permission_required('main.add_view', raise_exception=True)
 def masterdatauser(request):
-
     if request.method == 'POST':
         kroy_no_id = request.POST.get('kroy_no')
         operation_code = request.POST.get('type_product')
@@ -429,6 +428,7 @@ def masterdatauser(request):
         edinitsa = request.POST.get('edinitsa')
         status_id = request.POST.get('status')
         user = request.user
+        user_group = user.groups.first()
 
         operation_code_instance = Operation_code.objects.get(id=operation_code)
         status_instance = Status.objects.get(id=status_id)
@@ -441,18 +441,21 @@ def masterdatauser(request):
             price=price,
             edinitsa=edinitsa,
             status=status_instance,
-            user=user
+            user=user,
+            user_group=user_group
         )
         masterdata.save()
         return HttpResponseRedirect(reverse('main:masterdatauser'))
 
     else:
+        # 'user_group' özelliğini request.user üzerinden almak yerine doğru şekilde kullanıyoruz
+        user_group = request.user.groups.first()
         context = {
             'masterdata_list': Masterdata.objects.filter(user=request.user),
             'kroy_detail_list': Kroy_detail.objects.filter(user=request.user),
             'user': request.user,
             'kroy_list': Kroy.objects.all(),
             'status_list': Status.objects.all(),
+            'user_group': user_group,  # Düzeltilen kısım
         }
         return render(request, 'main/mdata/masterdatauser.html', context)
-# --- Kullanicilar sayfasi sonu--
