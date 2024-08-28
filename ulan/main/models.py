@@ -52,7 +52,6 @@ class Kroy(models.Model):
     description = models.TextField(null=True, blank=True, verbose_name='Примечение')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создание')
     is_active = models.BooleanField(default=True, verbose_name='Активен')
-    #client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name="Клиент")
     order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name="Заказ")
 
     def __str__(self):
