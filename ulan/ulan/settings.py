@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-0qd#p(&s_(%zkofyr#1_yf*+s4_kp-pf4w%d2c+38e1x2t&!6o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['nurlanbek.pythonanywhere.com']
 
 
 # Application definition
@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     'import_export',
     'main',
     'account',
-    'jazzmin',
+#    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -80,10 +80,10 @@ WSGI_APPLICATION = 'ulan.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ulan',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
+        'NAME': 'nurlanbek$default',
+        'USER': 'nurlanbek',
+        'PASSWORD': 'Suvorov1046',
+        'HOST': 'nurlanbek.mysql.pythonanywhere-services.com',
         'PORT': '3306',
         'OPTIONS': { 'sql_mode': 'traditional'}
     }
