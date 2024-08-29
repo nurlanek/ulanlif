@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-0qd#p(&s_(%zkofyr#1_yf*+s4_kp-pf4w%d2c+38e1x2t&!6o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['nurlanbek.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -80,10 +80,10 @@ WSGI_APPLICATION = 'ulan.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'nurlanbek$default',
-        'USER': 'nurlanbek',
-        'PASSWORD': 'Suvorov1046',
-        'HOST': 'nurlanbek.mysql.pythonanywhere-services.com',
+        'NAME': 'ulan',
+        'USER': 'root',
+        'PASSWORD': 'Sumbula1046@',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': { 'sql_mode': 'traditional'}
     }
