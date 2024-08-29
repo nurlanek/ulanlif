@@ -1,0 +1,10 @@
+venv/Lib
+ulan/main/migrations/
+**/migrations/
+readme.txt
+git.txt
+sql_queries.txt
+.idea/
+*.log
+*.tmp
+*.txt
