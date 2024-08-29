@@ -16,7 +16,7 @@ def login_request(request):
         user = authenticate(request, username = username, password = password)
         if user is not None:
             login (request, user)
-            return redirect("home")
+            return redirect("reports:home")
         else:
             return render(request, "account/login.html", {
                 "error": "имя или пароль неправильно"
@@ -42,7 +42,7 @@ def register_request(request):
                 else:
                     user = User.objects.create_user(username=username, email=email, first_name=firstname, last_name=lastname, password=password)
                     user.save()
-                    return redirect("login")
+                    return redirect("account:login")
 
         else:
             return render(request, 'account/register.html', {"error":"Пароль не совпадает"})
@@ -52,7 +52,7 @@ def register_request(request):
 
 def logout_request(request):
     logout(request)
-    return redirect("home")
+    return redirect("reports:home")
 
 def user_logout_request(request):
     logout(request)
