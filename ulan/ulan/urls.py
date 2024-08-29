@@ -7,7 +7,8 @@ from django.contrib.auth.views import LoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('reports.urls')),
+    #path('', include('reports.urls')),
+    path('', include(('reports.urls', 'reports'), namespace='reports')),
     path('main/', include('main.urls')),
     path('account/', include('account.urls')),
     path('material/', include('material.urls')),
