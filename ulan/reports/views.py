@@ -15,6 +15,7 @@ def weekly_report(request):
     form = ReportForm()
     report_data = None
     user = None  # Kullanıcıyı burada başlatıyoruz
+    status = None
 
     if request.method == "POST":
         form = ReportForm(request.POST)
@@ -34,5 +35,6 @@ def weekly_report(request):
     return render(request, 'reports/weekly_report.html', {
         'form': form,
         'report_data': report_data,
-        'user': user  # Kullanıcıyı template'e gönderiyoruz
+        'user': user,  # Kullanıcıyı template'e gönderiyoruz
+        'status': status
     })

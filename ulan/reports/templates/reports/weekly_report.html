@@ -38,12 +38,10 @@
     </div>
 </form>
 
-
-
 {% include 'partials/print.html' %}
 
 {% if user %}
-        <h4>сотрудник : {{ user.username }}</h4> <!-- Kullanıcı adını göster -->
+        <h4>Сотрудник : {{ user.username }} ________  Статус : {{ status }}</h4> <!-- Kullanıcı adını göster -->
     {% endif %}
 
     {% if report_data %}
@@ -52,7 +50,7 @@
             <thead>
                 <tr>
                     <th>Крой №</th>
-                    <th>Код операции</th>
+                    <th>Операция</th>
                     <th>Единица</th>
                     <th>Цена</th>
                     <th>время операции</th>
@@ -62,7 +60,7 @@
                 {% for item in report_data %}
                     <tr>
                         <td>{{ item.kroy_no }}</td>
-                        <td>{{ item.operation_code }} </td>
+                        <td>{{ item.operations}} </td>
                         <td>{{ item.edinitsa }}</td>
                         <td>{{ item.price }}</td>
                         <td>{{ item.created }}</td>
