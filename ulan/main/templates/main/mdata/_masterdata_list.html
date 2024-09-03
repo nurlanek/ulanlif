@@ -66,13 +66,7 @@
                 <td>{{ masterdata.kroy_no }}</td>
                 <td>{{ masterdata.edinitsa }}</td>
                 <td>{{ masterdata.created|date:"d.m.Y H:i" }}</td>
-                <td>
-                    {% if masterdata.status == 'завершень' %}
-                    <b>звершень</b>
-                    {% else %}
-                    в процессе
-                    {% endif %}
-                    </td>
+                <td>{{ masterdata.status }}</td>
                 <td>
                     {% if masterdata.confirmation %}
                     <b style="color: green;"> проверено</b>
