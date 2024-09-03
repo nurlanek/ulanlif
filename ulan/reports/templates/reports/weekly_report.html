@@ -42,6 +42,10 @@
 
 {% include 'partials/print.html' %}
 
+{% if user %}
+        <h4>сотрудник : {{ user.username }}</h4> <!-- Kullanıcı adını göster -->
+    {% endif %}
+
     {% if report_data %}
     <div class="mt-2" id="table-container">
         <table class="table table-bordered" >
