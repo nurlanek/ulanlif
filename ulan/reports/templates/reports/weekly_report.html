@@ -56,8 +56,8 @@
             <tbody>
                 {% for item in report_data %}
                     <tr>
-                        <td>{{ item.kroy_no }}</td>
-                        <td>{{ item.operation_code }}</td>
+                        <td>{{ item.kroy_no }} ({{ item.kroy_no.kroy_field_name }})</td>
+                        <td>{{ item.operation_code }} ({{ item.operation_code.operation_field_name }})</td>
                         <td>{{ item.edinitsa }}</td>
                         <td>{{ item.price }}</td>
                     </tr>

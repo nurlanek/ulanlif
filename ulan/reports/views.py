@@ -28,6 +28,6 @@ def weekly_report(request):
                 created__range=(start_date, end_date),
                 user=user if user else None,
                 status=status if status else None
-            ).values('kroy_no', 'operation_code', 'edinitsa', 'price')
+            )
 
     return render(request, 'reports/weekly_report.html', {'form': form, 'report_data': report_data})
