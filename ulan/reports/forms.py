@@ -14,14 +14,19 @@ class ReportForm(forms.Form):
         label="Статус",
         required=False
     )
-    start_date = forms.DateField(
-        widget=forms.SelectDateWidget(),
-        label="Дата начала"
-    )
-    end_date = forms.DateField(
-        widget=forms.SelectDateWidget(),
-        label="Дата окончания"
-    )
+    start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label='Дата начала')
+    end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label='Дата окончания')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control form-control-sm'})
+
+
+class Report_allForm(forms.Form):
+    user = forms.ModelChoiceField(queryset=User.objects.all(), required=False, label='Пользователь')
+    start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label='Дата начала')
+    end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label='Дата окончания')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

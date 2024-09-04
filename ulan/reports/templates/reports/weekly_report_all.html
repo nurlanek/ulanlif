@@ -7,39 +7,34 @@
     {% csrf_token %}
     <div class="container">
         <div class="row">
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="{{ form.user.id_for_label }}">{{ form.user.label }}</label>
-            {{ form.user }} <!-- Bootstrap stilinde açılır menü -->
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="{{ form.user.id_for_label }}">{{ form.user.label }}</label>
+                    {{ form.user }} <!-- Bootstrap stilinde açılır menü -->
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="{{ form.start_date.id_for_label }}">{{ form.start_date.label }}</label>
+                    {{ form.start_date }} <!-- Bootstrap stilinde tarih seçici -->
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="{{ form.end_date.id_for_label }}">{{ form.end_date.label }}</label>
+                    {{ form.end_date }} <!-- Bootstrap stilinde tarih seçici -->
+                </div>
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <div class="form-group w-100">
+                    <button type="submit" class="btn btn-primary btn-sm w-100">Показать отчет</button>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="{{ form.status.id_for_label }}">{{ form.status.label }}</label>
-            {{ form.status }} <!-- Bootstrap stilinde açılır menü -->
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="form-group">
-            <label for="{{ form.start_date.id_for_label }}">{{ form.start_date.label }}</label>
-            {{ form.start_date }} <!-- Bootstrap stilinde tarih seçici -->
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="form-group">
-            <label for="{{ form.end_date.id_for_label }}">{{ form.end_date.label }}</label>
-            {{ form.end_date }} <!-- Bootstrap stilinde tarih seçici -->
-        </div>
-    </div>
-    <div class="col-md-2 d-flex align-items-end">
-        <button type="submit" class="btn btn-primary btn-sm w-100">Показать отчет</button>
-    </div>
-</div>
+    </form>
 
-    </div>
-</form>
-
- <div class="d-flex justify-content-end mb-3"> <!-- Butonları sağa hizalamak için -->
+    <div class="d-flex justify-content-end mb-3"> <!-- Butonları sağa hizalamak için -->
         <div class="me-2">
             {% include 'partials/print.html' %}
         </div>
@@ -48,23 +43,22 @@
         </div>
     </div>
 
-
-
     {% if report_data %}
     <div class="mt-2" id="table-container">
-        <table class="table table-bordered"  id="mytable" >
+        <table class="table table-bordered" id="mytable">
             <thead>
-             <tr>
+            <tr>
                 <!-- Kullanıcının adını tablo başlığı olarak göster -->
                 <th colspan="6" class="text-center">
                     {% if user %}
-                    Сотрудник: {{ user.username }} - статус: {{ status }} - общая количество единицы: {{ total_units }}
+                    Сотрудник: {{ user.username }}
                     {% endif %}
                 </th>
             </tr>
                 <tr>
                     <th>Крой №</th>
                     <th>Операция</th>
+                    <th>Статус</th>
                     <th>Единица</th>
                     <th>Цена</th>
                     <th>время операции</th>
@@ -74,7 +68,8 @@
                 {% for item in report_data %}
                     <tr>
                         <td>{{ item.kroy_no }}</td>
-                        <td>{{ item.operations}} </td>
+                        <td>{{ item.operations }}</td>
+                        <td>{{ item.status }}</td>
                         <td>{{ item.edinitsa }}</td>
                         <td>{{ item.price }}</td>
                         <td>{{ item.created }}</td>
@@ -82,9 +77,8 @@
                 {% endfor %}
             </tbody>
         </table>
-        {% else %}
+    {% else %}
         <p>По выбранным вами критериям данные не найдены.</p>
     {% endif %}
     </div>
-
 {% endblock %}

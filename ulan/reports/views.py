@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.shortcuts import render
 from django.db.models import Sum
 from main.models import Masterdata
-from .forms import ReportForm
+from .forms import ReportForm, Report_allForm
 
 # Create your views here.
 def index(request):
@@ -16,6 +16,7 @@ def weekly_report(request):
     report_data = None
     user = None  # Kullanıcıyı burada başlatıyoruz
     status = None
+    total_units = 0
 
     if request.method == "POST":
         form = ReportForm(request.POST)
@@ -32,9 +33,42 @@ def weekly_report(request):
                 status=status if status else None
             )
 
+            # Подсчет общей суммы единиц
+            total_units = report_data.aggregate(total=Sum('edinitsa'))['total'] or 0
+
     return render(request, 'reports/weekly_report.html', {
         'form': form,
         'report_data': report_data,
         'user': user,  # Kullanıcıyı template'e gönderiyoruz
-        'status': status
+        'status': status,
+        'total_units': total_units  # Добавляем общую сумму в контекст
+    })
+
+def weekly_report_all(request):
+    form = Report_allForm()
+    report_data = None
+    user = None
+
+    if request.method == "POST":
+        form = Report_allForm(request.POST)
+        if form.is_valid():
+            user = form.cleaned_data.get('user')
+            start_date = form.cleaned_data.get('start_date')
+            end_date = form.cleaned_data.get('end_date')
+
+            # Filtreleme
+            if user:
+                report_data = Masterdata.objects.filter(
+                    created__range=(start_date, end_date),
+                    user=user
+                )
+            else:
+                report_data = Masterdata.objects.filter(
+                    created__range=(start_date, end_date)
+                )
+
+    return render(request, 'reports/weekly_report_all.html', {
+        'form': form,
+        'report_data': report_data,
+        'user': user,
     })
