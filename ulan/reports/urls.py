@@ -8,4 +8,5 @@ urlpatterns = [
     path("index", views.index),
     path('weekly-report/', weekly_report, name='weekly_report'),
     path('weekly-report-all/', weekly_report_all, name='weekly_report_all'),
+    path('report/', views.alluser_report, name='alluser_report'),
 ]

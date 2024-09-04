@@ -10,10 +10,13 @@
 
         <ul class="navbar-nav me-auto">
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'reports:weekly_report' %}">Отчет по сотрудникам </a>
+                <a class="nav-link" href="{% url 'reports:weekly_report' %}">Отчет по состояние по одному</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'reports:weekly_report_all' %}">Отчет </a>
+                <a class="nav-link" href="{% url 'reports:weekly_report_all' %}">Отчет по одному сотруднику  </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'reports:alluser_report' %}">Отчет всех по состоянию работы</a>
             </li>
         </ul>
         <ul class="navbar-nav ms-auto">

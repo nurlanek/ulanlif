@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.shortcuts import render
 from django.db.models import Sum
 from main.models import Masterdata
-from .forms import ReportForm, Report_allForm
+from .forms import ReportForm, Report_allForm, AlluserReportForm
 
 # Create your views here.
 def index(request):
@@ -72,3 +72,39 @@ def weekly_report_all(request):
         'report_data': report_data,
         'user': user,
     })
+
+def alluser_report(request):
+    form = AlluserReportForm(request.GET or None)
+    report_data = []
+    status = None
+    start_date = None
+    end_date = None
+
+    if request.method == 'GET' and form.is_valid():
+        status = form.cleaned_data.get('status')
+        start_date = form.cleaned_data.get('start_date')
+        end_date = form.cleaned_data.get('end_date')
+
+        filters = {}
+        if status:
+            filters['status'] = status
+        if start_date:
+            filters['created__gte'] = start_date
+        if end_date:
+            filters['created__lte'] = end_date
+
+        report_data = (
+            Masterdata.objects
+            .filter(**filters)
+            .values('user__username')
+            .annotate(total_edinitsa=Sum('edinitsa'), total_price=Sum('price'))
+        )
+
+    context = {
+        'form': form,
+        'report_data': report_data,
+        'status': status,
+        'start_date': start_date,
+        'end_date': end_date,
+    }
+    return render(request, 'reports/alluser_report.html', context)
