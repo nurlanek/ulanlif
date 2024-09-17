@@ -27,9 +27,9 @@
                     <td><a href="{% url 'main:operation_list_detail' operation_code_id=operation_code.id %}">{{ operation_code.title }}</a></td>
                     <td>{{ operation_code.description }}</td>
                     <td>{{ operation_code.product_type }}</td>
-                    <td><a  class="btn btn-warning btn-sm" href="{% url 'main:operation_code_update' operation_code.id %}">Изменить</a></td>
+                    <td><a  class="btn btn-secondary btn-sm" href="{% url 'main:operation_code_update' operation_code.id %}">Изменить</a></td>
                     <td><a class="btn btn-danger btn-sm" href="{% url 'main:operation_code_delete' operation_code.id %}">Удалить</a></td>
-                    <td><a href="{% url 'main:operation_list_detail' operation_code.id %}" class="btn btn-primary btn-sm">Показать</a></td>
+                    <td><a href="{% url 'main:operation_list_detail' operation_code.id %}" class="btn btn-secondary btn-sm">Показать</a></td>
                 </tr>
             {% empty %}
                 <tr>
@@ -38,7 +38,7 @@
             {% endfor %}
         </tbody>
     </table>
-    <a href="{% url 'main:operation_code_create' %}" class="btn btn-success btn-sm" >Создать новый код</a>
+    <a href="{% url 'main:operation_code_create' %}" class="btn btn-secondary btn-sm" >Создать новый код</a>
 </div>
 {% endblock %}
 {% block js_files %}

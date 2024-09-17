@@ -43,7 +43,7 @@
                 <td>{{ kroy.order.orderno }} - {{ kroy.order.client }}</td>
 
                 <td>{{ kroy.edinitsa }}</td>
-                <td><a href="{% url 'main:kroy-update' kroy.pk %}" class="btn btn-warning btn-sm">Изменить</a></td>
+                <td><a href="{% url 'main:kroy-update' kroy.pk %}" class="btn btn-secondary btn-sm">Изменить</a></td>
                 <td>
                     <form method="post" action="{% url 'main:kroy-delete' kroy.pk %}" style="display:inline;">
                         {% csrf_token %}

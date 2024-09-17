@@ -1,8 +1,8 @@
 {% extends "main/base.html" %}
 {% block content %}
-<div class="container mt-5">
+<div class="container mt-2">
   <h2>Назначение операции</h2>
-  <a href="{% url 'main:kroy_operation_code_create' %}" class="btn btn-success btn-sm mb-3">Создать новый</a>
+  <a href="{% url 'main:kroy_operation_code_create' %}" class="btn btn-secondary btn-sm mb-3">Создать новый</a>
   <table class="table table-striped">
     <thead class="thead-dark">
       <tr>
@@ -17,8 +17,8 @@
         <td>{{ code.kroy.kroy_no }}</td>
         <td>{{ code.operation_code.title }}1</td>
         <td>
-          <a href="{% url 'main:kroy_operation_code_edit' code.pk %}" class="btn btn-warning btn-sm">Edit</a>
-          <a href="{% url 'main:kroy_operation_code_delete' code.pk %}" class="btn btn-danger btn-sm">Delete</a>
+          <a href="{% url 'main:kroy_operation_code_edit' code.pk %}" class="btn btn-secondary btn-sm">Изменить</a>
+          <a href="{% url 'main:kroy_operation_code_delete' code.pk %}" class="btn btn-danger btn-sm">Удалить</a>
         </td>
       </tr>
       {% endfor %}
