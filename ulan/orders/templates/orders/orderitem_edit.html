@@ -6,7 +6,7 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <button type="submit" class="btn btn-secondary">Сохранить</button>
         <a href="{% url 'orders:orderitem_list_by_order' order_item.order.id %}" class="btn btn-secondary">Отмена</a>
     </form>
 </div>

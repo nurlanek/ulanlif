@@ -2,7 +2,7 @@
 
 {% block content %}
 {% include 'partials/print.html' %}
-<div class="container mt-4"  id="table-container" >
+<div class="container mt-2"  id="table-container" >
 
     <h2>Список продуктов</h2>
     <table class="table table-striped" >
@@ -27,7 +27,7 @@
                 <td>{{ product.created_at|date:"d.m.Y H:i" }}</td>
                 <td>{{ product.updated_at|date:"d.m.Y H:i" }}</td>
                 <td>
-                    <a href="{% url 'warehouse:product_edit' product.pk %}" class="btn btn-warning btn-sm">Изменить</a>
+                    <a href="{% url 'warehouse:product_edit' product.pk %}" class="btn btn-secondary btn-sm">Изменить</a>
                     <a href="{% url 'warehouse:product_delete' product.pk %}" class="btn btn-danger btn-sm">Удалить</a>
                 </td>
             </tr>
