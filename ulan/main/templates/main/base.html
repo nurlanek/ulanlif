@@ -21,9 +21,11 @@
 
 {% include 'main/partials/_nav_main.html' %}
 
-<div class="container">
-{% block content %}{% endblock %}
-    </div>
+
+{% block content %}
+
+    {% endblock %}
+
 <script src="{% static 'js/print.js' %}"></script>
 <script src="{% static 'js/base.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>

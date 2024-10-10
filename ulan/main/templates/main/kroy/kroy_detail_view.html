@@ -14,6 +14,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="container mt-2">
 {% include 'partials/print.html' %}
 <a href="{% url 'main:kroy-detail-create' kroy_instance.pk %}" class="btn btn-primary btn-sm mt-2">Создать крой детали</a>
     <div id="table-container" class="">
