@@ -4,12 +4,16 @@
 
 
     <h4>Отчет по состоянию работы всех сотрудников</h4>
-
+ooo
     <form method="get" class="form">
         <div class="row">
             <div class="col-auto">
                 {{ form.status.label_tag }}
                 {{ form.status }}
+            </div>
+            <div class="col-auto">
+                {{ form.kroy_no.label_tag }}
+                {{ form.kroy_no }}
             </div>
             <div class="col-auto">
                 {{ form.start_date.label_tag }}
@@ -45,6 +49,7 @@
                 <th>Пользователь</th>
                 <th>Единица (сумма)</th>
                 <th>Цена (сумма)</th>
+                <th>Дата выполнение</th>
             </tr>
         </thead>
         <tbody>
@@ -53,6 +58,7 @@
                 <td>{{ item.user__username }}</td>
                 <td>{{ item.total_edinitsa }}</td>
                 <td>{{ item.total_price }}</td>
+                <td>{{ item.created }}</td>
             </tr>
             {% empty %}
             <tr>

@@ -77,17 +77,21 @@ def alluser_report(request):
     form = AlluserReportForm(request.GET or None)
     report_data = []
     status = None
+    kroy_no = None
     start_date = None
     end_date = None
 
     if request.method == 'GET' and form.is_valid():
         status = form.cleaned_data.get('status')
+        kroy_no = form.cleaned_data.get('kroy_no')
         start_date = form.cleaned_data.get('start_date')
         end_date = form.cleaned_data.get('end_date')
 
         filters = {}
         if status:
             filters['status'] = status
+        if status:
+            filters['kroy_no'] = kroy_no
         if start_date:
             filters['created__gte'] = start_date
         if end_date:
@@ -96,15 +100,18 @@ def alluser_report(request):
         report_data = (
             Masterdata.objects
             .filter(**filters)
-            .values('user__username')
+            .values('user__username', 'created')
             .annotate(total_edinitsa=Sum('edinitsa'), total_price=Sum('price'))
         )
+
 
     context = {
         'form': form,
         'report_data': report_data,
         'status': status,
+        'kroy_no': kroy_no,
         'start_date': start_date,
         'end_date': end_date,
+        #'created': created,
     }
     return render(request, 'reports/alluser_report.html', context)

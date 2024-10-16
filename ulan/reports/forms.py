@@ -1,7 +1,7 @@
 # forms.py
 from django import forms
 from django.contrib.auth.models import User
-from main.models import Status
+from main.models import Status, Kroy
 
 class ReportForm(forms.Form):
     user = forms.ModelChoiceField(
@@ -40,6 +40,14 @@ class AlluserReportForm(forms.Form):
         label='Статус',
         widget=forms.Select(attrs={'class': 'form-control'})
     )
+
+    kroy_no = forms.ModelChoiceField(
+        queryset=Kroy.objects.all(),
+        required=False,
+        label='Крой номер',
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
     start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label='Дата начала')
     end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label='Дата окончания')
 
