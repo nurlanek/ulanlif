@@ -100,7 +100,7 @@ def alluser_report(request):
         report_data = (
             Masterdata.objects
             .filter(**filters)
-            .values('user__username', 'created')
+            .values('user__username', 'created', 'user__first_name', 'user__last_name')
             .annotate(total_edinitsa=Sum('edinitsa'), total_price=Sum('price'))
         )
 

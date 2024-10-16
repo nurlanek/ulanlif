@@ -56,6 +56,8 @@ ooo
             {% for item in report_data %}
             <tr>
                 <td>{{ item.user__username }}</td>
+                <td>{{ item.user__first_name }}</td>  <!-- user__first_name kullanımı -->
+                <td>{{ item.user__last_name }}</td>
                 <td>{{ item.total_edinitsa }}</td>
                 <td>{{ item.total_price }}</td>
                 <td>{{ item.created }}</td>
